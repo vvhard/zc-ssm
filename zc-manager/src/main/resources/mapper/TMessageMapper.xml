@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zc.manager.dao.TMessageMapper">
+  <resultMap id="BaseResultMap" type="zc.commons.pojo.TMessage">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="memberid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="senddate" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zc.commons.pojo.TMessage">
+    insert into t_message (id, memberid, content, 
+      senddate)
+    values (#{id,jdbcType=INTEGER}, #{memberid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{senddate,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TMessage">
+    update t_message
+    set memberid = #{memberid,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      senddate = #{senddate,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, memberid, content, senddate
+    from t_message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, memberid, content, senddate
+    from t_message
+  </select>
+</mapper>

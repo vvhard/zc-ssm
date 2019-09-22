@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zc.manager.dao.TAccountTypeCertMapper">
+  <resultMap id="BaseResultMap" type="zc.commons.pojo.TAccountTypeCert">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="accttypeid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="certid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_account_type_cert
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zc.commons.pojo.TAccountTypeCert">
+    insert into t_account_type_cert (id, accttypeid, certid
+      )
+    values (#{id,jdbcType=INTEGER}, #{accttypeid,jdbcType=INTEGER}, #{certid,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TAccountTypeCert">
+    update t_account_type_cert
+    set accttypeid = #{accttypeid,jdbcType=INTEGER},
+      certid = #{certid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, accttypeid, certid
+    from t_account_type_cert
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, accttypeid, certid
+    from t_account_type_cert
+  </select>
+</mapper>

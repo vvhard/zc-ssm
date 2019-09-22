@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zc.manager.dao.TTokenMapper">
+  <resultMap id="BaseResultMap" type="zc.commons.pojo.TToken">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="userid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="pwd_token" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="auto_login_token" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_token
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zc.commons.pojo.TToken">
+    insert into t_token (id, userid, pwd_token, 
+      auto_login_token)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{pwdToken,jdbcType=VARCHAR}, 
+      #{autoLoginToken,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TToken">
+    update t_token
+    set userid = #{userid,jdbcType=INTEGER},
+      pwd_token = #{pwdToken,jdbcType=VARCHAR},
+      auto_login_token = #{autoLoginToken,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, userid, pwd_token, auto_login_token
+    from t_token
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, userid, pwd_token, auto_login_token
+    from t_token
+  </select>
+</mapper>

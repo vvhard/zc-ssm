@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zc.manager.dao.TProjectMapper">
+  <resultMap id="BaseResultMap" type="zc.commons.pojo.TProject">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="money" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="day" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="deploydate" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="supportmoney" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="supporter" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="completion" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="memberid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="createdate" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="follower" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_project
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zc.commons.pojo.TProject">
+    insert into t_project (id, name, remark, 
+      money, day, status, deploydate, 
+      supportmoney, supporter, completion, 
+      memberid, createdate, follower
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{money,jdbcType=BIGINT}, #{day,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, #{deploydate,jdbcType=CHAR}, 
+      #{supportmoney,jdbcType=BIGINT}, #{supporter,jdbcType=INTEGER}, #{completion,jdbcType=INTEGER}, 
+      #{memberid,jdbcType=INTEGER}, #{createdate,jdbcType=CHAR}, #{follower,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TProject">
+    update t_project
+    set name = #{name,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      money = #{money,jdbcType=BIGINT},
+      day = #{day,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR},
+      deploydate = #{deploydate,jdbcType=CHAR},
+      supportmoney = #{supportmoney,jdbcType=BIGINT},
+      supporter = #{supporter,jdbcType=INTEGER},
+      completion = #{completion,jdbcType=INTEGER},
+      memberid = #{memberid,jdbcType=INTEGER},
+      createdate = #{createdate,jdbcType=CHAR},
+      follower = #{follower,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, name, remark, money, day, status, deploydate, supportmoney, supporter, 
+    completion, memberid, createdate, follower
+    from t_project
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, remark, money, day, status, deploydate, supportmoney, supporter, 
+    completion, memberid, createdate, follower
+    from t_project
+  </select>
+</mapper>

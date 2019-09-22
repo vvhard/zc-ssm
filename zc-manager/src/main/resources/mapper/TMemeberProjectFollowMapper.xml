@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zc.manager.dao.TMemeberProjectFollowMapper">
+  <resultMap id="BaseResultMap" type="zc.commons.pojo.TMemeberProjectFollow">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="projectid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="memberid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_member_project_follow
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zc.commons.pojo.TMemeberProjectFollow">
+    insert into t_member_project_follow (id, projectid, memberid
+      )
+    values (#{id,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, #{memberid,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TMemeberProjectFollow">
+    update t_member_project_follow
+    set projectid = #{projectid,jdbcType=INTEGER},
+      memberid = #{memberid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, projectid, memberid
+    from t_member_project_follow
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, projectid, memberid
+    from t_member_project_follow
+  </select>
+</mapper>
