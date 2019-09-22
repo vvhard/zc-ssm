@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--引用外部文件，后期考虑将数据库的属性单独配置，resources在classpath下查找，url可以文件系统的任意位置
+    <properties resource="db.properties"></properties>
+    -->
+    <!--Mybatis3Simple不生成Example查询-->
+    <context id="mysql_zc" targetRuntime="Mybatis3Simple" defaultModelType="flat">
+        <!--配置分隔符，表名或列名出现sql关键词使用-->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <!--<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
+        <!--生成注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/zc?useUnicode=true&amp;useSSL=false&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8"
+                        userId="root"
+                        password="admin_root">
+        </jdbcConnection>
+        <!--控制生成实体类-->
+        <javaModelGenerator targetPackage="zc.commons.pojo" targetProject="parent/commons/src/main/java">
+            <property name="constructorBased" value="true"/>
+            <!--对结果进行去除空格-->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="parent/manager/src/main/resources">
+            <property name="enableSubPackages" value="true"></property>
+            
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="zc.manager.dao" targetProject="parent/manager/src/main/java"/>
+
+        <!--
+        <table schema="root" tableName="" domainObjectName="">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+        -->
+        <!-- 指定要逆向的每一张表,用户表
+            <table schema="root" tableName="t_user" domainObjectName="TUser"></table>
+            <table schema="root" tableName="t_user_role" domainObjectName="TUserRole"></table>
+            <table schema="root" tableName="t_type" domainObjectName="TType"></table>
+            <table schema="root" tableName="t_tag" domainObjectName="TTag"></table>
+            <table schema="root" tableName="t_role_permission" domainObjectName="TRolePermission"></table>
+            <table schema="root" tableName="t_role" domainObjectName="TRole"></table>
+            <table schema="root" tableName="t_return" domainObjectName="TReturn"></table>
+            <table schema="root" tableName="t_project_type" domainObjectName="TProjectType"></table>
+            <table schema="root" tableName="t_project_tag" domainObjectName="TProjectTag"></table>
+            <table schema="root" tableName="t_project" domainObjectName="TProject"></table>
+            <table schema="root" tableName="t_permission" domainObjectName="TPermission"></table>
+            <table schema="root" tableName="t_param" domainObjectName="TParam"></table>
+            <table schema="root" tableName="t_order" domainObjectName="TOrder"></table>
+            <table schema="root" tableName="t_message" domainObjectName="TMessage"></table>
+            <table schema="root" tableName="t_member_project_follow" domainObjectName="TMemeberProjectFollow"></table>
+            <table schema="root" tableName="t_member_cert" domainObjectName="TMemberCert"></table>
+            <table schema="root" tableName="t_member_address" domainObjectName="TMemberAddress"></table>
+            <table schema="root" tableName="t_member" domainObjectName="TMemeber"></table>
+            <table schema="root" tableName="t_dictionary" domainObjectName="TDictionary"></table>
+            <table schema="root" tableName="t_cert" domainObjectName="TCert"></table>
+            <table schema="root" tableName="t_advertisement" domainObjectName="TAdvertisement"></table>
+            <table schema="root" tableName="t_account_type_cert" domainObjectName="TAccountTypeCert"></table>
+            <table schema="root" tableName="t_token" domainObjectName="TToken"></table>
+            -->
+        </context>
+    </generatorConfiguration>
