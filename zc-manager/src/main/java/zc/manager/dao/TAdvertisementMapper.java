@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 import zc.commons.pojo.TAdvertisement;
 
 import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface TAdvertisementMapper {
     int deleteByPrimaryKey(Integer id);
@@ -15,4 +17,8 @@ public interface TAdvertisementMapper {
     List<TAdvertisement> selectAll();
 
     int updateByPrimaryKey(TAdvertisement record);
+
+    List<TAdvertisement> selectWithCondition(Map<String, Object> map);
+
+    int selectCountWithCondition(Map<String, Object> map);
 }

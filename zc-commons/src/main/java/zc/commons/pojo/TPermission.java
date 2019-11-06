@@ -1,5 +1,7 @@
 package zc.commons.pojo;
 
+import java.util.List;
+
 public class TPermission {
     private Integer id;
 
@@ -10,6 +12,8 @@ public class TPermission {
     private String icon;
 
     private String url;
+
+    private List<TPermission> childs;
 
     public TPermission(Integer id, Integer pid, String name, String icon, String url) {
         this.id = id;
@@ -61,5 +65,25 @@ public class TPermission {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public List<TPermission> getChilds() {
+        return childs;
+    }
+
+    public void setChilds(List<TPermission> childs) {
+        this.childs = childs;
+    }
+
+    @Override
+    public String toString() {
+        return "TPermission{" +
+                "id=" + id +
+                ", pid=" + pid +
+                ", name='" + name + '\'' +
+                ", icon='" + icon + '\'' +
+                ", url='" + url + '\'' +
+                ", childs=" + childs +
+                '}';
     }
 }

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 import zc.commons.pojo.TType;
 
 import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface TTypeMapper {
     int deleteByPrimaryKey(Integer id);
@@ -15,4 +17,8 @@ public interface TTypeMapper {
     List<TType> selectAll();
 
     int updateByPrimaryKey(TType record);
+
+    int selectCountWithCondition(Map<String, Object> map);
+
+    List<TType> selectWithCondition(Map<String, Object> map);
 }

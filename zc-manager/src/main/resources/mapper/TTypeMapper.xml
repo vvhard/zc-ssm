@@ -33,4 +33,20 @@
     select id, name, description
     from t_type
   </select>
+  <select id="selectCountWithCondition" resultType="int">
+    select count(*)
+    from t_type
+    <if test="queryContent != null">
+      where name like concat('%',#{queryContent},'%')
+    </if>
+  </select>
+  <select id="selectWithCondition" resultType="zc.commons.pojo.TType">
+    select * from
+    t_type
+    <if test="queryContent != null">
+      where name like concat('%',#{queryContent},'%')
+    </if>
+    order by id desc
+    limit #{start},#{size}
+  </select>
 </mapper>

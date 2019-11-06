@@ -37,5 +37,18 @@
     select id, pid, name, icon, url
     from t_permission
   </select>
+  <select id="selectByUser" resultType="zc.commons.pojo.TPermission">
+    select p.*
+    from t_user u join t_user_role ur on u.id = ur.userid
+                join t_role r on ur.roleid = r.id
+                join t_role_permission rp on rp.roleid = r.id
+                join t_permission p on p.id = rp.permissionid
+    where u.loginacct =#{loginacct};
+  </select>
+  <select id="selectRolePermissions" resultType="zc.commons.pojo.TPermission">
+    select p.*
+    from t_permission p join t_role_permission rp on  p.id=rp.permissionid
+    where rp.id=#{roleid}
+  </select>
 
 </mapper>

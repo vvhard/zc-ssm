@@ -29,4 +29,22 @@
     select id, name
     from t_cert
   </select>
+  <select id="selectWithConditon" resultType="zc.commons.pojo.TCert">
+    select *
+    from t_cert
+    <if test="queryContent != null">
+      <!-- '%#{queryText}%'这样写会查不出来，因为#后面的变成占位符？，？前面有‘’时会识别成字符串 -->
+      where name like concat('%',#{queryContent},'%')
+    </if>
+    order by id desc
+    limit #{start},#{size}
+  </select>
+  <select id="selectCountWithCondition" resultType="int">
+    select count(*)
+    from t_cert
+    <if test="queryContent != null">
+      <!-- '%#{queryText}%'这样写会查不出来，因为#后面的变成占位符？，？前面有‘’时会识别成字符串 -->
+      where name like concat('%',#{queryContent},'%')
+    </if>
+  </select>
 </mapper>

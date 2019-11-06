@@ -27,11 +27,11 @@
     <form class="form-signin" role="form" action="${ctx}/login" method="post">
         <h2 class="form-signin-heading"><i class="glyphicon glyphicon-user"></i> 管理员登录</h2>
         <div class="form-group has-success has-feedback">
-            <input type="text" class="form-control" id="userpswd" placeholder="请输入登录账号" autofocus>
+            <input type="text" class="form-control" id="loginacct" name="loginacct" placeholder="请输入登录账号" autofocus>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
-            <input type="text" class="form-control" id="" placeholder="请输入登录密码" style="margin-top:10px;">
+            <input type="password" class="form-control" id="userpswd" name="userpswd" placeholder="请输入登录密码" style="margin-top:10px;">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">

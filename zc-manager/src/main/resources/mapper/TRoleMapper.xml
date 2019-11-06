@@ -33,4 +33,51 @@
     select id, name, createtime
     from t_role
   </select>
+  <select id="selectAssignToUser" resultType="zc.commons.pojo.TRole">
+    select r.*
+    from t_role r join t_user_role ur on ur.roleid = r.id join t_user u on ur.userid = u.id
+    where u.id = #{id}
+  </select>
+  <select id="selectUnAssignToUser" resultType="zc.commons.pojo.TRole">
+    select *
+    from t_role
+    where id not in(
+        select r.id
+        from t_role r join t_user_role ur on ur.roleid = r.id join t_user u on ur.userid = u.id
+        where u.id = #{id}
+    )
+  </select>
+  <delete id="deleteRoleFromUr" parameterType="zc.commons.pojo.TUserRole">
+    delete from t_user_role
+    where userid=#{userid} and roleid = #{roleid}
+  </delete>
+  <insert id="insertRoleToUr" parameterType="zc.commons.pojo.TUserRole" keyProperty="id" useGeneratedKeys="true">
+    insert into t_user_role(userid,roleid) value(#{userid},#{roleid})
+  </insert>
+  <select id="selectWithCondition" resultType="zc.commons.pojo.TRole">
+    select *
+    from t_role
+    <if test="quertContent != null">
+     where name like concat('%',#{queryContext},'%')
+    </if>
+     order by id desc
+     limit #{start},#{size}
+  </select>
+  <select id="selectCountWithCondition" resultType="int">
+    select count(*)
+    from t_role
+    <if test="quertContent != null">
+      where name like concat('%',#{queryContext},'%')
+    </if>
+    order by id desc
+    limit #{start},#{size}
+  </select>
+  <delete id="deleteBatch" parameterType="list">
+    delete
+    from t_role
+    where id in
+    <foreach separator="," open="(" close=")" collection="roleid" item="id">
+      #{id}
+    </foreach>
+  </delete>
 </mapper>

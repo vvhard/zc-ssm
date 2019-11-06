@@ -42,9 +42,38 @@
     from t_user
   </select>
   <select id="selectUserForLogin" resultType="zc.commons.pojo.TUser">
-    selec *
+    select *
     from t_user
     where loginacct=#{loginacct} and userpswd=#{userpswd}
   </select>
-
+  <select id="selectCountWithCondition" resultType="int">
+    select count(*)
+    from t_user
+    <if test="queryContent != null">
+      <!-- '%#{queryText}%'这样写会查不出来，因为#后面的变成占位符？，？前面有‘’时会识别成字符串 -->
+      where loginacct like concat('%',#{queryContent},'%')
+    </if>
+  </select>
+  <select id="selectWithCondition" resultType="zc.commons.pojo.TUser">
+    select *
+    from t_user
+    <if test="queryContent != null">
+      <!-- '%#{queryText}%'这样写会查不出来，因为#后面的变成占位符？，？前面有‘’时会识别成字符串 -->
+      where loginacct like concat('%',#{queryContent},'%')
+    </if>
+    order by id desc
+    limit #{start},#{size}
+  </select>
+  <delete id="deleteBatchByUserId" parameterType="list">
+    delete
+    from t_user
+    where id in
+    <foreach separator="," open="(" close=")" collection="userid" item="id">
+      #{id}
+    </foreach>
+  </delete>
+  <delete id="deleteByUserId">
+    delete from t_user
+    where id = #{userid}
+  </delete>
 </mapper>

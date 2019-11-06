@@ -35,4 +35,12 @@
     select id, memberid, content, senddate
     from t_message
   </select>
+  <select id="selectWithCondition" resultType="zc.commons.pojo.TMessage">
+      select * from t_message
+      order by id desc
+      limit #{start},#{size}
+  </select>
+  <select id="selectCountWithCondition" resultType="int" >
+      select count(*) from t_message
+  </select>
 </mapper>

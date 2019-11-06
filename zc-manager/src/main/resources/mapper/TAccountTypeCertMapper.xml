@@ -33,4 +33,18 @@
     select id, accttypeid, certid
     from t_account_type_cert
   </select>
+  <select id="selectAcctType" resultType="zc.commons.pojo.TAcctType">
+		select * from t_account_type
+	</select>
+  <select id="selectAcctCerts" resultType="zc.commons.pojo.TCert">
+		select tc.id,tc.name name
+		from t_account_type tat join t_account_type_cert atc on tat.id=atc.accttypeid join t_cert tc on atc.certid=tc.id
+		where tat.name=#{name};
+	</select>
+  <delete id="deleteByAcctTypeId">
+		delete from t_account_type_cert where accttypeid=#{accttypeid}
+  </delete>
+  <insert id="insertAcct" parameterType="zc.commons.pojo.TAcctType" keyProperty="id" useGeneratedKeys="true">
+      insert into t_account_type_cert(accttypeid,certid) value(#{accttypeid},#{certid})
+  </insert>
 </mapper>

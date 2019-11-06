@@ -1,12 +1,13 @@
 package zc.manager.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import zc.commons.pojo.TUser;
 
 import java.util.List;
 import java.util.Map;
 
-@Repository("t")
+@Repository
 public interface TUserMapper {
 
     int deleteByPrimaryKey(Integer id);
@@ -20,4 +21,12 @@ public interface TUserMapper {
     int updateByPrimaryKey(TUser record);
 
     TUser selectUserForLogin(Map<String, Object> map);
+
+    int selectCountWithCondition(Map<String, Object> map);
+
+    List<TUser> selectWithCondition(Map<String, Object> map);
+
+    int deleteBatchByUserId(@Param("userid") List<Integer> userid);
+
+    int deleteByUserId(int userid);
 }

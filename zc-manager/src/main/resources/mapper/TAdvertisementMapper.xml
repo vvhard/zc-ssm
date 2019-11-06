@@ -39,4 +39,20 @@
     select id, name, iconpath, status, url, userid
     from t_advertisement
   </select>
+  <select id="selectWithCondition" resultType="zc.commons.pojo.TAdvertisement">
+    select id, name, iconpath, status, url, userid
+    from t_advertisement
+    <if test="queryContent != null">
+      where name like concat('%',#{queryContent},'%')
+    </if>
+    order by id desc
+    limit #{start},#{size}
+  </select>
+  <select id="selectCountWithCondition" resultType="int">
+    select count(*)
+    from t_advertisement
+    <if test="queryContent != null">
+      where name like concat('%',#{queryContent},'%')
+    </if>
+  </select>
 </mapper>
