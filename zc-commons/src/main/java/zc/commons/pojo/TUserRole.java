@@ -7,10 +7,13 @@ public class TUserRole {
 
     private Integer roleid;
 
-    public TUserRole(Integer id, Integer userid, Integer roleid) {
+    private String description;
+
+    public TUserRole(Integer id, Integer userid, Integer roleid, String description) {
         this.id = id;
         this.userid = userid;
         this.roleid = roleid;
+        this.description = description;
     }
 
     public TUserRole() {
@@ -39,5 +42,13 @@ public class TUserRole {
 
     public void setRoleid(Integer roleid) {
         this.roleid = roleid;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 }

@@ -5,12 +5,12 @@ public class TRole {
 
     private String name;
 
-    private String createtime;
+    private String description;
 
-    public TRole(Integer id, String name, String createtime) {
+    public TRole(Integer id, String name, String description) {
         this.id = id;
         this.name = name;
-        this.createtime = createtime;
+        this.description = description;
     }
 
     public TRole() {
@@ -33,11 +33,11 @@ public class TRole {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getCreatetime() {
-        return createtime;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCreatetime(String createtime) {
-        this.createtime = createtime == null ? null : createtime.trim();
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 }

@@ -9,11 +9,17 @@ public class TToken {
 
     private String autoLoginToken;
 
-    public TToken(Integer id, Integer userid, String pwdToken, String autoLoginToken) {
+    private String expireToken;
+
+    private String ssoToken;
+
+    public TToken(Integer id, Integer userid, String pwdToken, String autoLoginToken, String expireToken, String ssoToken) {
         this.id = id;
         this.userid = userid;
         this.pwdToken = pwdToken;
         this.autoLoginToken = autoLoginToken;
+        this.expireToken = expireToken;
+        this.ssoToken = ssoToken;
     }
 
     public TToken() {
@@ -50,5 +56,21 @@ public class TToken {
 
     public void setAutoLoginToken(String autoLoginToken) {
         this.autoLoginToken = autoLoginToken == null ? null : autoLoginToken.trim();
+    }
+
+    public String getExpireToken() {
+        return expireToken;
+    }
+
+    public void setExpireToken(String expireToken) {
+        this.expireToken = expireToken == null ? null : expireToken.trim();
+    }
+
+    public String getSsoToken() {
+        return ssoToken;
+    }
+
+    public void setSsoToken(String ssoToken) {
+        this.ssoToken = ssoToken == null ? null : ssoToken.trim();
     }
 }

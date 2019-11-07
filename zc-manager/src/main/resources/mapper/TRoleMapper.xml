@@ -3,35 +3,36 @@
 <mapper namespace="zc.manager.dao.TRoleMapper">
   <resultMap id="BaseResultMap" type="zc.commons.pojo.TRole">
     <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="createtime" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+  <insert id="insert" parameterType="zc.commons.pojo.TRole">
+    insert into t_role (id, name, description
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, description
+    from t_role
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="zc.commons.pojo.TRole">
-    insert into t_role (id, name, createtime
-      )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createtime,jdbcType=CHAR}
-      )
-  </insert>
   <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TRole">
     update t_role
     set name = #{name,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=CHAR}
+      description = #{description}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, name, createtime
+    select id, name, createtime,description
     from t_role
     where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, name, createtime
-    from t_role
   </select>
   <select id="selectAssignToUser" resultType="zc.commons.pojo.TRole">
     select r.*
@@ -51,7 +52,7 @@
     delete from t_user_role
     where userid=#{userid} and roleid = #{roleid}
   </delete>
-  <insert id="insertRoleToUr" parameterType="zc.commons.pojo.TUserRole" keyProperty="id" useGeneratedKeys="true">
+  <insert id="insertRoleToUr" keyProperty="id" parameterType="zc.commons.pojo.TUserRole" useGeneratedKeys="true">
     insert into t_user_role(userid,roleid) value(#{userid},#{roleid})
   </insert>
   <select id="selectWithCondition" resultType="zc.commons.pojo.TRole">
@@ -76,7 +77,7 @@
     delete
     from t_role
     where id in
-    <foreach separator="," open="(" close=")" collection="roleid" item="id">
+    <foreach close=")" collection="roleid" item="id" open="(" separator=",">
       #{id}
     </foreach>
   </delete>

@@ -5,9 +5,12 @@ public class TCert {
 
     private String name;
 
-    public TCert(Integer id, String name) {
+    private String description;
+
+    public TCert(Integer id, String name, String description) {
         this.id = id;
         this.name = name;
+        this.description = description;
     }
 
     public TCert() {
@@ -28,5 +31,13 @@ public class TCert {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 }

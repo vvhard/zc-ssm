@@ -3,34 +3,36 @@
 <mapper namespace="zc.manager.dao.TTagMapper">
   <resultMap id="BaseResultMap" type="zc.commons.pojo.TTag">
     <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="pid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+  <insert id="insert" parameterType="zc.commons.pojo.TTag">
+    insert into t_tag (id, pid, name, 
+      description)
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, pid, name, description
+    from t_tag
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_tag
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="zc.commons.pojo.TTag">
-    insert into t_tag (id, pid, name
-      )
-    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}
-      )
-  </insert>
   <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TTag">
     update t_tag
     set pid = #{pid,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR}
+      name = #{name,jdbcType=VARCHAR},
+      description = #{description}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, pid, name
+    select id, pid, name,description
     from t_tag
     where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, pid, name
-    from t_tag
   </select>
 </mapper>

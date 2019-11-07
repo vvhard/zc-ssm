@@ -3,34 +3,24 @@
 <mapper namespace="zc.manager.dao.TUserRoleMapper">
   <resultMap id="BaseResultMap" type="zc.commons.pojo.TUserRole">
     <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="userid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="roleid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+  <insert id="insert" parameterType="zc.commons.pojo.TUserRole">
+    insert into t_user_role (id, userid, roleid, 
+      description)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, userid, roleid, description
+    from t_user_role
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_user_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="zc.commons.pojo.TUserRole">
-    insert into t_user_role (id, userid, roleid
-      )
-    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}
-      )
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TUserRole">
-    update t_user_role
-    set userid = #{userid,jdbcType=INTEGER},
-      roleid = #{roleid,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, userid, roleid
-    from t_user_role
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, userid, roleid
-    from t_user_role
-  </select>
 </mapper>

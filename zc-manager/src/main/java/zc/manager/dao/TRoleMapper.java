@@ -1,24 +1,15 @@
 package zc.manager.dao;
 
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
-import zc.commons.pojo.TRole;
-import zc.commons.pojo.TUserRole;
-
 import java.util.List;
 import java.util.Map;
 
-@Repository
-public interface TRoleMapper {
-    int deleteByPrimaryKey(Integer id);
+import zc.commons.pojo.TRole;
+import zc.commons.pojo.TUserRole;
 
+public interface TRoleMapper {
     int insert(TRole record);
 
-    TRole selectByPrimaryKey(Integer id);
-
     List<TRole> selectAll();
-
-    int updateByPrimaryKey(TRole record);
 
     List<TRole> selectAssignToUser(int id);
 
@@ -32,5 +23,9 @@ public interface TRoleMapper {
 
     int selectCountWithCondition(Map<String, Object> map);
 
-    int deleteBatch(@Param("roleid") List<Integer> roleid);
+    int deleteByPrimaryKey(int id);
+
+    int deleteBatch(List<Integer> list);
+
+    TRole selectByPrimaryKey(int id);
 }

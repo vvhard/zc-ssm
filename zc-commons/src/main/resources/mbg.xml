@@ -20,21 +20,21 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/zc?useUnicode=true&amp;useSSL=false&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8"
                         userId="root"
-                        password="admin_root">
+                        password="admin">
         </jdbcConnection>
         <!--控制生成实体类-->
-        <javaModelGenerator targetPackage="zc.commons.pojo" targetProject="parent/commons/src/main/java">
+        <javaModelGenerator targetPackage="zc.commons.pojo" targetProject="zc-commons/src/main/java">
             <property name="constructorBased" value="true"/>
             <!--对结果进行去除空格-->
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="mapper" targetProject="parent/manager/src/main/resources">
+        <sqlMapGenerator targetPackage="mapper" targetProject="zc-manager/src/main/resources">
             <property name="enableSubPackages" value="true"></property>
             
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="zc.manager.dao" targetProject="parent/manager/src/main/java"/>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="zc.manager.dao" targetProject="zc-manager/src/main/java"/>
 
         <!--
         <table schema="root" tableName="" domainObjectName="">
@@ -66,5 +66,10 @@
             <table schema="root" tableName="t_account_type_cert" domainObjectName="TAccountTypeCert"></table>
             <table schema="root" tableName="t_token" domainObjectName="TToken"></table>
             -->
+        <table schema="root" tableName="t_cert" domainObjectName="TCert"></table>
+        <table schema="root" tableName="t_role" domainObjectName="TRole"></table>
+        <table schema="root" tableName="t_tag" domainObjectName="TTag"></table>
+        <table schema="root" tableName="t_user_role" domainObjectName="TUserRole"></table>
+        <table schema="root" tableName="t_token" domainObjectName="TToken"></table>
         </context>
     </generatorConfiguration>
