@@ -148,7 +148,7 @@
         }
         $.ajax({
             type : "POST",
-            url : "${ctx}/serviceman/project/asyncRequestData",
+            url : "${ctx}/serviceman/type/asyncRequestData",
             data : jsonData,
             beforeSend : function() {
                 loadingIndex = layer.msg("处理中", {icon : 16});
@@ -226,7 +226,7 @@
             // 删除信息
             $.ajax({
                 type : "POST",
-                url : "${ctx}/serviceman/project/delete",
+                url : "${ctx}/serviceman/type/delete",
                 data : {
                     id : typeid
                 },
@@ -266,7 +266,7 @@
                 // 删除信息
                 $.ajax({
                     type : "POST",
-                    url : "${ctx}/serviceman/project/deleteBatch",
+                    url : "${ctx}/serviceman/type/deleteBatch",
                     data : $("#typeForm").serialize(), // 元素属性必须使用name
                     success : function(result) {
                         if (result.success) {

@@ -18,7 +18,7 @@ import java.util.List;
  * 项目资质管理
  */
 @Controller
-@RequestMapping("/serviceman/type")
+@RequestMapping("/serviceman/category")
 public class TypeController {
     @Autowired
     private CertService certServiceImpl;

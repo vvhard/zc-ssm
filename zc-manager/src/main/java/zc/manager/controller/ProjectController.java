@@ -13,8 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 项目分类，类型
+ */
 @Controller
-@RequestMapping("/serviceman/project")
+@RequestMapping("/serviceman/type")
 public class ProjectController {
     @Autowired
     private TypeService typeServiceImpl;
