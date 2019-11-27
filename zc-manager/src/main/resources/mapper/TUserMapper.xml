@@ -15,7 +15,7 @@
     delete from t_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="zc.commons.pojo.TUser">
+  <insert id="insert" parameterType="zc.commons.pojo.TUser" useGeneratedKeys="true">
     insert into t_user (id, loginacct, userpswd, 
       username, email, createtime
       )
@@ -31,6 +31,13 @@
       email = #{email,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByLoginAcct">
+    update t_user
+    set
+      username = #{username},
+      email = #{email}
+    where loginacct = #{loginacct}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, loginacct, userpswd, username, email, createtime

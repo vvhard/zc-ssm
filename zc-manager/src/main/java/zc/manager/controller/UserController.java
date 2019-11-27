@@ -1,5 +1,6 @@
 package zc.manager.controller;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -146,6 +147,36 @@ public class UserController {
             result.setSuccess(true);
         } catch (Exception e) {
             e.printStackTrace();
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/add")
+    public Object add(String loginacct,String username,String email){
+        AjaxResult result = new AjaxResult();
+       TUser user  = new TUser();
+       user.setLoginacct(loginacct);
+       user.setUsername(username);
+        user.setEmail(email);
+        try{
+            userServiceImpl.addUser(user);
+            result.setSuccess(true);
+        }catch (Exception e){
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/update")
+    public Object update(String loginacct,String username,String email){
+        AjaxResult result = new AjaxResult();
+        try {
+            userServiceImpl.updateUser(loginacct,username,email);
+            result.setSuccess(true);
+        }catch (Exception e){
             result.setSuccess(false);
         }
         return result;

@@ -14,4 +14,8 @@ public interface UserService {
     int deleteUserBatch(int[] userid);
 
     TUser getOne(int id);
+
+    void addUser(TUser user);
+
+    void updateUser(String loginacct, String username, String email);
 }

@@ -3,12 +3,13 @@ package zc.manager.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import zc.commons.pojo.TUser;
+import zc.commons.util.MD5Util;
 import zc.manager.dao.TUserMapper;
 import zc.manager.service.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,5 +44,20 @@ public class UserServiceImpl implements UserService {
     public TUser getOne(int id) {
 
         return userMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void addUser(TUser user) {
+        String encryptionPassword = MD5Util.digest32("123456"); // 初始密码默认为123456
+        user.setUserpswd(encryptionPassword);
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        user.setCreatetime(format.format(date));
+        userMapper.insert(user);
+    }
+
+    @Override
+    public void updateUser(String loginacct, String username, String email) {
+        userMapper.updateByLoginAcct(loginacct,username,email);
     }
 }

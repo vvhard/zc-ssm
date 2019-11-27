@@ -29,4 +29,6 @@ public interface TUserMapper {
     int deleteBatchByUserId(@Param("userid") List<Integer> userid);
 
     int deleteByUserId(int userid);
+
+    void updateByLoginAcct(@Param("loginacct")String loginacct, @Param("username")String username,@Param("email") String email);
 }

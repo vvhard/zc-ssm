@@ -89,7 +89,6 @@
                 <h3 class="modal-title" style="text-align: center">添加用户</h3>
             </div>
             <div class="modal-body">
-                在这里添加一些文本
             </div>
             <div class="modal-footer" style="text-align: center">
 
@@ -223,6 +222,53 @@
         }); // ajax
     } // asyncReq
 
+
+    function add(){
+        $.ajax({
+           type:"POST",
+            url:"${ctx}/user/add",
+            data:$("#addForm").serialize(),
+            success:function(result){
+                if(result.success){
+                    layer.msg("新增成功",{time:1500,icon:6},function(){
+                        // 回调函数做页面跳转,跳转到列表
+                        asyncRequesyData(1);
+                        $("#my_modal").modal("hide");
+                    });
+                }else{
+                    layer.msg("新增失败", {
+                        time : 2000,
+                        icon : 5,
+                        shift : 6
+                    }, function() {});
+                }
+            } // success
+
+        }); // ajax
+    }
+    function update(){
+        $.ajax({
+            type:"POST",
+            url:"${ctx}/user/update",
+            data:$("#editForm").serialize(),
+            success:function (result) {
+                if(result.success){
+                    layer.msg("修改成功",{time:1500,icon:6},function(){
+                        asyncRequesyData(1);
+                        $("#my_modal").modal("hide");
+                    });
+                }else{
+                    layer.msg("修改失败，请重试", {
+                        time : 2000,
+                        icon : 5,
+                        shift : 6
+                    }, function() {});
+                }
+            } //success
+
+
+        });// ajax
+    }
     function del(userid,loginacct){
         layer.confirm("是否删除用户【" + loginacct + "】信息?", {
             icon : 3,
@@ -296,7 +342,8 @@
     }
     function addModal(){
         $(".modal-title").empty().text("用户添加");
-        var body = '<div class="form-group">'
+        var body ='<form id="addForm">'
+            + '<div class="form-group">'
             +'<label for="exampleInputPassword1">登陆账号</label>'
             +'<input type="text" class="form-control" id="loginacct" name="loginacct" placeholder="请输入登陆账号">'
             +'<i style="color:red;" class="errorinfo"></i>'
@@ -310,9 +357,10 @@
             +'<label for="exampleInputEmail1">邮箱地址</label>'
             +'<input type="email" class="form-control" id="email" name="email" placeholder="请输入邮箱地址">'
             +'<i style="color:red;" class="errorinfo"></i>'
-            +'</div>';
+            +'</div>'
+            +'</form>';
         $(".modal-body").empty().html(body);
-        var footer = '<button type="button" id="insertBtn" class="btn btn-success">'
+        var footer = '<button type="button" id="insertBtn" onclick="add()" class="btn btn-success">'
             +'<i class="glyphicon glyphicon-plus"></i> 新增'
             +'</button>'
             +'<button type="reset" class="btn btn-danger">'
@@ -322,7 +370,6 @@
         $(".modal-footer").empty().html(footer);
     }
     function assignModal(userid){
-
         var assign;
         var unassign;
         var ass_str;
@@ -367,14 +414,6 @@
                         +'</div>'
                         +'</form>';
                     $(".modal-body").empty().html(body);
-                    var footer =
-                        '<button type="button" id="modifyBtn" class="btn btn-success">'
-                        +'<i class="glyphicon glyphicon-plus"></i> 完成'
-                        +'</button>'
-                        + '<button type="reset" class="btn btn-danger">'
-                        +'<i class="glyphicon glyphicon-refresh">' +  '</i> 重置'
-                        +'</button>';
-                    $(".modal-footer").empty().html(footer);
                 }else {
                     layer.msg("请重试", {
                         time : 2000,
@@ -388,23 +427,24 @@
     }
     function editModal(acct,username,email){
         $(".modal-title").empty().text("用户修改");
-        var body = '<div class="form-group">'+
-            '<label for="exampleInputPassword1">登陆账号</label>' +
-            '<input type="text" class="form-control" id="loginacct" name="loginacct" value="' +acct + '">' +
-            '<i style="color:red;" class="errorinfo"></i>' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="exampleInputPassword1">用户名称</label>' +
-            '<input type="text" class="form-control" id="username" name="username" value value="' +username + '">' +
-            '<i style="color:red;" class="errorinfo"></i>' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="exampleInputEmail1">邮箱地址</label>' +
-            '<input type="email" class="form-control" id="email" name="email" value="' + email+'">' +
-            '<i style="color:red;" class="errorinfo"></i>' +
-            '</div>';
+        var body = '<form id="editForm">'
+            +'<div class="form-group">'
+            +'<label for="exampleInputPassword1">登陆账号</label>'
+            +'<input type="text" class="form-control" readonly id="loginacct" name="loginacct" value="' +acct + '">'
+            +'<i style="color:red;" class="errorinfo"></i>'
+            +'<div class="form-group">'
+            +'<label for="exampleInputPassword1">用户名称</label>'
+            +'<input type="text" class="form-control" id="username" name="username" value="' +username + '">'
+            +'<i style="color:red;" class="errorinfo"></i>'
+            +'</div>'
+            +'<div class="form-group">'
+            +'<label for="exampleInputEmail1">邮箱地址</label>'
+            +'<input type="email" class="form-control" id="email" name="email" value="' + email+'">'
+            +'<i style="color:red;" class="errorinfo"></i>'
+            +'</div>'
+            +'</form>';
         $(".modal-body").empty().html(body);
-        var footer = '<button type="button" id="modifyBtn" class="btn btn-success">' +
+        var footer = '<button type="button" id="modifyBtn" onclick="update()" class="btn btn-success">' +
             '<i class="glyphicon glyphicon-plus"></i> 修改' +
             '</button>' +
             '<button type="reset" class="btn btn-danger">' +
@@ -455,6 +495,7 @@
             });
         }
     }
+
 </script>
 </body>
 </html>
