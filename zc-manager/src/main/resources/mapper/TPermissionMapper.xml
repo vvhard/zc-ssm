@@ -15,8 +15,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="zc.commons.pojo.TPermission">
-    insert into t_permission (id, pid, name, 
-      icon, url)
+    insert into t_permission (id, pid, name,icon, url)
     values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
   </insert>
@@ -26,6 +25,20 @@
       name = #{name,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateById">
+    update t_permission
+    set
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+       icon = #{icon,jdbcType=VARCHAR},
+     </if>
+      <if test="url != null">
+       url = #{url,jdbcType=VARCHAR}
+      </if>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

@@ -77,12 +77,15 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3 class="modal-title" style="text-align: center"></h3>
             </div>
-            <div class="modal-body">
-                在这里添加一些文本
-            </div>
-            <div class="modal-footer" style="text-align: center">
+            <form id="modalForm" role="form">
+                <div class="modal-body">
 
-            </div>
+                </div>
+                <div class="modal-footer" style="text-align: center">
+
+                </div>
+            </form>
+
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
@@ -120,6 +123,10 @@
                     url : "haha" // 不使用url属性
                 }
             },
+            // async:{
+            //     enable: true
+            // },
+
             view : {
                 //自定义显示的效果
                 addDiyDom : function(treeId, treeNode) { // 用于在节点上固定显示用户自定义控件
@@ -201,62 +208,46 @@
             $.fn.zTree.init($("#permissionTree"), setting,nodes);
         })
     }
-    function addModal(pid){
-        $(".modal-title").empty().text("许可添加");
-        var body = '<form id="pForm" role="form">'
-            +'<div class="form-group">'
-                +'<label >许可名称</label>'
-                +'<input type="text" class="form-control" id="permissionname" placeholder="请输入许可名称" pidVal="">'
-            +'</div>'
-            +'<div class="form-group">'
-                +'<label>链接地址</label>'
-                +'<input type="text" class="form-control" id="url" placeholder="请输入链接地址">'
-            +'</div>'
-            +'</form>';
-        $(".modal-body").empty().html(body);
-        var footer = '<button type="button" id="insertBtn" class="btn btn-success">'
-                +'<i class="glyphicon glyphicon-plus"></i> 新增'
-            +'</button>'
-            +'<button type="reset" class="btn btn-danger">'
-                +'<i class="glyphicon glyphicon-refresh"></i> 重置'
-            +'</button>';
-        $(".modal-footer").empty().html(footer);
-    }
-    function editModal(id){
-        // 通过ajax获取
+    function update(){
         $.ajax({
-            type:'POST',
-            url:"${ctx}/serviceman/tag/getDetail",
-            data:{id:id},
+            type:"POST",
+            url:"${ctx}/perm/update",
+            data:$("#modalForm").serialize(),
+            cache: false,
             success:function(result){
                 if(result.success){
-                    var p = result.data;
-                    $(".modal-title").empty().text("许可修改");
-                    var body = '<form id="pForm" role="form">'
-                        +'<div class="form-group">'
-                        +'<label for="exampleInputPassword1">许可名称</label>'
-                        +'<input type="text" class="form-control" value=" '+p.name+'" id="permissionname" placeholder="请输入许可名称">'
-                        +'</div>'
-                        +'<div class="form-group">'
-                        +'<label for="exampleInputPassword1">链接地址</label>'
-                        +'<input type="text" class="form-control" value="'+p.description+'" id="url" placeholder="请输入链接地址">'
-                        +'</div>'
-                        +'</form>';
-                    $(".modal-body").empty().html(body);
-                    var footer = '<button type="button" id="modifyBtn" class="btn btn-success">' +
-                        '<i class="glyphicon glyphicon-plus"></i> 修改' +
-                        '</button>' +
-                        '<button type="reset" class="btn btn-danger">' +
-                        '<i class="glyphicon glyphicon-refresh">' +
-                        '</i> 重置' +
-                        '</button>';
-                    $(".modal-footer").empty().html(footer);
+                    layer.msg("更新成功",{time:1500,icon:6},function(){
+                        $("#my_modal").modal("hide");
+                        initPermissionTree(); // 完成后要先重新加载数据，才能刷新出新的树
+                        var treeObj = $.fn.zTree.getZTreeObj("permissionTree");
+                        treeObj.reAsyncChildNodes(null, "refresh");// 刷新属性许可树
+                    });
+                }else{
+                    layer.msg("更新失败",{time:1500,icon:5,shift:6},function(){
+                    });
                 }
-            }
-
-
-        })
-
+            } // success
+        }); // ajax
+    }
+    function add(){
+        $.ajax({
+            type:"POST",
+            url:"${ctx}/perm/addPermission",
+            data:$("#modalForm").serialize(),
+            success:function(result){
+                if(result.success){
+                    layer.msg("更新成功",{time:1500,icon:6},function(){
+                        $("#my_modal").modal("hide");
+                        initPermissionTree();
+                        var treeObj = $.fn.zTree.getZTreeObj("permissionTree");
+                        treeObj.reAsyncChildNodes(null, "refresh");// 属性许可树
+                    });
+                }else{
+                    layer.msg("更新失败",{time:1500,icon:5,shift:6},function(){
+                    });
+                }
+            } // success
+        }); // ajax
     }
     function deleteNode(id){
         layer.confirm("是否删除",{icon:3,title:'提示'},
@@ -268,8 +259,9 @@
                     success:function(result){
                         if(result.success){
                             layer.msg("删除成功",{time:2000,icon:6},function(){
+                                initPermissionTree();
                                 var treeObj = $.fn.zTree.getZTreeObj("permissionTree");
-                                treeObj.reAsyncChildNodes(null, "refresh");// 属性许可树
+                                 treeObj.reAsyncChildNodes(null, "refresh");
                             });
 
                         }else{
@@ -281,6 +273,71 @@
             },
             function(cindex){layer.close(cindex)})
     }
+    function addModal(pid){
+        $(".modal-title").empty().text("许可添加");
+        var body = '<div class="form-group">'
+                +'<label >许可名称</label>'
+                +'<input type="hidden" class="form-control" name="pid" id="pid" value="'+pid+'">'
+                +'<input type="text" class="form-control" name="permName" id="permName" placeholder="请输入许可名称">'
+            +'</div>'
+            +'<div class="form-group">'
+                +'<label>链接地址</label>'
+                +'<input type="text" class="form-control" name="permUrl" id="permUrl" placeholder="请输入链接地址">'
+            +'</div>'
+            +'<div class="form-group">'
+                +'<label>图标样式</label>'
+                +'<input type="text" class="form-control" name="permIcon" id="permIcon" placeholder="请输入图标样式">'
+            +'</div>';
+        $(".modal-body").empty().html(body);
+        var footer = '<button type="button" id="insertBtn" onclick="add()" class="btn btn-success">'
+                +'<i class="glyphicon glyphicon-plus"></i> 新增'
+            +'</button>'
+            +'<button type="reset" class="btn btn-danger">'
+                +'<i class="glyphicon glyphicon-refresh"></i> 重置'
+            +'</button>';
+        $(".modal-footer").empty().html(footer);
+    }
+    function editModal(permId){
+        // 通过ajax获取
+        $.ajax({
+            type:'POST',
+            url:"${ctx}/perm/edit",
+            data:{id:permId},
+            success:function(result){
+                if(result.success){
+                    var p = result.data;
+                    var name = p.name==null?"":p.name;
+                    var url = p.url==null?"":p.url;
+                    var icon = p.icon==null?"":p.icon;
+                    $(".modal-title").empty().text("许可修改");
+                    var body = '<div class="form-group">'
+                        +'<label for="exampleInputPassword1">许可名称</label>'
+                        +'<input type="hidden" class="form-control" name="permId" id="permId" value="'+permId+'">'
+                        +'<input type="text" class="form-control" value=" '+name+'" name="permName" id="permName">'
+                        +'</div>'
+                        +'<div class="form-group">'
+                        +'<label for="exampleInputPassword1">链接地址</label>'
+                        +'<input type="text" class="form-control" value="'+url+'" name="permUrl" id="permUrl">'
+                        +'<label for="exampleInputPassword1">图标</label>'
+                        +'<input type="text" class="form-control" value="'+icon+'" name="permIcon" id="permIcon">'
+                        +'</div>';
+                    $(".modal-body").empty().html(body);
+                    var footer = '<button type="button" id="modifyBtn" onclick="update()" class="btn btn-success">' +
+                        '<i class="glyphicon glyphicon-plus"></i> 修改' +
+                        '</button>' +
+                        '<button type="reset" class="btn btn-danger">' +
+                        '<i class="glyphicon glyphicon-refresh">' +
+                        '</i> 重置' +
+                        '</button>';
+                    $(".modal-footer").empty().html(footer);
+                }else{
+                    $(".modal-body").empty().html("<label>数据获取失败，请重试</label>");
+                }
+            }
+        })
+
+    }
+
 </script>
 <%pageContext.setAttribute("curUrl", "permission/perm/list"); %>
 </body>

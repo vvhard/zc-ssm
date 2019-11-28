@@ -3,6 +3,7 @@ package zc.manager.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import zc.commons.pojo.TPermission;
+import zc.commons.pojo.TRole;
 import zc.commons.pojo.TUser;
 import zc.manager.dao.TPermissionMapper;
 import zc.manager.service.PermissionService;
@@ -54,6 +55,11 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public int deletePermission(int id) {
         return permissionMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updatePermission(Integer id, String name, String url, String icon) {
+        return permissionMapper.updateById(id,name,url,icon);
     }
 
     private List<TPermission> genWithStructure(List<TPermission> permissions){

@@ -23,24 +23,10 @@ public class PermissionController {
         return permissionServiceImpl.getAllPermission();
     }
     @ResponseBody
-    @RequestMapping("/edit")
-    public Object edit(int id){
-        AjaxResult result  = new AjaxResult();
-        TPermission p = permissionServiceImpl.getOneById(id);
-        if(p != null){
-            result.setData(p);
-            result.setSuccess(true);
-        }else{
-            result.setSuccess(false);
-        }
-        return result;
-    }
-    @ResponseBody
     @RequestMapping("/save")
     public Object savePermission(TPermission p) {
         AjaxResult result = new AjaxResult();
         // 带图标的添加以后做
-
         if(permissionServiceImpl.updatePermission(p) == 1) {
             result.setSuccess(true);
         }else
@@ -50,13 +36,14 @@ public class PermissionController {
 
     @ResponseBody
     @RequestMapping("/addPermission")
-    public Object addPermission(String name,String url,int pid) {
+    public Object addPermission(Integer pid,String permName,String permUrl,String permIcon) {
         AjaxResult result = new AjaxResult();
         // 带图标的添加以后做
         TPermission p = new TPermission();
-        p.setName(name);
-        p.setUrl(url);
+        p.setName(permName);
+        p.setUrl(permUrl);
         p.setPid(pid);
+        p.setIcon(permIcon);
         if(permissionServiceImpl.addPermission(p) == 1) {
             result.setSuccess(true);
         }else
@@ -69,6 +56,35 @@ public class PermissionController {
         AjaxResult result  = new AjaxResult();
         // 注意外键
         if(permissionServiceImpl.deletePermission(id) == 1) {
+            result.setSuccess(true);
+        }else
+            result.setSuccess(false);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/edit")
+    public Object getDetail(Integer id){
+        AjaxResult result = new AjaxResult();
+        try{
+            TPermission permission = permissionServiceImpl.getOneById(id);
+            if(permission != null){
+                result.setSuccess(true);
+                result.setData(permission);
+            }else{
+                result.setSuccess(false);
+            }
+        }catch (Exception e){
+            result.setSuccess(false);
+        }
+        return result;
+    }
+    @ResponseBody
+    @RequestMapping("/update")
+    public Object savePermission(Integer permId,String permName,String permUrl,String permIcon) {
+        AjaxResult result = new AjaxResult();
+        // 带图标的添加以后做
+        if(permissionServiceImpl.updatePermission(permId,permName,permUrl,permIcon) == 1) {
             result.setSuccess(true);
         }else
             result.setSuccess(false);

@@ -34,6 +34,7 @@
         <fastjson.verion>1.2.58</fastjson.verion>
         <servlet.version>3.1.0</servlet.version>
         <jsp.version>2.2</jsp.version>
+        <log4j.version>1.2.17</log4j.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -226,6 +227,11 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>2.9.8</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
             </dependency>
 
         </dependencies>

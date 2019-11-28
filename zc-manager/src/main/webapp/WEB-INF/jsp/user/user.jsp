@@ -363,11 +363,21 @@
         var footer = '<button type="button" id="insertBtn" onclick="add()" class="btn btn-success">'
             +'<i class="glyphicon glyphicon-plus"></i> 新增'
             +'</button>'
-            +'<button type="reset" class="btn btn-danger">'
-            +'<i class="glyphicon glyphicon-refresh">'
+            +'<button type="reset" class="btn btn-danger" onclick="reset()" '
+            +'lass="glyphicon glyphicon-refresh">'
             +'</i> 重置'
             +'</button>';
         $(".modal-footer").empty().html(footer);
+    }
+    function reset(){
+        // 不要用$("#addForm").reset();
+        if(document.getElementById("addForm") != null){
+            document.getElementById("addForm").reset();
+        }
+        if(document.getElementById("editForm") != null){
+            document.getElementById("editForm").reset();
+        }
+
     }
     function assignModal(userid){
         var assign;
@@ -447,8 +457,8 @@
         var footer = '<button type="button" id="modifyBtn" onclick="update()" class="btn btn-success">' +
             '<i class="glyphicon glyphicon-plus"></i> 修改' +
             '</button>' +
-            '<button type="reset" class="btn btn-danger">' +
-            '<i class="glyphicon glyphicon-refresh">' +
+            '<button type="reset" class="btn btn-danger" onclick="reset()" ' +
+            'lass="glyphicon glyphicon-refresh">' +
             '</i> 重置' +
             '</button>';
         $(".modal-footer").empty().html(footer);

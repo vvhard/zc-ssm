@@ -63,4 +63,14 @@ public class RoleServiceImpl implements RoleService {
     public TRole getRoleById(int id) {
         return roleMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public void addRole(TRole role) {
+        roleMapper.insert(role);
+    }
+
+    @Override
+    public void updateRoleById(Integer roleid, String name, String description) {
+        roleMapper.updateByPrimaryKey(roleid,name,description);
+    }
 }

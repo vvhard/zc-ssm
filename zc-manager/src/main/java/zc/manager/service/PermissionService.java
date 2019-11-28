@@ -1,6 +1,7 @@
 package zc.manager.service;
 
 import zc.commons.pojo.TPermission;
+import zc.commons.pojo.TRole;
 import zc.commons.pojo.TUser;
 
 import java.util.List;
@@ -19,4 +20,7 @@ public interface PermissionService {
     int addPermission(TPermission p);
 
     int deletePermission(int id);
+
+    int updatePermission(Integer id, String name, String url, String icon);
+
 }

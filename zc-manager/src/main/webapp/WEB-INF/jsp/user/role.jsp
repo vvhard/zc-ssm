@@ -88,12 +88,15 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3 class="modal-title" style="text-align: center"></h3>
             </div>
-            <div class="modal-body">
-                在这里添加一些文本
-            </div>
-            <div class="modal-footer" style="text-align: center">
+            <form id="modalForm">
+                <div class="modal-body">
+                    在这里添加一些文本
+                </div>
+                <div class="modal-footer" style="text-align: center">
 
-            </div>
+                </div>
+            </form>
+
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
@@ -224,7 +227,40 @@
             } // success
         }); // ajax
     } // asyncReq
-
+    function add(){
+        $.ajax({
+           type:"POST",
+           url:"${ctx}/role/add",
+           data:$("#modalForm").serialize(),
+           success:function(result){
+               if(result.success){
+                   layer.msg("新增成功",{time:1500,icon:6},function(){
+                       asyncRequesyData(1);
+                       $("#my_modal").modal("hide");
+                   });// layer
+               }else{
+                   layer.msg("新增失败",{time:1500,icon:5,shift:6},function(){});
+               }
+           } // success
+        });//ajax
+    }
+    function update(){
+        $.ajax({
+            type:"POST",
+            url:"${ctx}/role/update",
+            data:$("#modalForm").serialize(),
+            success:function(result){
+                if(result.success){
+                    layer.msg("更新成功",{time:1500,icon:6},function(){
+                        asyncRequesyData(1);
+                        $("#my_modal").modal("hide");
+                    });// layer
+                }else{
+                    layer.msg("更新失败",{time:1500,icon:5,shift:6},function(){});
+                }
+            } // success
+        });//ajax
+    }
     function del(roleid,name){
         layer.confirm("是否删除角色【" + name + "】信息?", {
             icon : 3,
@@ -309,7 +345,7 @@
             +'<i style="color:red;" class="errorinfo"></i>'
             +'</div>';
         $(".modal-body").empty().html(body);
-        var footer = '<button type="button" id="insertBtn" class="btn btn-success">'
+        var footer = '<button type="button" id="insertBtn" class="btn btn-success" onclick="add()">'
             +'<i class="glyphicon glyphicon-plus"></i> 新增'
             +'</button>'
             +'<button type="reset" class="btn btn-danger">'
@@ -453,29 +489,29 @@
     }
     function editModal(roleid,name,description){
         $(".modal-title").empty().text("用户修改");
-        var body = '<div class="form-group">'+
-            '<label for="exampleInputPassword1">角色名称</label>' +
-            '<input type="text" class="form-control" id="name" name="name" value="' +name + '">' +
-            '<i style="color:red;" class="errorinfo"></i>' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="exampleInputPassword1">角色描述</label>' +
-            '<input type="text" class="form-control" id="description" name="description" value="' +description + '">' +
-            '<i style="color:red;" class="errorinfo"></i>' +
-            '</div>';
+        var body = '<div class="form-group">'
+            + '<label for="exampleInputPassword1">角色名称</label>'
+            + '<input type="hidden" class="form-control" id="roleid" name="roleid" value="' +roleid + '">'
+            + '<input type="text" class="form-control" id="name" name="name" value="' +name + '">'
+            +'<i style="color:red;" class="errorinfo"></i>'
+            +'</div>'
+            +'<div class="form-group">'
+            +'<label for="exampleInputPassword1">角色描述</label>'
+            +'<input type="text" class="form-control" id="description" name="description" value="' +description + '">'
+            +'<i style="color:red;" class="errorinfo"></i>'
+            +'</div>';
         $(".modal-body").empty().html(body);
-        var footer = '<button type="button" id="modifyBtn" class="btn btn-success">' +
-            '<i class="glyphicon glyphicon-plus"></i> 修改' +
-            '</button>' +
-            '<button type="reset" class="btn btn-danger">' +
-            '<i class="glyphicon glyphicon-refresh">' +
-            '</i> 重置' +
-            '</button>';
+        var footer = '<button type="button" id="modifyBtn" class="btn btn-success" onclick="update()" '
+            +'lass="glyphicon glyphicon-plus"></i> 修改'
+            +'</button>'
+            +'<button type="reset" class="btn btn-danger">'
+            +'<i class="glyphicon glyphicon-refresh">'
+            +'</i> 重置'
+            + '</button>';
         $(".modal-footer").empty().html(footer);
     }
     function  assign() {
         // 获取被选中的角色
-
     }
     function unAssign(){
 

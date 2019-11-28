@@ -1,6 +1,7 @@
 package zc.manager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -129,6 +130,30 @@ public class RoleController {
         return permissionServiceImpl.getRolePermissions(roleid);
     }
 
+    @ResponseBody
+    @RequestMapping("/add")
+    public Object add(TRole role) {
+        AjaxResult result = new AjaxResult();
+        try {
+            roleServiceImpl.addRole(role);
+            result.setSuccess(true);
+        }catch (Exception e){
+            result.setSuccess(false);
+        }
+        return result;
+    }
 
+    @ResponseBody
+    @RequestMapping("/update")
+    public Object uppdate(Integer roleid,String name,String description) {
+        AjaxResult result = new AjaxResult();
+        try {
+            roleServiceImpl.updateRoleById(roleid,name,description);
+            result.setSuccess(true);
+        }catch (Exception e){
+            result.setSuccess(false);
+        }
+        return result;
+    }
     
 }

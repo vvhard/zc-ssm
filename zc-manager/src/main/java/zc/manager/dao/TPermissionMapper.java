@@ -1,5 +1,6 @@
 package zc.manager.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import zc.commons.pojo.TPermission;
 
@@ -19,4 +20,6 @@ public interface TPermissionMapper {
     List<TPermission> selectByUser(String loginacct);
 
     List<TPermission> selectRolePermissions(int roleid);
+
+    int updateById(@Param("id")Integer id,@Param("name") String name,@Param("url") String url, @Param("icon")String icon);
 }

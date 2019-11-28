@@ -24,4 +24,8 @@ public interface RoleService {
     int deleteRoleBatch(int[] roleid);
 
     TRole getRoleById(int id);
+
+    void addRole(TRole role);
+
+    void updateRoleById(Integer roleid, String name, String description);
 }
