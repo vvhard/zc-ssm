@@ -54,4 +54,69 @@ public class ProjectController {
         result.setSuccess(true);
         return result;
     }
+    @ResponseBody
+    @RequestMapping("/add")
+    public Object add(TType type){
+        AjaxResult result = new AjaxResult();
+        if(type.getName() == null || "".equals(type.getName().trim())){
+            result.setMsg("名字为空");
+            result.setSuccess(false);
+            return result;
+        }
+        try{
+            typeServiceImpl.addType(type);
+            result.setSuccess(true);
+        }catch (Exception e){
+            result.setMsg(e.toString());
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/update")
+    public Object update(TType type){
+        AjaxResult result = new AjaxResult();
+        if(type.getName() == null || "".equals(type.getName().trim())){
+            result.setMsg("名字为空");
+            result.setSuccess(false);
+            return result;
+        }
+        try{
+            typeServiceImpl.updateType(type);
+            result.setSuccess(true);
+        }catch (Exception e){
+            result.setMsg(e.toString());
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/del")
+    public Object del(Integer id){
+        AjaxResult result = new AjaxResult();
+        try{
+         typeServiceImpl.delType(id);
+         result.setSuccess(true);
+        }catch (Exception e){
+            result.setMsg(e.toString());
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/delBatch")
+    public Object delBatch(Integer[] typeid){
+        AjaxResult result = new AjaxResult();
+        try{
+            typeServiceImpl.delTypeBatch(typeid);
+            result.setSuccess(true);
+        }catch (Exception e){
+            result.setMsg(e.toString());
+            result.setSuccess(false);
+        }
+        return result;
+    }
 }

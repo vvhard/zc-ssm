@@ -217,7 +217,47 @@
             } // success
         }); // ajax
     } // asyncReq
+    function addType(){
+        $.ajax({
+            type:"POST",
+            url:"${ctx}/serviceman/type/add",
+            data:$("#addForm").serialize(),
+            success:function(result){
+                if(result.success){
+                    layer.msg("添加成功",{icon:6,time:1500},function(){
+                        asyncRequesyData(1);
+                        $("#my_modal").modal("hide");
+                    });
+                }else{
+                    layer.msg("添加失败",{icon:5,time:1500,shift:6},function(){
 
+                    });
+                }
+            }
+
+        }); // ajax
+    } // add()
+
+    function update() {
+        $.ajax({
+            type:"POST",
+            url:"${ctx}/serviceman/type/update",
+            data:$("#editForm").serialize(),
+            success:function (result) {
+                if(result.success){
+                    layer.msg("修改成功",{icon:6,time:1500},function () {
+                        asyncRequesyData(1);
+                        $("#my_modal").modal("hide");
+                    })
+                }else{
+                    layer.msg("修改失败",{icon:5,time:1500,shift:6},function(){
+                        $("#my_modal").modal("hide");
+                    })
+                }
+            } // success
+
+        }) // ajax
+    } // update
     function del(typeid,name){
         layer.confirm("是否删除分类【" + name + "】信息?", {
             icon : 3,
@@ -226,7 +266,7 @@
             // 删除信息
             $.ajax({
                 type : "POST",
-                url : "${ctx}/serviceman/type/delete",
+                url : "${ctx}/serviceman/type/del",
                 data : {
                     id : typeid
                 },
@@ -251,7 +291,7 @@
     }
     function delBatch(){
         // 选中的checkbox
-        var boxes = $("#certData :checkbox:checked");
+        var boxes = $("#typeData :checkbox:checked");
         if (boxes.length == 0) {
             layer.msg("请选择删除的分类", {
                 time : 2000,
@@ -266,7 +306,7 @@
                 // 删除信息
                 $.ajax({
                     type : "POST",
-                    url : "${ctx}/serviceman/type/deleteBatch",
+                    url : "${ctx}/serviceman/type/delBatch",
                     data : $("#typeForm").serialize(), // 元素属性必须使用name
                     success : function(result) {
                         if (result.success) {
@@ -289,10 +329,22 @@
             }); // layer
         }
     }
+
+    function reset(){
+        // 不要用$("#addForm").reset();
+        if(document.getElementById("addForm") != null){
+            document.getElementById("addForm").reset();
+        }
+        if(document.getElementById("editForm") != null){
+            document.getElementById("editForm").reset();
+        }
+
+    }
     function addModal(){
-        $(".modal-title").empty().text("资质添加");
-        var body = '<div class="form-group">'
-            +'<label for="exampleInputPassword1">资质名字</label>'
+        $(".modal-title").empty().text("项目类型添加");
+        var body = '<form id="addForm">'
+            +'<div class="form-group">'
+            +'<label for="exampleInputPassword1">分类名字</label>'
             +'<input type="text" class="form-control" id="name" name="name" placeholder="分类名字">'
             +'<i style="color:red;" class="errorinfo"></i>'
             +' </div>'
@@ -300,12 +352,13 @@
             +'<label for="exampleInputPassword1">简介描述</label>'
             +'<input type="text" class="form-control" id="description" name="description" placeholder="简介描述">'
             +'<i style="color:red;" class="errorinfo"></i>'
-            +'</div>';
+            +'</div>'
+            +'</form>';
         $(".modal-body").empty().html(body);
-        var footer = '<button type="button" id="insertBtn" class="btn btn-success">'
+        var footer = '<button type="button" id="insertBtn" class="btn btn-success" onclick="addType()">'
             +'<i class="glyphicon glyphicon-plus"></i> 新增'
             +'</button>'
-            +'<button type="reset" class="btn btn-danger">'
+            +'<button type="reset" class="btn btn-danger" onclick="reset()">'
             +'<i class="glyphicon glyphicon-refresh">'
             +'</i> 重置'
             +'</button>';
@@ -313,24 +366,27 @@
     }
     function editModal(typeid,name,description){
         $(".modal-title").empty().text("分类信息修改");
-        var body = '<div class="form-group">'+
-            '<label for="exampleInputPassword1">分类名称</label>' +
-            '<input type="text" class="form-control" id="name" name="name" value="' +name + '">' +
-            '<i style="color:red;" class="errorinfo"></i>' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="exampleInputPassword1">简介描述</label>' +
-            '<input type="text" class="form-control" id="description" name="description" value="' +description + '">' +
-            '<i style="color:red;" class="errorinfo"></i>' +
-            '</div>';
+        var body ='<form id="editForm">'
+            +'<div class="form-group">'
+            + '<input type="hidden" class="form-control" id="id" name="id" value="' +typeid + '">'
+            +'<label for="exampleInputPassword1">分类名称</label>'
+            +'<input type="text" class="form-control" id="name" name="name" value="' +name + '">'
+            +'<i style="color:red;" class="errorinfo"></i>'
+            +'</div>'
+            +'<div class="form-group">'
+            +'<label for="exampleInputPassword1">简介描述</label>'
+            +'<input type="text" class="form-control" id="description" name="description" value="' +description + '">'
+            +'<i style="color:red;" class="errorinfo"></i>'
+            +'</div>'
+            +'</form>';
         $(".modal-body").empty().html(body);
-        var footer = '<button type="button" id="modifyBtn" class="btn btn-success">' +
-            '<i class="glyphicon glyphicon-plus"></i> 修改' +
-            '</button>' +
-            '<button type="reset" class="btn btn-danger">' +
-            '<i class="glyphicon glyphicon-refresh">' +
-            '</i> 重置' +
-            '</button>';
+        var footer = '<button type="button" id="modifyBtn" class="btn btn-success" onclick="update()">'
+            +'<i class="glyphicon glyphicon-plus"></i> 修改'
+            +'</button>'
+            +'<button type="reset" class="btn btn-danger" onclick="reset()">'
+            +'<i class="glyphicon glyphicon-refresh">'
+            +'</i> 重置'
+            +'</button>';
         $(".modal-footer").empty().html(footer);
     }
 </script>

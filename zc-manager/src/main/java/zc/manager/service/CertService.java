@@ -11,4 +11,12 @@ public interface CertService {
     List<TCert> queryData(Map<String, Object> map);
 
     int queryUserNums(Map<String, Object> map);
+
+    void deleteById(int id);
+
+    void deleteBatch(int[] certid);
+
+    void insertCert(TCert cert);
+
+    void updateCert(TCert cert);
 }

@@ -55,13 +55,60 @@ public class CertController {
     @ResponseBody
     public Object delete(int id){
         AjaxResult result = new AjaxResult();
+        try{
+            certServiceImpl.deleteById(id);
+            result.setSuccess(true);
+        }catch (Exception e){
+            result.setSuccess(false);
+        }
         return result;
     }
 
     @RequestMapping("/deleteBatch")
     @ResponseBody
-    public Object deleteBatch(int id){
+    public Object deleteBatch(int[] certid){
         AjaxResult result = new AjaxResult();
+        try{
+            certServiceImpl.deleteBatch(certid);
+            result.setSuccess(true);
+        }catch (Exception e){
+            result.setSuccess(false);
+        }
+        return result;
+    }
+    @RequestMapping("/update")
+    @ResponseBody
+    public Object update(TCert cert){
+        AjaxResult result = new AjaxResult();
+        String certName = cert.getName();
+        if(certName == null || "".equals(certName.trim())){
+            result.setSuccess(false);
+        }else{
+            try{
+                certServiceImpl.updateCert(cert);
+                result.setSuccess(true);
+            }catch (Exception e){
+                result.setSuccess(false);
+            }
+        }
+        return result;
+    }
+
+    @RequestMapping("/add")
+    @ResponseBody
+    public Object add(TCert cert){
+        AjaxResult result = new AjaxResult();
+        String certName = cert.getName();
+        if(certName == null || "".equals(certName.trim())){
+            result.setSuccess(false);
+        }else{
+            try{
+                certServiceImpl.insertCert(cert);
+                result.setSuccess(true);
+            }catch (Exception e){
+                result.setSuccess(false);
+            }
+        }
         return result;
     }
 }

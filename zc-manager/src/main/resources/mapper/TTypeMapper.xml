@@ -12,6 +12,13 @@
     delete from t_type
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="delBatch" parameterType="list">
+    delete from t_type
+    where id in
+    <foreach collection="typeid" item="id"  open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
   <insert id="insert" parameterType="zc.commons.pojo.TType">
     insert into t_type (id, name, description
       )

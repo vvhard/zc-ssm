@@ -92,7 +92,7 @@
     function modify(acctTypeId){
         var c = acctTypeId;
         var s = "." + c + " :checkbox:checked" ;
-        var boxes = $(s);
+        var boxes = $(s); // 拼接处要进行选择的内容
         var certid = new Array();
         $.each(boxes,function(index,box){
             certid[index] = box.value; // 取得复选框的值，即资质id
@@ -107,7 +107,7 @@
         }
         $.ajax({
             type:"POST",
-            url:"${ctx}/serviceman/type/update",
+            url:"${ctx}/serviceman/category/update",
             data:{"accttypeid":acctTypeId,"certids":certid},
             // 指定参数序列化时比进行深度序列化，通过JSON.stringify()将参数作为数组传递到后台，后台不能通过获取参数名的方式获取参数，需要通过inputstream流来读取参数。
             // 如果不做traditional:true的设置，参数传递中是这样子参数名certids后面加入了[]，服务端是无法通过参数名获取参数的：
@@ -116,7 +116,7 @@
                 if (result.success) {
                     layer.msg("更新成功",{time:1500,icon:6},function(){
                         // 回调函数做页面跳转,跳转到列表
-                        window.location.href="${ctx}/serviceman/type/index";
+                        window.location.href="${ctx}/serviceman/category/index";
                     });
                 } else {
                     layer.msg("更新失败", {

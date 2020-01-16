@@ -59,7 +59,6 @@ public class TypeController {
             acctTypeServiceImpl.deleteAcctCertById(accttypeid);
         } catch (Exception e) {
             result.setSuccess(false);
-            e.printStackTrace();
             return result;
         }
         for (int certid : certids) {

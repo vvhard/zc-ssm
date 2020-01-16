@@ -22,4 +22,24 @@ public class TypeServiceImpl implements TypeService {
     public List<TType> queryData(Map<String, Object> map) {
         return typeMapper.selectWithCondition(map);
     }
+
+    @Override
+    public void addType(TType type) {
+        typeMapper.insert(type);
+    }
+
+    @Override
+    public void updateType(TType type) {
+        typeMapper.updateByPrimaryKey(type);
+    }
+
+    @Override
+    public void delType(Integer typeid) {
+        typeMapper.deleteByPrimaryKey(typeid);
+    }
+
+    @Override
+    public void delTypeBatch(Integer[] typeid) {
+        typeMapper.delBatch(typeid);
+    }
 }

@@ -1,5 +1,6 @@
 package zc.manager.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import zc.commons.pojo.TType;
 
@@ -21,4 +22,6 @@ public interface TTypeMapper {
     int selectCountWithCondition(Map<String, Object> map);
 
     List<TType> selectWithCondition(Map<String, Object> map);
+
+    void delBatch(@Param("typeid") Integer[] typeid);
 }

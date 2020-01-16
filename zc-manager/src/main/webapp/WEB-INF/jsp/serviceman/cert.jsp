@@ -253,20 +253,20 @@
         // 选中的checkbox
         var boxes = $("#certData :checkbox:checked");
         if (boxes.length == 0) {
-            layer.msg("请选择删除的角色", {
+            layer.msg("请选择删除选项", {
                 time : 2000,
                 icon : 5,
                 shift : 6
             }, function() {});
         } else {
-            layer.confirm("是否删除选中角色信息?", {
+            layer.confirm("是否删除选中内容?", {
                 icon : 3,
                 title : '提示'
             }, function(cindex) {
                 // 删除信息
                 $.ajax({
                     type : "POST",
-                    url : "${ctx}/servicemancert/deleteBatch",
+                    url : "${ctx}/serviceman/cert/deleteBatch",
                     data : $("#certForm").serialize(), // 元素属性必须使用name
                     success : function(result) {
                         if (result.success) {
@@ -289,9 +289,61 @@
             }); // layer
         }
     }
+
+    function update() {
+        $.ajax({
+            type:"POST",
+            url:"${ctx}/serviceman/cert/update",
+            data:$("#editForm").serialize(),
+            success:function (result) {
+                if(result.success){
+                    layer.msg("修改成功",{icon:6,time:1500},function () {
+                        asyncRequesyData(1);
+                        $("#my_modal").modal("hide");
+                    })
+                }else{
+                    layer.msg("修改失败",{icon:5,time:1500,shift:6},function(){
+                        $("#my_modal").modal("hide");
+                    })
+                }
+            } // success
+
+        }) // ajax
+    }
+    function addCert() {
+        $.ajax({
+            type:"POST",
+            url:"${ctx}/serviceman/cert/add",
+            data:$("#addForm").serialize(),
+            success:function (result) {
+                if(result.success){
+                    layer.msg("新增成功",{icon:6,time:1500},function () {
+                        asyncRequesyData(1);
+                        $("#my_modal").modal("hide");
+                    })
+                }else{
+                    layer.msg("新增失败",{icon:5,time:1500,shift:6},function(){
+                        // $("#my_modal").modal("hide");
+                    })
+                }
+            } // success
+
+        }) // ajax
+    }
+    function reset(){
+        // 不要用$("#addForm").reset();
+        if(document.getElementById("addForm") != null){
+            document.getElementById("addForm").reset();
+        }
+        if(document.getElementById("editForm") != null){
+            document.getElementById("editForm").reset();
+        }
+
+    }
     function addModal(){
         $(".modal-title").empty().text("资质添加");
-        var body = '<div class="form-group">'
+        var body = '<form id="addForm">'
+            +'<div class="form-group">'
             +'<label for="exampleInputPassword1">资质名字</label>'
             +'<input type="text" class="form-control" id="name" name="name" placeholder="资质名字">'
             +'<i style="color:red;" class="errorinfo"></i>'
@@ -300,34 +352,38 @@
             +'<label for="exampleInputPassword1">资质描述</label>'
             +'<input type="text" class="form-control" id="description" name="description" placeholder="资质描述">'
             +'<i style="color:red;" class="errorinfo"></i>'
-            +'</div>';
+            +'</div>'
+            +'</from>';
         $(".modal-body").empty().html(body);
-        var footer = '<button type="button" id="insertBtn" class="btn btn-success">'
+        var footer = '<button type="button" id="insertBtn" class="btn btn-success" onclick="addCert()">'
             +'<i class="glyphicon glyphicon-plus"></i> 新增'
             +'</button>'
-            +'<button type="reset" class="btn btn-danger">'
-            +'<i class="glyphicon glyphicon-refresh">'
+            +'<button type="reset" class="btn btn-danger" onclick="reset()" '
+            +'lass="glyphicon glyphicon-refresh">'
             +'</i> 重置'
             +'</button>';
         $(".modal-footer").empty().html(footer);
     }
     function editModal(certid,name,description){
         $(".modal-title").empty().text("资质修改");
-        var body = '<div class="form-group">'+
-            '<label for="exampleInputPassword1">资质名称</label>' +
-            '<input type="text" class="form-control" id="name" name="name" value="' +name + '">' +
-            '<i style="color:red;" class="errorinfo"></i>' +
-            '</div>' +
-            '<div class="form-group">' +
-            '<label for="exampleInputPassword1">资质描述</label>' +
-            '<input type="text" class="form-control" id="description" name="description" value="' +description + '">' +
-            '<i style="color:red;" class="errorinfo"></i>' +
-            '</div>';
+        var body = '<form id="editForm">'
+            + '<div class="form-group">'
+            + '<input type="hidden" class="form-control" id="id" name="id" value="' +certid + '">'
+            + '<label for="exampleInputPassword1">资质名称</label>'
+            + '<input type="text" class="form-control" id="name" name="name" value="' +name + '">'
+            + '<i style="color:red;" class="errorinfo"></i>'
+            + '</div>'
+            + '<div class="form-group">'
+            + '<label for="exampleInputPassword1">资质描述</label>'
+            + '<input type="text" class="form-control" id="description" name="description" value="' +description + '">'
+            + '<i style="color:red;" class="errorinfo"></i>'
+            + '</div>'
+            + '</form>';
         $(".modal-body").empty().html(body);
-        var footer = '<button type="button" id="modifyBtn" class="btn btn-success">' +
+        var footer = '<button type="button" id="modifyBtn" class="btn btn-success" onclick="update()">' +
             '<i class="glyphicon glyphicon-plus"></i> 修改' +
             '</button>' +
-            '<button type="reset" class="btn btn-danger">' +
+            '<button type="reset" class="btn btn-danger" onclick="reset()">' +
             '<i class="glyphicon glyphicon-refresh">' +
             '</i> 重置' +
             '</button>';
