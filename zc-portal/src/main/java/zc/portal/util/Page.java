@@ -1,4 +1,4 @@
-package zc.portal;
+package zc.portal.util;
 
 import java.util.List;
 

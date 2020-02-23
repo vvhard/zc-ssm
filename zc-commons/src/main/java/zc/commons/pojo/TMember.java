@@ -1,6 +1,6 @@
 package zc.commons.pojo;
 
-public class TMemeber {
+public class TMember {
     private Integer id;
 
     private String loginacct;
@@ -23,7 +23,7 @@ public class TMemeber {
 
     private String accttype;
 
-    public TMemeber(Integer id, String loginacct, String userpswd, String username, String tel, String email, String authstatus, String usertype, String realname, String cardnum, String accttype) {
+    public TMember(Integer id, String loginacct, String userpswd, String username, String tel, String email, String authstatus, String usertype, String realname, String cardnum, String accttype) {
         this.id = id;
         this.loginacct = loginacct;
         this.userpswd = userpswd;
@@ -37,7 +37,7 @@ public class TMemeber {
         this.accttype = accttype;
     }
 
-    public TMemeber() {
+    public TMember() {
         super();
     }
 

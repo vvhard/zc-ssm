@@ -1,8 +1,8 @@
-<%@page contentType="text/html; UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@page contentType="text/html;charset=utf-8" language="java" pageEncoding="utf-8" %>
 <!DOCTYPE html>
-<html lang="UTF-8">
+<html lang="utf-8">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
@@ -98,26 +98,7 @@
 	</style>
 </head>
 <body>
-<div class="navbar-wrapper">
-	<div class="container">
-		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="index.html" style="font-size:32px;">尚筹网-创意产品众筹平台</a>
-				</div>
-				<div id="navbar" class="navbar-collapse collapse" style="float:right;">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="login.jsp">登录</a></li>
-						<li><a href="reg.html">注册</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-
-	</div>
-</div>
-
-
+<%@include file="/WEB-INF/commons/nav_bar.jsp" %>
 <!-- Carousel
 ================================================== -->
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -235,7 +216,7 @@
 							</div>
 							<div class="col-md-3">
 								<div class="thumbnail">
-									<img alt="300x200" src="img/product-3.png" />
+									<img alt="300x200" src="${ctx}/static/img/product-3.png" />
 									<div class="caption">
 										<h3 class="break">
 											<a href="project.html">小熊猫鱼眼全景安防摄像机</a>
@@ -629,6 +610,9 @@
 	$(".thumbnail img").css("cursor", "pointer");
 	$(".thumbnail img").click(function(){
 		window.location.href = "project.html";
+	});
+	$(function(){
+		$.sess
 	});
 </script>
 </body>

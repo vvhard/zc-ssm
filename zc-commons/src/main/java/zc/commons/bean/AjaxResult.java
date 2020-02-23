@@ -1,6 +1,5 @@
-package zc.api.bean;
+package zc.commons.bean;
 
-import javax.lang.model.element.NestingKind;
 import java.util.Map;
 
 /**
@@ -9,10 +8,9 @@ import java.util.Map;
  */
 public class AjaxResult<T> {
     private int code ; // 状态码
+    private String msg ; // 返回需要的提示信息
     private T content ; // 请求内容
     private Map<String,Object> ext; //用于返回额外内容
-    private String msg ; // 返回需要的提示信息
-
     public int getCode() {
         return code;
     }

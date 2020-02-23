@@ -7,7 +7,6 @@ import zc.commons.util.MD5Util;
 import zc.manager.dao.TUserMapper;
 import zc.manager.service.UserService;
 
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.util.*;
 

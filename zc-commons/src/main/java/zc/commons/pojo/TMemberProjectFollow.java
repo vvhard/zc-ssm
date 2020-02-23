@@ -1,19 +1,19 @@
 package zc.commons.pojo;
 
-public class TMemeberProjectFollow {
+public class TMemberProjectFollow {
     private Integer id;
 
     private Integer projectid;
 
     private Integer memberid;
 
-    public TMemeberProjectFollow(Integer id, Integer projectid, Integer memberid) {
+    public TMemberProjectFollow(Integer id, Integer projectid, Integer memberid) {
         this.id = id;
         this.projectid = projectid;
         this.memberid = memberid;
     }
 
-    public TMemeberProjectFollow() {
+    public TMemberProjectFollow() {
         super();
     }
 

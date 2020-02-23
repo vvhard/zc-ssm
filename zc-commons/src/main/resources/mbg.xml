@@ -56,10 +56,10 @@
             <table schema="root" tableName="t_param" domainObjectName="TParam"></table>
             <table schema="root" tableName="t_order" domainObjectName="TOrder"></table>
             <table schema="root" tableName="t_message" domainObjectName="TMessage"></table>
-            <table schema="root" tableName="t_member_project_follow" domainObjectName="TMemeberProjectFollow"></table>
+            <table schema="root" tableName="t_member_project_follow" domainObjectName="TMemberProjectFollow"></table>
             <table schema="root" tableName="t_member_cert" domainObjectName="TMemberCert"></table>
             <table schema="root" tableName="t_member_address" domainObjectName="TMemberAddress"></table>
-            <table schema="root" tableName="t_member" domainObjectName="TMemeber"></table>
+            <table schema="root" tableName="t_member" domainObjectName="TMember"></table>
             <table schema="root" tableName="t_dictionary" domainObjectName="TDictionary"></table>
             <table schema="root" tableName="t_cert" domainObjectName="TCert"></table>
             <table schema="root" tableName="t_advertisement" domainObjectName="TAdvertisement"></table>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zc.manager.dao.TMemberMapper">
+  <resultMap id="BaseResultMap" type="zc.commons.pojo.TMember">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="loginacct" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="userpswd" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tel" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="authstatus" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="usertype" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="realname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cardnum" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="accttype" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <!--注册时，只有这几个字段信息，其他字段可在个人中心修改信息时，通过更新记录进行设置-->
+  <insert id="insert" parameterType="zc.commons.pojo.TMember" useGeneratedKeys="true" keyProperty="id">
+    insert into t_member
+        (loginacct, userpswd,username, email,authstatus,usertype)
+    values (
+      #{loginacct,jdbcType=VARCHAR},
+      #{userpswd,jdbcType=VARCHAR},
+      #{username,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR},
+      #{authstatus,jdbcType=CHAR},
+      #{usertype,jdbcType=CHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TMember">
+    update t_member
+    set loginacct = #{loginacct,jdbcType=VARCHAR},
+      userpswd = #{userpswd,jdbcType=CHAR},
+      username = #{username,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      authstatus = #{authstatus,jdbcType=CHAR},
+      usertype = #{usertype,jdbcType=CHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      cardnum = #{cardnum,jdbcType=VARCHAR},
+      accttype = #{accttype,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, loginacct, userpswd, username, tel, email, authstatus, usertype, realname, 
+    cardnum, accttype
+    from t_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, loginacct, userpswd, username, tel, email, authstatus, usertype, realname, 
+    cardnum, accttype
+    from t_member
+  </select>
+  <select id="selectByLoginacct" resultType="zc.commons.pojo.TMember">
+    select * from t_member
+    where loginacct=#{loginacct} and userpswd=#{userpswd}
+  </select>
+</mapper>

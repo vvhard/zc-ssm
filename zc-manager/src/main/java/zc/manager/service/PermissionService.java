@@ -1,7 +1,6 @@
 package zc.manager.service;
 
 import zc.commons.pojo.TPermission;
-import zc.commons.pojo.TRole;
 import zc.commons.pojo.TUser;
 
 import java.util.List;

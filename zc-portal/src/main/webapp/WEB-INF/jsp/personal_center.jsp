@@ -1,8 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html;charset=utf-8" language="java" pageEncoding="utf-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="UTF-8">
+<html lang="utf-8">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -51,43 +52,28 @@
     </style>
 </head>
 <body>
-<div class="navbar-wrapper">
-    <div class="container">
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html" style="font-size:32px;">尚筹网-创意产品众筹平台</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse" style="float:right;">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> 张三<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="member.html"><i class="glyphicon glyphicon-scale"></i> 会员中心</a></li>
-                                <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
-                                <li class="divider"></li>
-                                <li><a href="index.html"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-    </div>
-</div>
+<%-- 携带seesion信息过来--%>
+<%@include file="../commons/nav_bar.jsp"%>
 <div class="container">
     <div class="row clearfix">
         <div class="col-sm-3 col-md-3 column">
             <div class="row">
                 <div class="col-md-12">
                     <div class="thumbnail" style="    border-radius: 0px;">
-                        <img src="img/services-box1.jpg" class="img-thumbnail" alt="A generic square placeholder image with a white border around it, making it resemble a photograph taken with an old instant camera">
+                        <img src="${ctx}/static/img/services-box1.jpg" class="img-thumbnail" alt="无法显示">
                         <div class="caption" style="text-align:center;">
                             <h3>
-                                ZhangSan
+                               ${portal_login_user.username}
                             </h3>
-                            <span class="label label-danger" style="cursor:pointer;" onclick="window.location.href='accttype.html'">未实名认证</span>
+                            <%-- 根据数据库的记录验证是否已经进行实名认证--%>
+                            <c:choose>
+                                <c:when test="${portal_login_user.authstatus  == 'Y'}">
+                                    <span class="label label-danger" style="cursor:pointer;" onclick="auth('Y')">已实名认证</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="label label-danger" style="cursor:pointer;" onclick="auth('N')">未实名认证</span>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
@@ -108,7 +94,6 @@
             </ul>
             <div id="myTabContent" class="tab-content" style="margin-top:10px;">
                 <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
-
                     <ul id="myTab1" class="nav nav-tabs">
                         <li role="presentation" class="active"><a href="#support">我支持的</a></li>
                         <li role="presentation"><a href="#attension">我关注的</a></li>
@@ -354,6 +339,14 @@
         e.preventDefault()
         $(this).tab('show')
     })
+    function auth(status) {
+        if('Y' == status){
+
+        }
+        if(status == 'N'){
+            window.location.href = "${ctx}/member/auth" // 跳转到实名认证页面
+        }
+    }
 </script>
 </body>
 </html>

@@ -3,7 +3,6 @@ package zc.manager.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import zc.commons.pojo.TPermission;
-import zc.commons.pojo.TRole;
 import zc.commons.pojo.TUser;
 import zc.manager.dao.TPermissionMapper;
 import zc.manager.service.PermissionService;
