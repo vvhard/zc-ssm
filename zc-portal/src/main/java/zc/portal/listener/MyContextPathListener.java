@@ -8,6 +8,7 @@ public class MyContextPathListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
         context.setAttribute("ctx", context.getContextPath());
+        // 准备数据
     }
 
     @Override

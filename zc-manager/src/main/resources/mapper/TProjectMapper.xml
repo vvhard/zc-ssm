@@ -56,9 +56,32 @@
     from t_project
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectProjectMem" parameterType="java.lang.Integer" resultType="zc.commons.pojo.TMember">
+    select * from t_member
+    where id = #{memberId}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, remark, money, day, status, deploydate, supportmoney, supporter, 
     completion, memberid, createdate, follower
     from t_project
+  </select>
+  <select id="selectByType" resultType="zc.commons.pojo.TProject">
+    select id, name, remark, money, day, status, deploydate, supportmoney, supporter,
+            completion, memberid, createdate, follower
+    from t_project
+    where id in (select projectid from t_project_type
+                  where typeid in (select id from t_type
+                                  where name=#{project_type})
+                )
+  </select>
+  <select id="selectRecommand" resultType="zc.commons.pojo.TProject">
+    select * from t_project where id =1;
+    -- 以后再修改
+  </select>
+  <select id="selectRange" resultType="zc.commons.pojo.TProject">
+    select id, name, remark, money, day, status, deploydate, supportmoney, supporter,
+            completion, memberid, createdate, follower
+    from t_project
+    limit #{from},#{to}
   </select>
 </mapper>

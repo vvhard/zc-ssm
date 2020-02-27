@@ -14,6 +14,7 @@
       <arg column="realname" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="cardnum" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="accttype" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -47,6 +48,24 @@
       accttype = #{accttype,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="updateByLoginacct" parameterType="zc.commons.pojo.TMember">
+    update t_member
+    set
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      authstatus = #{authstatus,jdbcType=CHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      cardnum = #{cardnum,jdbcType=VARCHAR},
+      accttype = #{accttype,jdbcType=VARCHAR}
+    where loginacct = #{loginacct,jdbcType=VARCHAR},
+  </update>
+  <insert id="" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+    insert into t_member_cert(memberid,certid,iconpath)
+    values
+    <foreach separator="," collection="list" item="tmc">
+      (#{tmc.memberid},#{tmc.certid},#{tmc.iconpath})
+    </foreach>
+  </insert>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, loginacct, userpswd, username, tel, email, authstatus, usertype, realname, 
     cardnum, accttype
@@ -61,5 +80,9 @@
   <select id="selectByLoginacct" resultType="zc.commons.pojo.TMember">
     select * from t_member
     where loginacct=#{loginacct} and userpswd=#{userpswd}
+  </select>
+  <select id="selectId" resultType="int">
+    select id from t_member
+    where loginacct=#{loginacct}
   </select>
 </mapper>

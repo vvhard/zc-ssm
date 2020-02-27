@@ -21,6 +21,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.HttpRequest;
 
 public class HttpClientUtil {
     private static PoolingHttpClientConnectionManager cm; // 连接池管理器

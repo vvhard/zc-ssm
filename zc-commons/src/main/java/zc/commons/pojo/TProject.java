@@ -150,4 +150,23 @@ public class TProject {
     public void setFollower(Integer follower) {
         this.follower = follower;
     }
+
+    @Override
+    public String toString() {
+        return "TProject{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", remark='" + remark + '\'' +
+                ", money=" + money +
+                ", day=" + day +
+                ", status='" + status + '\'' +
+                ", deploydate='" + deploydate + '\'' +
+                ", supportmoney=" + supportmoney +
+                ", supporter=" + supporter +
+                ", completion=" + completion +
+                ", memberid=" + memberid +
+                ", createdate='" + createdate + '\'' +
+                ", follower=" + follower +
+                '}';
+    }
 }

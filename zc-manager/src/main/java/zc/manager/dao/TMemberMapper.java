@@ -3,6 +3,7 @@ package zc.manager.dao;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import zc.commons.pojo.TMember;
+import zc.commons.pojo.TMemberCert;
 
 import java.util.List;
 @Repository
@@ -23,4 +24,10 @@ public interface TMemberMapper {
     int updateByPrimaryKey(TMember record);
 
     TMember selectByLoginacct(@Param("loginacct") String loginacct, @Param("userpswd") String userpswd);
+
+    int selectId(String loginacct);
+
+    void updateByLoginacct(TMember member);
+
+    void insert_cert(List<TMemberCert> list);
 }

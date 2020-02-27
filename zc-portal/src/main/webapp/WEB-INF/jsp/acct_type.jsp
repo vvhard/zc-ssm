@@ -34,33 +34,17 @@
     </div>
     <div style="padding-top:10px;">
         <div class="row">
-            <div class="col-xs-6 col-md-3">
-                <h2>商业公司</h2>
-                <a href="#" class="thumbnail">
-
-                    <img alt="100%x180" src="${ctx}/static/img/services-box1.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
-                </a>
-            </div>
-            <div class="col-xs-6 col-md-3">
-                <h2>个体工商户</h2>
-                <a href="#" class="thumbnail">
-                    <img alt="100%x180" src="${ctx}/static/img/services-box2.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
-                </a>
-            </div>
-            <div class="col-xs-6 col-md-3">
-                <h2>个人经营</h2>
-                <a href="#" class="thumbnail">
-                    <img alt="100%x180" src="${ctx}/static/img/services-box3.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
-                </a>
-            </div>
-            <div class="col-xs-6 col-md-3">
-                <h2>政府及非营利组织</h2>
-                <a href="#" class="thumbnail">
-                    <img alt="100%x180" src="${ctx}/static/img/services-box4.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
-                </a>
-            </div>
+            <c:forEach items="${portal_auth_acct_type}" var="acct_type">
+                <div class="col-xs-6 col-md-3">
+                    <h2>${acct_type.name}</h2>
+                    <a href="#" class="thumbnail">
+                        <%-- src 后续写进数据库--%>
+                        <img alt="100%x180" src="${ctx}/static/img/services-box1.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
+                    </a>
+                </div>
+            </c:forEach>
         </div>
-        <button type="button" class="btn btn-danger btn-lg btn-block" onclick="window.location.href='apply.html'">认证申请</button>
+        <button type="button" class="btn btn-danger btn-lg btn-block" onclick="apply()">认证申请</button>
     </div> <!-- /container -->
     <!-- /END THE FEATURETTES -->
     <div class="container" style="margin-top:20px;">
@@ -81,11 +65,32 @@
 <script src="${ctx}/static/jquery/jquery-2.1.1.min.js"></script>
 <script src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="${ctx}/static/script/docs.min.js"></script>
+<script src="${ctx}/static/layer/layer.js"></script>
 <script>
     $(".thumbnail").click(function(){
         $('.seltype').remove();
         $(this).prepend('<div class="glyphicon glyphicon-ok seltype"></div>');
     });
+    function apply(){
+        var acctType = $(".glyphicon-ok").parent().siblings().text();
+        if(acctType== null || acctType ==""){
+            layer.msg("请先选择认证类型",{icon:5,time:1500,shift:6},function(){
+                return ;
+            });
+        }
+        $.ajax({
+            type:"POST",
+            url:"${ctx}/member/auth_apply",
+            data:{"acct_type": acctType},
+            success:function(result){
+                if(result.code == 1){
+                    window.location.href = "${ctx}/member/apply_page";
+                }else{
+                    layer.msg(result.msg,{icon:5,time:1500,shift:6},function(){});
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>

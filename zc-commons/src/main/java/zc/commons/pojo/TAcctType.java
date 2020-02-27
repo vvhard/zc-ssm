@@ -6,7 +6,16 @@ import java.util.List;
 public class TAcctType {
     private int id;
     private String name;
-    private List<Boolean> certList = new ArrayList<>();
+    private List<Boolean> certList = new ArrayList<>(); // 用于后台
+    private List<TCert> certs = new ArrayList<>(); // 用于前台
+    public List<TCert> getCerts() {
+        return certs;
+    }
+
+    public void setCerts(List<TCert> certs) {
+        this.certs = certs;
+    }
+
     public int getId() {
         return id;
     }

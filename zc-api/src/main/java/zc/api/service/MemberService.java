@@ -1,6 +1,9 @@
 package zc.api.service;
 
 import zc.commons.pojo.TMember;
+import zc.commons.pojo.TMemberCert;
+
+import java.util.List;
 
 public interface MemberService {
     /**
@@ -17,4 +20,20 @@ public interface MemberService {
      * @return
      */
     TMember regist(TMember member);
+
+    Integer queryId(String loginacct);
+
+    /**
+     * 更新字段
+     * @param member
+     */
+    void update(TMember member);
+
+    /**
+     * 保存带t_member_cert,实名认证时的资质图片信息
+     * @param list
+     */
+    void cert(List<TMemberCert> list);
+
+    void auth(TMember member, List<TMemberCert> list);
 }
