@@ -147,9 +147,8 @@
 		// genDivContent("oc_div","test");
 	});
 	$(".thumbnail img").css("cursor", "pointer");
-	$(".thumbnail img").click(function(){
-		window.location.href = "project.html";
-	});
+	// $(".thumbnail img").click(function(id){
+	// });
 	function  genRecDivContent() {
 		$.ajax({
 			type:"GET",
@@ -233,7 +232,11 @@
 		}); // ajax
 	}
 	function details(id){
-		window.location.href ="${ctx}/project?id=" + id ;
+		window.location.href ="${ctx}/project/detail?id=" + id ;
+	}
+	function moreProject(div_id){
+		var type = $("#" + div_id).text() // 获取分类
+		window.location.href = "${ctx}/project/more?type=" + type ;
 	}
 </script>
 </body>

@@ -30,4 +30,6 @@ public interface TMemberMapper {
     void updateByLoginacct(TMember member);
 
     void insert_cert(List<TMemberCert> list);
+
+    String selectAuthStatusByAcct(String loginacct);
 }

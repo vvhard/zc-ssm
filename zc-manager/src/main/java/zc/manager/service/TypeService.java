@@ -17,4 +17,6 @@ public interface TypeService {
     void delType(Integer typeid);
 
     void delTypeBatch(Integer[] typeid);
+
+    List<TType> getTypes();
 }

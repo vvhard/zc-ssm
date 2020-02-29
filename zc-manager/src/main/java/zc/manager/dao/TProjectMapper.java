@@ -25,4 +25,13 @@ public interface TProjectMapper {
     List<TProject> selectByType(String project_type);
 
     TMember selectProjectMem(int memberId);
+
+    List<TProject> selectProjects(@Param("start") int start, @Param("size") int pagesize,
+                                  @Param("type") String type,@Param("status")  String status,
+                                  @Param("order") String order,@Param("queryContent")  String queryContent);
+
+    int selectProjectsCount(@Param("start") int start, @Param("size") int pagesize,
+                                  @Param("type") String type,@Param("status")  String status,
+                                  @Param("order") String order,@Param("queryContent")  String queryContent);
+
 }

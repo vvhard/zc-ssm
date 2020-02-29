@@ -85,4 +85,9 @@
     select id from t_member
     where loginacct=#{loginacct}
   </select>
+  <select id="selectAuthStatusByAcct" resultType="java.lang.String">
+      select authstatus
+      from t_member
+      where loginacct=#{loginacct}
+  </select>
 </mapper>

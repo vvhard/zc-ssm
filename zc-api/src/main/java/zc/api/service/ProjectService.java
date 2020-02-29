@@ -36,4 +36,30 @@ public interface ProjectService {
      * @return
      */
     TMember getProjectMemById(int id);
+
+    List<TProject> getProjectByType(String type);
+
+    /**
+     * 根据条件进行查询
+     * @param start
+     * @param pagesize
+     * @param type
+     * @param status
+     * @param order
+     * @param queryContent
+     * @return
+     */
+    List<TProject> getProjects(int start,int pagesize,String type,String status, String order,String queryContent);
+
+    /**
+     * 获取查询条件下的项目总数
+     * @param start
+     * @param pagesize
+     * @param type
+     * @param status
+     * @param order
+     * @param queryContent
+     * @return
+     */
+    int getProjectCount(int start, int pagesize, String type, String status, String order, String queryContent);
 }

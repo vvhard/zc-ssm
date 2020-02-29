@@ -84,4 +84,61 @@
     from t_project
     limit #{from},#{to}
   </select>
+  <select id="selectProjects" resultType="zc.commons.pojo.TProject">
+    select tp.id, tp.name,tp.remark, tp.money, tp.day, tp.status, tp.deploydate,
+           tp.supportmoney, tp.supporter,tp.completion, tp.memberid, tp.createdate, tp.follower
+    from t_project tp join t_project_type tpt on tp.id = tpt.projectid join  t_type  tt on tpt.typeid = tt.id
+    <where>
+      <if test="type != 'all'">
+        and tt.name=#{type}
+      </if>
+      <if test="status != 'all'">
+        and tp.status=#{status}
+      </if>
+      <if test="queryContent != null and queryContent!= ''">
+        and tp.name like concat('%',#{queryContent},'%')
+      </if>
+    </where>
+    <choose>
+      <when test="order == 'time'">
+        order by tp.createdate desc
+      </when>
+      <when test="order == 'money'">
+        order by tp.supportmoney desc
+      </when>
+      <when test="order == 'supporter'">
+        order by tp.supporter desc
+      </when>
+      <otherwise>
+        order by tp.id desc
+      </otherwise>
+    </choose>
+    limit #{start},#{size}
+  </select>
+  <select id="selectProjectsCount" resultType="int">
+    select count(tp.id)
+    from t_project tp join t_project_type tpt on tp.id = tpt.projectid join  t_type  tt on tpt.typeid = tt.id
+    <where>
+      <if test="type != 'all'">
+        and tt.name=#{type}
+      </if>
+      <if test="status != 'all'">
+        and tp.status=#{status}
+      </if>
+      <if test="queryContent != null and queryContent!= ''">
+        and tp.name like concat('%',#{queryContent},'%')
+      </if>
+    </where>
+    <choose>
+      <when test="order == 'time'">
+        order by tp.createdate desc
+      </when>
+      <when test="order == 'money'">
+        order by tp.supportmoney desc
+      </when>
+      <when test="order == 'supporter'">
+        order by tp.supporter desc
+      </when>
+    </choose>
+  </select>
 </mapper>

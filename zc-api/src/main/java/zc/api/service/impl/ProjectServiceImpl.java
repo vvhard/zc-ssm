@@ -62,11 +62,48 @@ public class ProjectServiceImpl implements ProjectService {
     /**
      * 获取项目发布者信息，根据memberid
      *
-     * @param id
+     * @param memberId
      * @return
      */
     @Override
     public TMember getProjectMemById(int memberId) {
         return projectMapper.selectProjectMem(memberId);
+    }
+
+    @Override
+    public List<TProject> getProjectByType(String type) {
+        return projectMapper.selectByType(type);
+    }
+
+    /**
+     * 根据条件进行查询
+     *
+     * @param start
+     * @param pagesize
+     * @param type
+     * @param status
+     * @param order
+     * @param queryContent
+     * @return
+     */
+    @Override
+    public List<TProject> getProjects(int start, int pagesize, String type, String status, String order, String queryContent) {
+        return projectMapper.selectProjects(start,pagesize,type, status, order, queryContent);
+    }
+
+    /**
+     * 获取查询条件下的项目总数
+     *
+     * @param start
+     * @param pagesize
+     * @param type
+     * @param status
+     * @param order
+     * @param queryContent
+     * @return
+     */
+    @Override
+    public int getProjectCount(int start, int pagesize, String type, String status, String order, String queryContent) {
+        return projectMapper.selectProjectsCount(start, pagesize, type, status, order, queryContent);
     }
 }

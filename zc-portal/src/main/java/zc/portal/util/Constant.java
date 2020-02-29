@@ -15,4 +15,10 @@ public class Constant {
     public static final String INDEX_CATEGORY_OTHER_PROJECT = "index_category_other_project";
     public static final String PROJECT = "project";
     public static final String PROJECT_MEMBER = "project_member";
+    public static final String PROJECTS_BY_TYPE = "projects_by_type";
+    public static final String PROJECTS_COUNT = "projects_count";
+    public static final String CURRENT_SELECTED_TYPE = "current_selected_type";
+    public static final String PROJECTS_STATUS_ING = "I";
+    public static final String PROJECTS_STAUS_WAIT_START= "W";
+    public static final String PROJECTS_STATUS_COMPLETE = "C";
 }

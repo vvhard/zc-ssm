@@ -6,7 +6,7 @@
             <div class="box ui-draggable" id="mainBox">
                 <div class="mHd" style="">
                     <div class="path">
-                        <a href="projects.html">更多...</a>
+                        <a onclick="moreProject('category2')">更多...</a>
                     </div>
                     <h3>
                         <i id="category2">互联网</i> <small style="color:#FFF;">创意改变生活</small>
@@ -41,10 +41,11 @@
                         var project = value;
                         h+= '<div class="col-md-3">'
                             +'  <div class="thumbnail">'
-                            +'      <img alt="300x200" src="${ctx}/static/img/product-'+(index+1)+'.jpg"/>'
+                            +'      <img alt="300x200" onclick="details('+ project.id+')" '
+                            +'           src="${ctx}/static/img/product-'+(index+1)+'.jpg"/>'
                             +'      <div class="caption">'
                             +'          <h3 class="break">'
-                            +'              <a href="project.html">'+project.name+'</a>'
+                            +'              <a onclick="details(' + project.id+ ')">'+project.name+'</a>'
                             +'          </h3>'
                             +'          <p>'
                             +'          <div style="float:left;">'

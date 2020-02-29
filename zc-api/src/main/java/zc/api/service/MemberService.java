@@ -36,4 +36,6 @@ public interface MemberService {
     void cert(List<TMemberCert> list);
 
     void auth(TMember member, List<TMemberCert> list);
+
+    boolean isAuth(String loginacct);
 }

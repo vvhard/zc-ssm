@@ -34,8 +34,8 @@
                     </c:if>
                     <c:if test="${empty portal_login_user}">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="login.jsp">登录</a></li>
-                            <li><a href="reg.jsp">注册</a></li>
+                            <li><a href="${ctx}/login.jsp">登录</a></li>
+                            <li><a href="${ctx}/reg.jsp">注册</a></li>
                         </ul>
                     </c:if>
                 </div>

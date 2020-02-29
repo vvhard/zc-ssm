@@ -67,6 +67,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public boolean isAuth(String loginacct) {
+        String status = memeberMapper.selectAuthStatusByAcct(loginacct);
+        if("YES".equals(status)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     @Transactional
     public void auth(TMember member,List<TMemberCert> list){
         memeberMapper.updateByLoginacct(member);

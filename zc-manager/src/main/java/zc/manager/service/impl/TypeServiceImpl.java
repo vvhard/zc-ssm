@@ -13,6 +13,12 @@ import java.util.Map;
 public class TypeServiceImpl implements TypeService {
     @Autowired
     private TTypeMapper typeMapper;
+
+    @Override
+    public List<TType> getTypes() {
+        return typeMapper.selectAll();
+    }
+
     @Override
     public int queryNums(Map<String, Object> map) {
         return typeMapper.selectCountWithCondition(map);
