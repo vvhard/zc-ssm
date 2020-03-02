@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zc.manager.dao.TStartProjectTaskMapper">
+  <resultMap id="BaseResultMap" type="zc.commons.pojo.TStartProjectTask">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="projecttempid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="returntempid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_start_project_task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zc.commons.pojo.TStartProjectTask">
+    insert into t_start_project_task (id, projecttempid,
+      returntempid)
+    values (#{id,jdbcType=INTEGER},#{projecttempid,jdbcType=INTEGER},
+      #{returntempid,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TStartProjectTask">
+    update t_start_project_task
+    set
+      projecttempid = #{projecttempid,jdbcType=INTEGER},
+      returntempid = #{returntempid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, projecttempid, returntempid,status
+    from t_start_project_task
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, projecttempid, returntempid,status
+    from t_start_project_task
+  </select>
+
+  <select id="selectByProjectId" resultType="zc.commons.pojo.TStartProjectTask">
+    select id,  projecttempid, returntempid,status
+    from t_start_project_task
+    where projecttempid=#{project_temp_id}
+  </select>
+  <insert id="insertTask"  useGeneratedKeys="true" keyProperty="id">
+    insert into t_start_project_task(projecttempid) value (#{project_temp_id})
+  </insert>
+  <insert id="addWithReturnIdAndProjectTempId" >
+    insert into t_start_project_task(projecttempid,returntempid)
+    values (#{project_temp_id,jdbcType=INTEGER},#{return_temp_id,jdbcType=INTEGER})
+  </insert>
+</mapper>

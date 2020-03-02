@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zc.manager.dao.TProjectTempMapper">
+  <resultMap id="BaseResultMap" type="zc.commons.pojo.TProjectTemp">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="memberid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="money" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="day" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="createdate" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="headpicpath" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="detailpicpath" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="contact" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_project_temp
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="zc.commons.pojo.TProjectTemp">
+    insert into t_project_temp (id, memberid, name, 
+      type, remark, money, 
+      day, status, createdate, 
+      headpicpath, detailpicpath, contact
+      )
+    values (#{id,jdbcType=INTEGER}, #{memberid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{money,jdbcType=BIGINT}, 
+      #{day,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, #{createdate,jdbcType=CHAR}, 
+      #{headpicpath,jdbcType=VARCHAR}, #{detailpicpath,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TProjectTemp">
+    update t_project_temp
+    set memberid = #{memberid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      money = #{money,jdbcType=BIGINT},
+      day = #{day,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR},
+      createdate = #{createdate,jdbcType=CHAR},
+      headpicpath = #{headpicpath,jdbcType=VARCHAR},
+      detailpicpath = #{detailpicpath,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, memberid, name, type, remark, money, day, status, createdate, headpicpath, 
+    detailpicpath, contact
+    from t_project_temp
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, memberid, name, type, remark, money, day, status, createdate, headpicpath, 
+    detailpicpath, contact
+    from t_project_temp
+  </select>
+  <insert id="insertProjectTemp" parameterType="zc.commons.pojo.TProjectTemp" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_project_temp
+      (memberid ,type,name,remark,money,day,createdate,headpicpath,detailpicpath,contact)
+    values
+      (#{memberid},#{type},#{name},#{remark},#{money},#{day},#{createdate},
+       #{headpicpath},#{detailpicpath},#{contact})
+  </insert>
+</mapper>
