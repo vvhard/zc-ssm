@@ -13,6 +13,15 @@ public class DateUtil {
         Date date = new Date();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
         return df.format(date);
-
     }
+    /**
+     * 获取当前时间，格式为yyyy-MM-dd
+     * @return
+     */
+    public static String currentDate(){
+        Date date = new Date();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.format(date);
+    }
+
 }

@@ -3,13 +3,93 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xsd">
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd">
     <context:annotation-config></context:annotation-config>
+    <context:property-placeholder location="classpath:portal-db.properties"></context:property-placeholder>
     <context:component-scan base-package="zc.portal">
     </context:component-scan>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driverClass}"></property>
+        <property name="jdbcUrl" value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis.xml"></property>
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="zc.manager.dao"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+    <!--配置事务管理器-->
+    <bean id="tm" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!-- 事务增强-->
+    <tx:advice id="myAdvice" transaction-manager="tm">
+        <!-- 事务属性 -->
+        <tx:attributes>
+            <tx:method name="*"/>
+            <!-- 支持事务，没有就算了 -->
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="myPointCut" expression="execution(* zc.api.service..*(..))" />
+        <aop:advisor advice-ref="myAdvice" pointcut-ref="myPointCut"></aop:advisor>
+    </aop:config>
+
+    <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration" >
+        <!--  共用数据源
+        <property name="dataSource" ref="dataSource" />-->
+        <!--  共用数据源可能会报错，创建不了表，原因不明确，或许因为数据源的属性明细不一样-->
+        <property name="jdbcUrl"
+                  value="${jdbc.url}" />
+        <property name="jdbcDriver" value="${jdbc.driverClass}" />
+        <property name="jdbcUsername" value="${jdbc.username}"></property>
+        <property name="jdbcPassword" value="${jdbc.password}"></property>
+        <property name="databaseSchemaUpdate" value="true" />
+        <property name="jobExecutorActivate" value="false" />
+        <property name="asyncExecutorEnabled" value="true" />
+        <property name="asyncExecutorActivate" value="false" />
+        <!-- 共用事务管理器  -->
+        <property name="transactionManager" ref="tm" />
+        <!--设置建表策略，如果没有表，自动创建表
+        <property name="databaseSchema" value="scw"/>
+        <property name="databaseSchemaUpdate" value="true" />
+        -->
+        <!--
+		<property name="jobExecutorActivate" value="false" />
+		<property name="activityFontName" value="宋体"></property>
+		<property name="labelFontName" value="宋体"></property>
+		<property name="annotationFontName" value="宋体"></property>
+		-->
+        <property name="activityFontName" value="宋体"></property>
+        <property name="labelFontName" value="宋体"></property>
+        <property name="annotationFontName" value="宋体"></property>
+    </bean>
+    <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+        <property name="processEngineConfiguration" ref="processEngineConfiguration" />
+    </bean>
+    <!-- 常见的组件都在这里 -->
+    <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
+    <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+    <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
+    <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
+    <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
+
 </beans>

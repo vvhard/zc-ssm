@@ -71,62 +71,22 @@
         .progress-bar-default {
             background-color: #ddd;
         }
+        /*这是一个用做回显的盒子的样式*/
+        .pic {
+            width: 100px;
+            height: 100px;
+        }
+
+        .pic img {
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
-<div class="navbar-wrapper">
-    <div class="container">
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html" style="font-size:32px;">尚筹网-创意产品众筹平台</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse" style="float:right;">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> 张三<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="member.html"><i class="glyphicon glyphicon-scale"></i> 会员中心</a></li>
-                                <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
-                                <li class="divider"></li>
-                                <li><a href="index.html"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
-
+<%@include file="../commons/nav_bar.jsp"%>
 <div class="container theme-showcase" role="main">
-
-    <div class="container">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <nav class="navbar navbar-default" role="navigation">
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li>
-                                <a rel="nofollow" href="index.html"><i class="glyphicon glyphicon-home"></i> 众筹首页</a>
-                            </li>
-                            <li >
-                                <a rel="nofollow" href="projects.html"><i class="glyphicon glyphicon-th-large"></i> 项目总览</a>
-                            </li>
-                            <li class="active">
-                                <a rel="nofollow" href="javascript:;"><i class="glyphicon glyphicon-edit"></i> 发起项目</a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="minecrowdfunding.html"><i class="glyphicon glyphicon-user"></i> 我的众筹</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
-
-
+    <%@include file="../commons/crowdfunding_nav.jsp"%>
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-12 column">
@@ -192,7 +152,7 @@
                                 <div class="col-md-12 column">
                                     <blockquote style="border-left: 5px solid #f60;color:#f60;padding: 0 0 0 20px;">
                                         <b>
-                                            项目及发起人信息
+                                            项目及发起信息
                                         </b>
                                     </blockquote>
                                 </div>
@@ -202,28 +162,21 @@
                                             项目信息
                                         </h3>
                                     </div>
-                                    <form class="form-horizontal">
+                                    <form class="form-horizontal" enctype="multipart/form-data">
                                         <div class="form-group">
-                                            <label for="inputEmail3" class="col-sm-2 control-label">分类信息</label>
+                                            <label class="col-sm-2 control-label">分类信息</label>
                                             <div class="col-sm-10">
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 科技
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 设计
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 公益
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 农业
-                                                </label>
+                                                <c:forEach items="${types}" var="type">
+                                                    <label class="radio-inline">
+                                                       <input type="radio" name="type" id="inlineRadio1" value="${type.name}"> ${type.name}
+                                                    </label>
+                                                </c:forEach>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="inputEmail3" class="col-sm-2 control-label">标签</label>
+                                            <label class="col-sm-2 control-label">标签</label>
                                             <div class="col-sm-10">
-                                                <ul style="list-style:none;padding-left:0;">
+                                                <ul style="list-style:none;padding-left:0;" id="type_ul">
                                                     <li style="margin:10px 0">[手机]
                                                         <span class="label-txt">手机</span> <span class="label-txt">快充</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span> <span class="label-txt">文字标签</span>
                                                     </li>
@@ -239,74 +192,62 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">项目名称</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" >
+                                                <input type="text" class="form-control" id="name" name="name" >
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">一句话简介</label>
                                             <div class="col-sm-10">
-                                                <textarea class="form-control" rows="5"></textarea>
+                                                <textarea class="form-control" rows="5" id="remark" name="remark"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">筹资金额（元）</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" style="width:100px;" >
+                                                <input type="text" class="form-control" id="money" name="money" style="width:100px;" >
                                                 <label class="control-label">筹资金额不能低于100元,不能高于1000000000元</label>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">筹资天数（天）</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" style="width:100px;" >
+                                                <input type="text" class="form-control"id="day" name="day" style="width:100px;" >
                                                 <label class="control-label">一般10-90天，建议30天</label>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">项目头图</label>
                                             <div class="col-sm-10">
-                                                <button type="button" class="btn btn-primary btn-lg active">上传图片</button>
-                                                <label class="control-label">图片上无文字,支持jpg、jpeg、png、gif格式，大小不超过2M，建议尺寸：740*457px</label>
+                                                <div style="float: left">
+                                                    <input type="file"name="hfile" id="hfile"onchange="readAsDataURL()">
+                                                </div>
+                                                <div class="pic" style="float: left">
+                                                    <img id="img1" src=""/>
+                                                </div>
                                             </div>
                                         </div>
+                                        <label  class="control-label col-sm-offset-2" style="margin-bottom: 20px;margin-top: 5px">
+                                            图片上无文字,支持jpg、jpeg、png、gif格式，大小不超过2M，建议尺寸：740*457px
+                                        </label>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">项目详情</label>
                                             <div class="col-sm-10">
-                                                <button type="button" class="btn btn-primary btn-lg active">上传图片</button>
-                                                <label class="control-label">支持jpg、jpeg、png、gif格式，大小不超过2M，建议尺寸：宽740px</label>
+                                                <div style="float: left">
+                                                    <input type="file" name="dfile" id="dfile"onchange="readAsDataURL()">
+                                                </div>
+                                                <div class="pic" style="float: left">
+                                                    <img id="img2" src=""/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="col-md-12 column">
-                                    <div class="page-header" style="    border-bottom-style: dashed;">
-                                        <h3>
-                                            发起人信息
-                                        </h3>
-                                    </div>
-                                    <form class="form-horizontal">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">自我介绍</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" placeholder="一句话自我介绍，不超过40字">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">详细自我介绍</label>
-                                            <div class="col-sm-10">
-                                                <textarea class="form-control" rows="5" placeholder="向支持者详细介绍你自己或你的团队及项目背景，让支持者在最短时间内了解你，不超过160字"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">联系电话</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" placeholder="此信息不会显示在项目页面">
-                                            </div>
-                                        </div>
+                                        <label class="control-label col-sm-offset-2" style="margin-bottom: 20px;margin-top: 5px">
+                                            支持jpg、jpeg、png、gif格式，大小不超过2M，建议尺寸：宽740px
+                                        </label>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">客服电话</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" placeholder="此信息显示在项目页面">
+                                                <input type="text" class="form-control" id="contact" name="contact"
+                                                       placeholder="此信息显示在项目页面">
                                             </div>
                                         </div>
                                     </form>
@@ -315,29 +256,14 @@
                         </div>
                     </div>
                     <div class="panel-footer" style="text-align:center;">
-                        <button type="button" class="btn  btn-warning btn-lg" onclick="window.location.href='start-step-2.html'">下一步</button>
+                        <button type="button" class="btn  btn-warning btn-lg" id="nextStepBtn">下一步</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <div class="container" style="margin-top:20px;">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <div id="footer">
-                    <div class="footerNav">
-                        <a rel="nofollow" href="http://www.layoutit.cn">关于我们</a> | <a rel="nofollow" href="http://www.layoutit.cn">服务条款</a> | <a rel="nofollow" href="http://www.layoutit.cn">免责声明</a> | <a rel="nofollow" href="http://www.layoutit.cn">网站地图</a> | <a rel="nofollow" href="http://www.layoutit.cn">联系我们</a>
-                    </div>
-                    <div class="copyRight">
-                        Copyright ?2017-2017layoutit.cn 版权所有
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    <%@include file="../commons/footer.jsp"%>
 
 </div> <!-- /container -->
 <script src="${ctx}/static/jquery/jquery-2.1.1.min.js"></script>
@@ -349,6 +275,24 @@
         e.preventDefault()
         $(this).tab('show')
     })
+    $("#nextStepBtn").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"${ctx}/crow/sumbit",
+            dataType: "json",
+            cache: false, // 上传文件不需要缓存。
+            data: new FormData($(".form-horizontal")[0]),
+            processData: false,// 不处理数据,因为data值是FormData对象，不需要对数据做处理。
+            contentType: false, // 不设置内容类型,因为是由<form>表单构造的FormData对象，且已经声明了属性
+            success:function(result){
+                if(result.code == 1){
+                    window.location.href = "${ctx}/crow/start_step2?projectTempId=" + result.ext.projectTempId;
+                }else{
+
+                }
+            }
+        });
+    });
 </script>
 </body>
 </html>

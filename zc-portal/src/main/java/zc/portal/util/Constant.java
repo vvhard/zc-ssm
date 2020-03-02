@@ -21,4 +21,7 @@ public class Constant {
     public static final String PROJECTS_STATUS_ING = "I";
     public static final String PROJECTS_STAUS_WAIT_START= "W";
     public static final String PROJECTS_STATUS_COMPLETE = "C";
+    public static final String TYPES = "types";
+    public static final String PROJECTTEMPID = "projectTempId";
+    public static final String PROJECTTEMP = "projecttemp";
 }
