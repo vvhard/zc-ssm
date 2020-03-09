@@ -24,7 +24,6 @@ public class IndexController {
     public  Object loadData(String[] types, HttpSession session){
         AjaxResult<String> result;
         AjaxResult<List<TProject>> res;
-        System.out.println(types);
         Map<String,Object> ext = new HashMap<>();
         // 加载推荐项目
         String rec_project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/recommand");
@@ -35,8 +34,6 @@ public class IndexController {
         String c1_project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/category");
         List<TProject> rec_projects = JSON.parseArray(JSON.toJSONString(res.getContent()), TProject.class);
         session.setAttribute(Constant.INDEX_RECOMMAND_PROJECT, rec_projects); // 通过session保存
-        for(TProject p:rec_projects)
-            System.out.println(p.toString());
         // 先写死
         res = JSON.toJavaObject(JSON.parseObject(c1_project), AjaxResult.class);
         List<TProject> c1_projects = JSON.parseArray(JSON.toJSONString(res.getContent()), TProject.class);
@@ -56,17 +53,11 @@ public class IndexController {
     @RequestMapping("/rec")
     @ResponseBody
     public  Object getRec(){
-        AjaxResult<List<TProject>> result;
         // 加载推荐项目
         String rec_project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/recommand");
         // 转换成JSON对象
-        result = JSON.toJavaObject(JSON.parseObject(rec_project), AjaxResult.class);
-        if(result.getCode() == 1){
-            result.setMsg("加载成功");
-        }else{
-            result.setMsg("加载失败");
-        }
-        return result;
+        return JSON.toJavaObject(JSON.parseObject(rec_project), AjaxResult.class);
+
     }
     @RequestMapping("/category")
     @ResponseBody
@@ -76,7 +67,6 @@ public class IndexController {
             String project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/category/" + type);
             // 转换成JSON对象
             return JSON.toJavaObject(JSON.parseObject(project), AjaxResult.class);
-
         } catch (Exception e) {
             ext.put("err", "跨域请求失败");
             ext.put("exception", e.toString());

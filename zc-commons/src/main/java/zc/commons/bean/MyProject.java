@@ -40,6 +40,9 @@ public class MyProject {
     private String initiator_name;
 
     private String initiator_desc;
+
+    private String project_head_pic;
+    private String project_detail_pic;
     // 剩余时间
     private int remaining_day;
 
@@ -50,7 +53,7 @@ public class MyProject {
     public MyProject(int project_id, String project_name, String remark, Long money, Integer day, String status,
                      String deploy_date, Long support_money, Integer supporter, Integer completion,
                      Integer initiator_id, String create_date, Integer follower, String contact, String initiator_name,
-                     String initiator_desc) {
+                     String initiator_desc,String project_head_pic,String project_detail_pic) {
         this.project_id = project_id;
         this.project_name = project_name;
         this.remark = remark;
@@ -67,29 +70,10 @@ public class MyProject {
         this.contact = contact;
         this.initiator_name = initiator_name;
         this.initiator_desc = initiator_desc;
+        this.project_detail_pic = project_detail_pic;
+        this.project_head_pic = project_head_pic;
+        setRemaining_day();
     }
-//    public MyProject(int project_id, String project_name, String remark, Long money, Integer day, String status,
-////                     String deploy_date, Long support_money, Integer supporter, Integer completion,
-////                     Integer initiator_id, String create_date, Integer follower, String contact, String initiator_name,
-////                     String initiator_desc,int remaining_day) {
-////        this.project_id = project_id;
-////        this.project_name = project_name;
-////        this.remark = remark;
-////        this.money = money;
-////        this.day = day;
-////        this.status = status;
-////        this.deploy_date = deploy_date;
-////        this.support_money = support_money;
-////        this.supporter = supporter;
-////        this.completion = completion;
-////        this.initiator_id = initiator_id;
-////        this.create_date = create_date;
-////        this.follower = follower;
-////        this.contact = contact;
-////        this.initiator_name = initiator_name;
-////        this.initiator_desc = initiator_desc;
-////        this.remaining_day = remaining_day;
-////    }
 
     public int getProject_id() {
         return project_id;
@@ -224,7 +208,23 @@ public class MyProject {
         return remaining_day;
     }
 
-    public void setRemaining_day(int remaining_day) {
+    public void setRemaining_day() {
         this.remaining_day = 10 - DateUtil.calculate(this.deploy_date);
+    }
+
+    public String getProject_head_pic() {
+        return project_head_pic;
+    }
+
+    public void setProject_head_pic(String project_head_pic) {
+        this.project_head_pic = project_head_pic;
+    }
+
+    public String getProject_detail_pic() {
+        return project_detail_pic;
+    }
+
+    public void setProject_detail_pic(String project_detail_pic) {
+        this.project_detail_pic = project_detail_pic;
     }
 }

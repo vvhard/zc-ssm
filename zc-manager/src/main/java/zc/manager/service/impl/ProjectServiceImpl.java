@@ -170,11 +170,13 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void cancelFollow(int memberid, int projectid) {
         projectMapper.deleteFollow(memberid,projectid);
+        projectMapper.updateFollowCount(projectid,-1);
     }
 
     @Override
     public void followProject(int memberid, int projectid) {
         projectMapper.insertFollow(memberid,projectid);
+        projectMapper.updateFollowCount(projectid,1);
     }
 
     @Override

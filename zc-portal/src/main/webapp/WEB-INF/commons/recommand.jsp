@@ -24,7 +24,7 @@
                         console.log(value.name)
                         var project = value;
                          h += '<div class="col-lg-4">'
-                            +'   <img class="img-circle" src="${ctx}/static/img/p'+(index+1)+'.jpg"'
+                            +'   <img class="img-circle" src="'+project.headpicpath+'"'
                             +'      alt="Generic placeholder image" style="width: 140px; height: 140px;">'
                             +'   <h2>' + project.name + '</h2>'
                             +'   <p>' + project.remark + '</p>'

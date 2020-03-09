@@ -134,4 +134,12 @@
     delete from t_order
     where ordernum=#{ordernum}
   </delete>
+  <update id="updateProjectAfterSupport">
+    update t_project
+    set
+    supporter = 1+(select c from (select supporter as c from t_project where id=1) as temp),
+    supportmoney = #{money}+ (select c from (select supportmoney as c from t_project where id=1) as temp),
+    completion = ((#{money}+(select c from (select supportmoney as c from t_project where id=1) as temp))/money)*100
+    where  id=#{projectid};
+  </update>
 </mapper>

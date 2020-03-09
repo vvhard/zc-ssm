@@ -68,4 +68,8 @@ public interface TProjectMapper {
     List<TReturn> selectReturnByProjectid(int projectid);
 
     ProjectPayInfo selectPayInfo(int projectid);
+
+    void updateFollowCount(@Param("projectid") int projectid, @Param("follower") int follower);
+
+    void updateProjectAfterSupport(@Param("projectid")Integer projectid, @Param("projectid")double money);
 }

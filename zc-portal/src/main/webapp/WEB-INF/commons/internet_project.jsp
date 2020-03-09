@@ -42,7 +42,7 @@
                         h+= '<div class="col-md-3">'
                             +'  <div class="thumbnail">'
                             +'      <img alt="300x200" onclick="details('+ project.id+')" '
-                            +'           src="${ctx}/static/img/product-'+(index+1)+'.jpg"/>'
+                            +'           src="'+project.headpicpath+'"/>'
                             +'      <div class="caption">'
                             +'          <h3 class="break">'
                             +'              <a onclick="details(' + project.id+ ')">'+project.name+'</a>'
@@ -59,7 +59,7 @@
                             +'          <br>'
                             +'          <div class="progress" style="margin-bottom: 4px;">'
                             +'              <div class="progress-bar progress-bar-success" role="progressbar" ' +
-                            '                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">'
+                            '                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:'+project.completion+'%">'
                             +'                  <span >' + project.completion + '% </span>'
                             +'              </div>'
                             +'          </div>'

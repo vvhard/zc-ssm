@@ -73,14 +73,11 @@
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-12 column">
-                <div class="row clearfix">
-                    <div class="col-md-8 column">
-                        <img alt="140x140" width="740" src="${ctx}/static/img/product_detail_head.jpg" />
-                        <img alt="140x140" width="740" src="${ctx}/static/img/product_detail_body.jpg" />
+                <div class="row clearfix" >
+                    <div class="col-md-8 column" id="picDiv">
                     </div>
                     <div class="col-md-4 column">
                         <div class="panel panel-default" style="border-radius: 0px;" id="infoDiv">
-
                         </div>
                         <div class=" panel panel-default" style="border-radius: 0px;">
                             <div class="panel-heading">
@@ -97,19 +94,8 @@
                                     6.如您不同意上述风险提示内容，您有权选择不支持；一旦选择支持，视为您已确认并同意以上提示内容。</p>
                             </div>
                         </div>
+                        <div id="recDiv"><h2>为你推荐</h2><hr></div>
 
-                        <div><h2>为你推荐</h2><hr></div>
-                        <div class="prjtip panel panel-default" style="border-radius: 0px;">
-                            <div class="panel-body">
-                                <img src="${ctx}/static/img/product-3.png" width="100%" height="100%">
-                            </div>
-                        </div>
-
-                        <div class="prjtip panel panel-default" style="border-radius: 0px;">
-                            <div class="panel-body">
-                                <img src="${ctx}/static/img/product-4.jpg" width="100%" height="100%">
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -134,7 +120,6 @@
                             </ul>
                         </div>
                         <div id="navList" class="col-sm-9 col-md-9 column" style="height:400px;overflow-y:auto;">
-
                         </div>
                     </div>
                 </div>
@@ -199,7 +184,7 @@
                             +'        <div>'
                             +'            <p><span>已有'+project.supporter+'人支持该项目</p>'
                             +'            <button type="button" class="btn  btn-warning btn-lg btn-block" onclick=getReturns('+project.project_id+')'
-                            +'                 data-toggle="modal" data-target="#myModal">立即支持</button>'
+                            +'                 data-toggle="modal" data-target="#myModal" id="supportBtn">立即支持</button>'
                             +'        </div>'
                             +'</div>'
                             +'<div class="panel-footer" style=" background-color: #fff;border-top: 1px solid #ddd;'
@@ -224,13 +209,45 @@
                             +'        </div>'
                             +'     </div>'
                             +'</div>'
+                    if(project.remaining_day <= 0){
+                        $("#supportBtn").attr("disabled", "disabled");
+                    }
                     $("#infoDiv").html(info);
+                    var detail = '<img alt="140x140" width="740" height="500" src="'+project.project_head_pic+'" />'
+                                +'  <img alt="140x140" width="740" src="'+project.project_detail_pic+'" />'
+                    $("#picDiv").html(detail);
                 }else{
                     layer.msg(result.msg,{icon:5,time:2000},function(){
                     });
                 }
             }
         })
+        $.ajax({
+            type:"GET",
+            url:"${ctx}/rec",
+            data:{},
+            success:function(result){
+                if(result.code == 1){
+                    var projects =  result.content;
+                    var rec = '';
+                    if(projects.length == 0){
+                        $("#recDiv").after(rec);
+                        return;
+                    }
+                    $.each(projects,function(index,project){
+                        rec +='<div class="prjtip panel panel-default" style="border-radius: 0px;">'
+                            +'      <div class="panel-body" style="text-align: center">'
+                            +'          <img src="'+project.headpicpath+'" style="width: 200px;height: 200px;" width="100%" height="100%">'
+                            +'      </div>'
+                            +'</div>'
+                    })
+                    $("#recDiv").after(rec);
+                }else{
+
+                }
+            }
+        })
+
     })
     $(".prjtip img").css("cursor", "pointer");
     $(".prjtip img").click(function(){
@@ -304,8 +321,6 @@
                         $(".nav.nav-tabs.nav-stacked").html(nl);
                         $("#navList").html(content)
                     }
-
-
 
                 }else{
                     $(".modal-body").empty().html('<label>获取数据失败，请重试!</label>')

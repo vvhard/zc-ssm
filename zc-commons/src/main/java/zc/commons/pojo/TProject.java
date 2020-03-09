@@ -33,9 +33,14 @@ public class TProject {
 
     private String concat;
 
+    private String headpicpath;
+
+    private String detailpicpath;
+
     public TProject(Integer id, String name, String remark, Long money, Integer day, String status,
                     String deploydate, Long supportmoney, Integer supporter, Integer completion,
-                    Integer memberid, String createdate, Integer follower,String concat) {
+                    Integer memberid, String createdate, Integer follower,String concat,String headpicpath,
+                    String detailpicpath) {
         this.id = id;
         this.name = name;
         this.remark = remark;
@@ -50,6 +55,8 @@ public class TProject {
         this.createdate = createdate;
         this.follower = follower;
         this.concat = concat;
+        this.headpicpath = headpicpath;
+        this.detailpicpath = detailpicpath;
     }
 
 
@@ -169,6 +176,22 @@ public class TProject {
         this.concat = concat;
     }
 
+    public String getHeadpicpath() {
+        return headpicpath;
+    }
+
+    public void setHeadpicpath(String headpicpath) {
+        this.headpicpath = headpicpath;
+    }
+
+    public String getDetailpicpath() {
+        return detailpicpath;
+    }
+
+    public void setDetailpicpath(String detailpicpath) {
+        this.detailpicpath = detailpicpath;
+    }
+
     @Override
     public String toString() {
         return "TProject{" +
@@ -186,6 +209,8 @@ public class TProject {
                 ", createdate='" + createdate + '\'' +
                 ", follower=" + follower +
                 ", concat='" + concat + '\'' +
+                ", headpicpath='" + headpicpath + '\'' +
+                ", detailpicpath='" + detailpicpath + '\'' +
                 '}';
     }
 }

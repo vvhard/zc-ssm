@@ -42,5 +42,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void addOrder(TOrder order) {
         orderMapper.insert(order);
+        projectMapper.updateProjectAfterSupport(order.getProjectid(), order.getCount() * order.getPrice()); // 被支持后更新数据
     }
 }
