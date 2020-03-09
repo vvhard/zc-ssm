@@ -24,4 +24,6 @@ public interface TTypeMapper {
     List<TType> selectWithCondition(Map<String, Object> map);
 
     void delBatch(@Param("typeid") Integer[] typeid);
+
+    int selectIdByName(String type);
 }

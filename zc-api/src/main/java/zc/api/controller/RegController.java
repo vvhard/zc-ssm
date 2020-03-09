@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import zc.api.util.ApiConstant;
 import zc.commons.bean.AjaxResult;
 import zc.commons.pojo.TMember;
-import zc.api.service.MemberService;
+import zc.manager.service.MemberService;
 import zc.commons.util.MD5Util;
 
 import java.util.HashMap;

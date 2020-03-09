@@ -105,6 +105,12 @@
                 }
             }
         });
+        // 列表展开
+        $("a[href='${ctx}/serviceman/tag/index']").css("color", "red");
+        //加上tree close样式
+        $("a[href='${ctx}/serviceman/tag/index']").parents(".list-group-item")
+            .removeClass("tree-closed");
+        $("a[href='${ctx}/serviceman/tag/index']").parent().parent("ul").show(100);
         initTagTree();
     });
 

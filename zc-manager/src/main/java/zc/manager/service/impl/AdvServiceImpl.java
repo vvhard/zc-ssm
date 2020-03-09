@@ -27,4 +27,24 @@ public class AdvServiceImpl implements AdvService {
     public TAdvertisement getDetailById(int id) {
         return advertisementMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public void addAdv(TAdvertisement advertisement) {
+        advertisementMapper.insert(advertisement);
+    }
+
+    @Override
+    public int deleteAdvById(int id) {
+        return advertisementMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int changAdvStatus(int id, String status) {
+        return  advertisementMapper.updateStatusById(id,status);
+    }
+
+    @Override
+    public List<TAdvertisement> getShowAdv() {
+        return advertisementMapper.selectTakeOnAdv();
+    }
 }

@@ -55,4 +55,8 @@
     freight, invoice, rtndate
     from t_return_temp
   </select>
+  <select id="selectByProjectId" resultType="zc.commons.pojo.TReturnTemp">
+    select * from t_return_temp
+    where projectid = #{projectTempId}
+  </select>
 </mapper>

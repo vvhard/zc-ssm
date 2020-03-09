@@ -25,29 +25,13 @@ public class TMember {
 
     private String description;
 
+    private String feedback;
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public TMember(Integer id, String loginacct, String userpswd, String username
-                , String tel, String email, String authstatus
-                , String usertype, String realname, String cardnum
-                , String accttype,String description) {
-        this.id = id;
-        this.loginacct = loginacct;
-        this.userpswd = userpswd;
-        this.username = username;
-        this.tel = tel;
-        this.email = email;
-        this.authstatus = authstatus;
-        this.usertype = usertype;
-        this.realname = realname;
-        this.cardnum = cardnum;
-        this.accttype = accttype;
         this.description = description;
     }
 
@@ -141,5 +125,13 @@ public class TMember {
 
     public void setAccttype(String accttype) {
         this.accttype = accttype == null ? null : accttype.trim();
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
     }
 }

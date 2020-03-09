@@ -17,7 +17,7 @@ public class UploadFile {
         // 1. 获取原始文件名
 //        String extendName = uploadFileName.substring(uploadFileName.lastIndexOf(".") + 1);
         // 3. 把文件加上随机数，防止文件重复
-        String uuid = UUID.randomUUID().toString().replace("-", "").substring(0, 5).toUpperCase();
+        String uuid = UUID.randomUUID().toString().replace("-", "").substring(0, 5).toLowerCase();
         String filename = uuid + "-" + file.getOriginalFilename();
         // 创建sun公司提供的jersey包中的Client对象
         Client client = Client.create();
@@ -25,7 +25,7 @@ public class UploadFile {
         WebResource resource = client.resource(webPath + filename);
         try {
             resource.put(file.getBytes());
-            result = AjaxResult.success("上传成功", filename, null);
+            result = AjaxResult.success("上传成功",  (webPath+"/" + filename), null);
         } catch (IOException e) {
             Map<String,Object> ext = new HashMap<>();
             ext.put("exception", e.toString());

@@ -9,17 +9,18 @@
       <arg column="status" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="url" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="userid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_advertisement
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="zc.commons.pojo.TAdvertisement">
-    insert into t_advertisement (id, name, iconpath, 
-      status, url, userid)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{iconpath,jdbcType=VARCHAR}, 
-      #{status,jdbcType=CHAR}, #{url,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER})
+  <insert id="insert" parameterType="zc.commons.pojo.TAdvertisement"  useGeneratedKeys="true" keyProperty="id">
+    insert into t_advertisement (name, iconpath,
+      status, url, userid,description)
+    values ( #{name,jdbcType=VARCHAR}, #{iconpath,jdbcType=VARCHAR},
+      #{status,jdbcType=CHAR}, #{url,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER},#{description})
   </insert>
   <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TAdvertisement">
     update t_advertisement
@@ -27,32 +28,39 @@
       iconpath = #{iconpath,jdbcType=VARCHAR},
       status = #{status,jdbcType=CHAR},
       url = #{url,jdbcType=VARCHAR},
-      userid = #{userid,jdbcType=INTEGER}
+      userid = #{userid,jdbcType=INTEGER},
+      description = #{description}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, name, iconpath, status, url, userid
+    select id, name, iconpath, status, url, userid,description
     from t_advertisement
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, name, iconpath, status, url, userid
+    select id, name, iconpath, status, url, userid,description
     from t_advertisement
   </select>
   <select id="selectWithCondition" resultType="zc.commons.pojo.TAdvertisement">
-    select id, name, iconpath, status, url, userid
+    select id, name, iconpath, status, url, userid,description
     from t_advertisement
-    <if test="queryContent != null">
-      where name like concat('%',#{queryContent},'%')
-    </if>
     order by id desc
     limit #{start},#{size}
   </select>
   <select id="selectCountWithCondition" resultType="int">
     select count(*)
     from t_advertisement
-    <if test="queryContent != null">
-      where name like concat('%',#{queryContent},'%')
+  </select>
+  <update id="updateStatusById">
+    update t_advertisement set status = #{status}
+    where id = #{id}
+    <if test="status == 'ON'">
+      and (select c from (select count(id) as c
+      from t_advertisement where status ='ON')
+      as temp )&lt; 3
     </if>
+  </update>
+  <select id="selectTakeOnAdv" resultType="zc.commons.pojo.TAdvertisement">
+    select * from t_advertisement where status='ON'
   </select>
 </mapper>

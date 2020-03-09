@@ -1,4 +1,4 @@
-package zc.portal.util;
+package zc.commons.util;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

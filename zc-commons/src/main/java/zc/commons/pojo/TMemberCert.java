@@ -7,13 +7,13 @@ public class TMemberCert {
 
     private Integer certid;
 
-    private String iconpath;
+    private String path;
 
-    public TMemberCert(Integer id, Integer memberid, Integer certid, String iconpath) {
+    public TMemberCert(Integer id, Integer memberid, Integer certid, String path) {
         this.id = id;
         this.memberid = memberid;
         this.certid = certid;
-        this.iconpath = iconpath;
+        this.path = path;
     }
 
     public TMemberCert() {
@@ -44,11 +44,11 @@ public class TMemberCert {
         this.certid = certid;
     }
 
-    public String getIconpath() {
-        return iconpath;
+    public String getPath() {
+        return path;
     }
 
-    public void setIconpath(String iconpath) {
-        this.iconpath = iconpath == null ? null : iconpath.trim();
+    public void setPath(String path) {
+        this.path = path == null ? null : path.trim();
     }
 }

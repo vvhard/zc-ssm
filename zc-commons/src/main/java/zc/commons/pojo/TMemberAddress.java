@@ -5,11 +5,17 @@ public class TMemberAddress {
 
     private Integer memberid;
 
+    private String name;
+
+    private String tel;
+
     private String address;
 
-    public TMemberAddress(Integer id, Integer memberid, String address) {
+    public TMemberAddress(Integer id, Integer memberid, String name, String tel, String address) {
         this.id = id;
         this.memberid = memberid;
+        this.name = name;
+        this.tel = tel;
         this.address = address;
     }
 
@@ -39,5 +45,21 @@ public class TMemberAddress {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 }

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import zc.commons.bean.AjaxResult;
 import zc.commons.pojo.TMember;
-import zc.portal.util.Configuration;
-import zc.portal.util.HttpClientUtil;
+import zc.commons.util.Configuration;
+import zc.commons.util.HttpClientUtil;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -13,7 +13,7 @@ public class Constant {
     public static final String INDEX_CATEGORY_2_PROJECT = "index_category_2_project";
     public static final String INDEX_CATEGORY_3_PROJECT = "index_category_3_project";
     public static final String INDEX_CATEGORY_OTHER_PROJECT = "index_category_other_project";
-    public static final String PROJECT = "project";
+    public static final String PROJECTID = "projectid";
     public static final String PROJECT_MEMBER = "project_member";
     public static final String PROJECTS_BY_TYPE = "projects_by_type";
     public static final String PROJECTS_COUNT = "projects_count";
@@ -24,4 +24,6 @@ public class Constant {
     public static final String TYPES = "types";
     public static final String PROJECTTEMPID = "projectTempId";
     public static final String PROJECTTEMP = "projecttemp";
+    public static final String FOLLOWED = "followed";
+    public static final String RETURNID = "returnid";
 }

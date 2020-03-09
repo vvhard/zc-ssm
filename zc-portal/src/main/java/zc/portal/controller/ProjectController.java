@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import zc.commons.bean.AjaxResult;
+import zc.commons.bean.MyProject;
 import zc.commons.pojo.TMember;
 import zc.commons.pojo.TProject;
+import zc.commons.pojo.TReturn;
 import zc.manager.Page;
-import zc.portal.util.Configuration;
+import zc.commons.util.Configuration;
 import zc.portal.util.Constant;
-import zc.portal.util.HttpClientUtil;
+import zc.commons.util.HttpClientUtil;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -23,19 +25,41 @@ import java.util.Map;
 @RequestMapping("/project")
 public class ProjectController {
     @RequestMapping("/detail")
-    public String details(int id, HttpSession session){
+    @ResponseBody
+    public AjaxResult<MyProject> details(int id){
         String json = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/project/" + id);
-        AjaxResult<TProject> result = JSON.toJavaObject(JSON.parseObject(json), AjaxResult.class);
-        String p = JSON.toJSONString(result.getContent());
-        TProject project = JSON.toJavaObject(JSON.parseObject(p), TProject.class);
-        // 获取项目发布者信息
-        String m = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/project/member/" + project.getMemberid());
-        AjaxResult<TMember> memberAjaxResult = JSON.toJavaObject(JSON.parseObject(m), AjaxResult.class);
-        String mem = JSON.toJSONString(memberAjaxResult.getContent());
-        TMember member = JSON.toJavaObject(JSON.parseObject(mem), TMember.class);
-        session.setAttribute(Constant.PROJECT_MEMBER, member);
-        session.setAttribute(Constant.PROJECT, project);
+        AjaxResult<MyProject> result = JSON.toJavaObject(JSON.parseObject(json), AjaxResult.class);
+        return result;
+    }
+    @RequestMapping("/toDetail")
+    public String projectDetail(int id,HttpSession session){
+        session.setAttribute(Constant.PROJECTID, id);
         return "project";
+    }
+
+    @GetMapping(value = "/support")
+    @ResponseBody
+    public AjaxResult<?> support(int projectid,int returnid,HttpSession session){
+        session.setAttribute(Constant.PROJECTID, projectid);
+        try {
+            TMember member = (TMember) session.getAttribute(Constant.PORTAL_LOGIN_USER);
+            if(member == null){
+                return AjaxResult.fail("请先进行登录", null, null);
+            }else{
+                Map<String,Object> ext = new HashMap<>();
+                ext.put("projectid", projectid);
+                ext.put("returnid", returnid);
+                return AjaxResult.success("已经登陆", null, ext);
+            }
+        } catch (Exception e) {
+            return AjaxResult.fail("请求错误", null, null);
+        }
+    }
+    @RequestMapping("/pay")
+    public String pay_1(int projectid,int returnid,HttpSession session){
+        session.setAttribute(Constant.PROJECTID, projectid);
+        session.setAttribute(Constant.RETURNID, returnid);
+        return "pay";
     }
     @RequestMapping("/more")
     public String moreProject(String type,HttpSession session){
@@ -58,14 +82,7 @@ public class ProjectController {
                                                @RequestParam(required = false)String queryContent){
         AjaxResult<Page<TProject>> result;
         Map<String, Object> ext = new HashMap<>();
-//        Map<String, Object> params = new HashMap<>();
         try {
-//            params.put("start", (pageno -1) * pagesize);
-//            params.put("pagesize",  pagesize);
-//            params.put("type", type);
-//            params.put("status", status);
-//            params.put("order", order);
-//            params.put("queryContent", queryContent);
             String url = null;
             if(queryContent == null || "".equals(queryContent)){
                 url = Configuration.remoteAddress +"/project/projects?start="+((pageno -1) * pagesize)
@@ -99,12 +116,26 @@ public class ProjectController {
         }
         return result;
     }
+
+    @GetMapping(value = "/return")
+    @ResponseBody
+    public AjaxResult<List<TReturn>> getReturn(int projectid){
+        Map<String, Object> ext = new HashMap<>();
+        try {
+            String json = HttpClientUtil.httpGetRequest(Configuration.remoteAddress+"/project/return/" + projectid);
+            return JSON.toJavaObject(JSON.parseObject(json), AjaxResult.class);
+        } catch (Exception e) {
+            // 查询失败
+            ext.put("err", "跨域请求错误/跨域返回结果处理错误");
+            ext.put("exception", e.toString());
+            return AjaxResult.fail("加载数据失败",null,ext);
+        }
+    }
+
     private Page<TProject> setPageData(String json,int pageno,int pagesize,int totalsize){
         AjaxResult<List<TProject>> ajaxResult = JSON.toJavaObject(JSON.parseObject(json), AjaxResult.class);
         List<TProject> projects = JSON.parseArray(JSON.toJSONString(ajaxResult.getContent()), TProject.class);
         Page<TProject> p_page = new Page<>();
-
-//        int totalsize = projects.size();
         // 总页数
         int totalno = ((totalsize % pagesize) == 0)?(totalsize / pagesize):(totalsize / pagesize) + 1;
         p_page.setDatas(projects); // 设置List<TProject>
@@ -113,4 +144,5 @@ public class ProjectController {
         p_page.setTotalsize(totalsize); // 总记录数
         return  p_page;
     }
+
 }

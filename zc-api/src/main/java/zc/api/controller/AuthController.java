@@ -2,21 +2,17 @@ package zc.api.controller;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import zc.api.service.MemberService;
+import zc.manager.service.MemberService;
 import zc.commons.bean.AjaxResult;
 import zc.commons.pojo.TAcctType;
 import zc.commons.pojo.TCert;
 import zc.commons.pojo.TMember;
-import zc.commons.pojo.TMemberCert;
 import zc.manager.service.AcctTypeService;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
+import java.beans.Transient;
 import java.util.*;
 
 @RestController
@@ -44,6 +40,21 @@ public class AuthController {
         }
         return result;
     }
+    @GetMapping(value = "/status/{id}")
+    public  AjaxResult<TMember> getStatus(@PathVariable("id")int memberid){
+        AjaxResult<TMember> result ;
+        Map<String,Object> ext = new HashMap<>();
+        try{
+            TMember member = memberService.getByMemberId(memberid);
+            result = AjaxResult.success("查询成功",member , null);
+        }catch (Exception e){
+            ext.put("err", "查询数据库出错");
+            ext.put("exception", e.toString());
+            result = AjaxResult.fail("查询失败",null,ext);
+        }
+        return result;
+    }
+
     @GetMapping(value = "/{acct_type}")
     public  AjaxResult<List<TCert>> getCerts(@PathVariable("acct_type")String acct_type){
         AjaxResult<List<TCert>> result ;
@@ -58,62 +69,22 @@ public class AuthController {
         }
         return result;
     }
-//    @RequestMapping("/upload")
-//    public Object test(){
-//
-//    }
-
-    /**
-     * 需要先将字符串(json)转换为原来的对象,file,member,certid
-     * @param loginacct
-     * @param file
-     * @param member
-     * @param validateCode
-     * @param certid
-     * @param session
-     * @return
-     */
-    @RequestMapping("/upload")
+    @RequestMapping("/submit")
     @ResponseBody
-    public AjaxResult<TMember> uploadInfo(String loginacct,String file, String member, String validateCode, String certid,
-                                          HttpSession session) {
-
-        // 转换为原来的内容
-        List<MultipartFile> files = JSON.parseArray(file,MultipartFile.class);
-        TMember mem = JSON.toJavaObject(JSON.parseObject(member), TMember.class);
-        List<Integer> cert_ids = JSON.parseArray(certid,Integer.class);
-
-        System.out.println("file："+files);
-        System.out.println("mem："+mem);
-        System.out.println("certid："+cert_ids);
-
+    @Transactional
+    public AjaxResult<TMember> uploadInfo(String file, String loginacct, String tel, String realname, String cardnum,
+                                          String accttype, String validateCode, String certids, HttpSession session) {
         AjaxResult<TMember> result;
         Map<String, Object> ext = new HashMap<>();
-        if (file != null && files.size() > 0) {
-            List<TMemberCert> list = new ArrayList<TMemberCert>();
-            for (int i = 0; i < cert_ids.size(); i++) { // 遍历该用户的所需cert的id
-                TMemberCert tmc = new TMemberCert();
-                MultipartFile multipartFile = files.get(i); // 第i个文件
-                String path = uploadFile("/auth_img", multipartFile, session); // 上传，返回在服务器中的地址
-                System.out.println("服务器中的地址:" + path);
-                tmc.setCertid(cert_ids.get(i));
-                try{
-                    tmc.setMemberid(memberService.queryId(loginacct));
-                }catch (Exception e){
-                    ext.put("err", "数据库操作失败");
-                    ext.put("exception", e.toString());
-                    result = AjaxResult.fail("信息提交及图片上传失败", null, ext);
-                    return result;
-                }
-                tmc.setIconpath(path);
-                list.add(tmc); // 资质记录
-            }
-            mem.setLoginacct(loginacct);
+        List<String> files = JSON.parseArray(file, String.class);
+        List<Integer> certid = JSON.parseArray(certids, Integer.class);
+        if ((files != null || files.size() > 0) && (certid!=null || certid.size() >0)) {
             try{
-//                memberService.update(member); //更新信息
-//                memberService.cert(list); // 保存带t_member_cert表，list 内容为tmc
-                memberService.auth(mem,list); // 带事务
-                result = AjaxResult.fail("信息提交及图片上传成功", mem, null);
+                // 形成新的Member
+                memberService.submitAuthInfoWithLoginacct(loginacct,realname,tel,cardnum,accttype); //更新信息
+                int memberId = memberService.queryId(loginacct);
+                memberService.updateMemberCert(memberId,certid,files); // 保存带t_member_cert表，list 内容为tmc
+                result = AjaxResult.success("信息提交成功,等待人工审核", null, null);
             }catch (Exception e){
                 ext.put("err", "数据库操作失败");
                 ext.put("exception", e.toString());
@@ -124,28 +95,6 @@ public class AuthController {
             ext.put("err", "没有图片");
             result = AjaxResult.fail("信息提交及图片上传失败", null, ext);
             return result;
-        }
-    }
-    /**
-     * 上传
-     */
-    private String uploadFile(String webPath, MultipartFile file,HttpSession session) {
-        ServletContext context = session.getServletContext();
-        String realPath = context.getRealPath(webPath);
-        System.out.println("真实地址:" + realPath);
-        String filename = UUID.randomUUID().toString().replace("-", "").
-                                 substring(0, 10) + "_file_" + file.getOriginalFilename();
-        try {
-            //webPath不存在的情况下必须创建
-            File file2 = new File(realPath);
-            if(!file2.exists()){
-                //创建目录
-                file2.mkdirs();
-            }
-            file.transferTo(new File(realPath+"/" + filename));
-            return webPath+"/" + filename;
-        } catch (Exception e) {
-            return null;
         }
     }
 }

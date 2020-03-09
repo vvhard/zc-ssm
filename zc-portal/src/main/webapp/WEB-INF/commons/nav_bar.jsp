@@ -18,7 +18,7 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="${ctx}/member/personal_center">
+                                    <li><a href="${ctx}/member/personal_center?id=${portal_login_user.id}">
                                         <i class="glyphicon glyphicon-scale"></i> 个人中心</a>
                                     </li>
                                     <li><a href="#">

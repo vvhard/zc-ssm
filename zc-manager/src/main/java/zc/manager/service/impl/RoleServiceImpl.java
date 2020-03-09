@@ -3,8 +3,10 @@ package zc.manager.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import zc.commons.pojo.TRole;
+import zc.commons.pojo.TRolePermission;
 import zc.commons.pojo.TUserRole;
 import zc.manager.dao.TRoleMapper;
+import zc.manager.dao.TRolePermissionMapper;
 import zc.manager.service.RoleService;
 
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import java.util.Map;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private TRoleMapper roleMapper;
+    @Autowired
+    private TRolePermissionMapper rolePermissionMapper;
     @Override
     public List<TRole> getUserRoles(int id) {
         return roleMapper.selectAssignToUser(id);
@@ -72,5 +76,16 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void updateRoleById(Integer roleid, String name, String description) {
         roleMapper.updateByPrimaryKey(roleid,name,description);
+    }
+
+    @Override
+    public void removeRoleAllPermission(int roleid) {
+
+        rolePermissionMapper.deleteByRoleId(roleid);
+    }
+
+    @Override
+    public void assignPermission2Role(TRolePermission rp) {
+        rolePermissionMapper.insert(rp);
     }
 }

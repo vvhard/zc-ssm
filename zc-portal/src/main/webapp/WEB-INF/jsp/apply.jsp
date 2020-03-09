@@ -52,11 +52,7 @@
                             申请账号:abc
                             <div>
                                 申请认证类型:
-                                <select>
-                                    <option>个人经营</option>
-                                    <option> 2</option>
-                                    <option> 3</option>
-                                </select>
+                                <label>个人经营</label>
                             </div>
                             预留邮箱:aaaa@zc.com<a href="#">[修改]</a>
                         </div>
@@ -148,7 +144,7 @@
          */
         var self = this;
         $.ajax({
-            url: "${ctx}/auth/apply1",
+            url: "${ctx}/auth/apply",
             type: "post",
             dataType: "json",
             cache: false, // 上传文件不需要缓存。
@@ -157,7 +153,7 @@
             contentType: false, // 不设置内容类型,因为是由<form>表单构造的FormData对象，且已经声明了属性
             success: function(result){
                 if(result.code == 1){
-                    alert("信息提交完成")
+                    window.location.href = "${ctx}/member/auth_complete";
                 }else{
                     alert("信息提交失败")
                 }

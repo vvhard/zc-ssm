@@ -1,6 +1,7 @@
 package zc.manager.service;
 
 import zc.commons.pojo.TRole;
+import zc.commons.pojo.TRolePermission;
 import zc.commons.pojo.TUserRole;
 
 import java.util.List;
@@ -28,4 +29,8 @@ public interface RoleService {
     void addRole(TRole role);
 
     void updateRoleById(Integer roleid, String name, String description);
+
+    void removeRoleAllPermission(int roleid);
+
+    void assignPermission2Role(TRolePermission rp);
 }

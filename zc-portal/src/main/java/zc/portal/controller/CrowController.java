@@ -1,8 +1,6 @@
 package zc.portal.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,20 +9,16 @@ import org.springframework.web.multipart.MultipartFile;
 import zc.commons.bean.AjaxResult;
 import zc.commons.pojo.*;
 import zc.commons.util.DateUtil;
-import zc.portal.util.Configuration;
+import zc.commons.util.Configuration;
 import zc.portal.util.Constant;
-import zc.portal.util.HttpClientUtil;
+import zc.commons.util.HttpClientUtil;
 import zc.portal.util.UploadFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/crow")
@@ -74,17 +68,26 @@ public class CrowController {
         session.setAttribute(Constant.PROJECTTEMPID,projectTempId);
         return "start_step_2";
     }
-    @RequestMapping("/start_step3")
-    public String step3(int projectTempId,HttpSession session){
-        session.setAttribute(Constant.PROJECTTEMPID,projectTempId);
-//        String json = HttpClientUtil.httpPostRequest(Configuration.remoteAddress+"/crow/task/projectTempId/" + projectid);
-//        result = JSON.toJavaObject(JSON.parseObject(json), AjaxResult.class);
-        return "start_step_3";
-    }
     @RequestMapping("/start_step4")
+    public String step3(int project_temp_id,String app_id,String app_private_key,String alipay_public_key,
+                        HttpSession session){
+        session.setAttribute(Constant.PROJECTTEMPID,project_temp_id);
+        Map<String,Object> params = new HashMap<>();
+        params.put("project_temp_id", project_temp_id);
+        params.put("app_id", app_id);
+        params.put("app_private_key", app_private_key);
+        params.put("alipay_public_key", alipay_public_key);
+        try {
+            String json = HttpClientUtil.httpPostRequest(Configuration.remoteAddress + "/crow/pay_info",params);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "start_step_4";
+    }
+    @RequestMapping("/start_step3")
     public String step4(int projectTempId,HttpSession session){
         session.setAttribute(Constant.PROJECTTEMPID,projectTempId);
-        return "start_step_4";
+        return "start_step_3";
     }
 
     @RequestMapping("/sumbit")
@@ -122,8 +125,8 @@ public class CrowController {
             params.put("money",money);
             params.put("day",day);
             params.put("createdate",DateUtil.currentDate());
-            params.put("headpicpath","/upload/crow/"+hFileRealPath); // 项目头图
-            params.put("detailpicpath","/upload/crow/"+dFileRealPath); // 项目详情图
+            params.put("headpicpath",hFileRealPath); // 项目头图
+            params.put("detailpicpath",dFileRealPath); // 项目详情图
             params.put("contact",contact);
             try {
                 String json = HttpClientUtil.httpPostRequest(Configuration.remoteAddress + "/crow/step1",params);

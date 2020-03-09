@@ -104,6 +104,12 @@
                 }
             }
         });
+        // 列表展开
+        $("a[href='${ctx}/serviceman/msg/index']").css("color", "red");
+        //加上tree close样式
+        $("a[href='${ctx}/serviceman/msg/index']").parents(".list-group-item")
+            .removeClass("tree-closed");
+        $("a[href='${ctx}/serviceman/adv/index']").parent().parent("ul").show(100);
         asyncRequesyData(1); // 页面初始化请求第一页
     });// init
 

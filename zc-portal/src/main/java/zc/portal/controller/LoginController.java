@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import zc.commons.bean.AjaxResult;
 import zc.commons.pojo.TMember;
-import zc.portal.util.Configuration;
+import zc.commons.util.Configuration;
 import zc.portal.util.Constant;
-import zc.portal.util.HttpClientUtil;
+import zc.commons.util.HttpClientUtil;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -16,7 +16,6 @@ import java.util.Map;
 public class LoginController {
     @RequestMapping("/login")
     public String login(String loginacct, String userpswd, HttpSession session){
-        System.out.println("portal:login");
         // 进行跨域请求
         // 带参数，使用get方法
         Map<String, Object> params = new HashMap<>();

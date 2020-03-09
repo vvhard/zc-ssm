@@ -15,6 +15,10 @@
       <arg column="headpicpath" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="detailpicpath" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="contact" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="appid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="appprivatekey" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="alipaypublickey" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="feedback" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -48,11 +52,11 @@
       contact = #{contact,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="zc.commons.pojo.TProjectTemp">
     select id, memberid, name, type, remark, money, day, status, createdate, headpicpath, 
-    detailpicpath, contact
+    detailpicpath, contact,appid,appprivatekey,alipaypublickey,feedback
     from t_project_temp
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, memberid, name, type, remark, money, day, status, createdate, headpicpath, 
@@ -66,4 +70,26 @@
       (#{memberid},#{type},#{name},#{remark},#{money},#{day},#{createdate},
        #{headpicpath},#{detailpicpath},#{contact})
   </insert>
+  <update id="insertPayInfo">
+    update t_project_temp
+    set appid=#{app_id},appprivatekey=#{app_private_key},alipaypublickey=#{alipay_public_key}
+    where id = #{project_temp_id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByMap" resultType="zc.commons.pojo.TProjectTemp">
+    select tpt.id, tpt.memberid,tm.realname as membername,tpt.name, tpt.type, tpt.remark, tpt.money, tpt.day,
+			tpt.status, tpt.createdate,tpt.headpicpath, tpt.detailpicpath, tpt.contact,tpt.appid,
+			tpt.appprivatekey,tpt.alipaypublickey
+    from t_project_temp tpt join t_member tm on tpt.memberid=tm.id
+    where status = 'CHECKING'
+    limit #{start},#{size}
+  </select>
+  <select id="selectProjectCount" resultType="int">
+    select count(id) from t_project_temp
+    where status = 'CHECKING'
+  </select>
+  <update id="updateStatus">
+    update t_project_temp
+    set status=#{status}
+    where id = #{project_temp_id}
+  </update>
 </mapper>

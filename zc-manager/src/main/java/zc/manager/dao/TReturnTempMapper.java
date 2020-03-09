@@ -13,4 +13,6 @@ public interface TReturnTempMapper {
     List<TReturnTemp> selectAll();
 
     int updateByPrimaryKey(TReturnTemp record);
+
+    List<TReturnTemp> selectByProjectId(int projectTempId);
 }

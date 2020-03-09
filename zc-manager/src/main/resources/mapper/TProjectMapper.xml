@@ -16,22 +16,73 @@
       <arg column="memberid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="createdate" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="follower" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="contact" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
+  </resultMap>
+  <resultMap id="MyFollowMap" type="zc.commons.bean.MyFollow">
+      <id column="id" property="id" />
+      <result column="name" property="name"/>
+      <result column="remark" property="remark"/>
+      <result column="money" property="money"/>
+      <result column="day"  property="day"/>
+      <result column="status"  property="status"/>
+      <result column="deploydate" property="deploydate"/>
+      <result column="supportmoney" property="supportmoney"/>
+      <result column="supporter"  property="supporter"/>
+      <result column="completion" property="completion" />
+      <result column="memberid" property="memberid"/>
+      <result column="createdate" property="createdate"/>
+      <result column="follower" property="follower"/>
+    <result column="contact" property="contact"/>
+  </resultMap>
+  <resultMap id="MyInitiateMap" type="zc.commons.bean.MyInitiate">
+    <id column="id" property="id" />
+    <result column="name" property="name"/>
+    <result column="remark" property="remark"/>
+    <result column="money" property="money"/>
+    <result column="day"  property="day"/>
+    <result column="status"  property="status"/>
+    <result column="deploydate" property="deploydate"/>
+    <result column="supportmoney" property="supportmoney"/>
+    <result column="supporter"  property="supporter"/>
+    <result column="completion" property="completion" />
+    <result column="memberid" property="memberid"/>
+    <result column="createdate" property="createdate"/>
+    <result column="follower" property="follower"/>
+    <result column="contact" property="contact"/>
+  </resultMap>
+  <resultMap id="MyProjectMap" type="zc.commons.bean.MyProject">
+    <id column="id" property="project_id" />
+    <result column="name" property="project_name"/>
+    <result column="remark" property="remark"/>
+    <result column="money" property="money"/>
+    <result column="day"  property="day"/>
+    <result column="status"  property="status"/>
+    <result column="deploydate" property="deploy_date"/>
+    <result column="supportmoney" property="support_money"/>
+    <result column="supporter"  property="supporter"/>
+    <result column="completion" property="completion" />
+    <result column="memberid" property="initiator_id"/>
+    <result column="createdate" property="create_date"/>
+    <result column="follower" property="follower"/>
+    <result column="contact" property="contact"/>
+    <result column="realname" property="initiator_name"/>
+    <result column="description" property="initiator_desc"/>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_project
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="zc.commons.pojo.TProject">
+  <insert id="insert" parameterType="zc.commons.pojo.TProject" keyProperty="id" useGeneratedKeys="true">
     insert into t_project (id, name, remark, 
       money, day, status, deploydate, 
       supportmoney, supporter, completion, 
-      memberid, createdate, follower
+      memberid, createdate, follower,contact
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{money,jdbcType=BIGINT}, #{day,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, #{deploydate,jdbcType=CHAR}, 
       #{supportmoney,jdbcType=BIGINT}, #{supporter,jdbcType=INTEGER}, #{completion,jdbcType=INTEGER}, 
-      #{memberid,jdbcType=INTEGER}, #{createdate,jdbcType=CHAR}, #{follower,jdbcType=INTEGER}
+      #{memberid,jdbcType=INTEGER}, #{createdate,jdbcType=CHAR}, #{follower,jdbcType=INTEGER},#{contact}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TProject">
@@ -47,12 +98,13 @@
       completion = #{completion,jdbcType=INTEGER},
       memberid = #{memberid,jdbcType=INTEGER},
       createdate = #{createdate,jdbcType=CHAR},
-      follower = #{follower,jdbcType=INTEGER}
+      follower = #{follower,jdbcType=INTEGER},
+      contact = #{contact}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, name, remark, money, day, status, deploydate, supportmoney, supporter, 
-    completion, memberid, createdate, follower
+    select id, name, remark, money, day, status, deploydate, supportmoney, supporter,
+    completion, memberid, createdate, follower,contact
     from t_project
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -62,12 +114,12 @@
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, remark, money, day, status, deploydate, supportmoney, supporter, 
-    completion, memberid, createdate, follower
+    completion, memberid, createdate, follower,contact
     from t_project
   </select>
   <select id="selectByType" resultType="zc.commons.pojo.TProject">
     select id, name, remark, money, day, status, deploydate, supportmoney, supporter,
-            completion, memberid, createdate, follower
+            completion, memberid, createdate, follower,contact
     from t_project
     where id in (select projectid from t_project_type
                   where typeid in (select id from t_type
@@ -80,13 +132,13 @@
   </select>
   <select id="selectRange" resultType="zc.commons.pojo.TProject">
     select id, name, remark, money, day, status, deploydate, supportmoney, supporter,
-            completion, memberid, createdate, follower
+            completion, memberid, createdate, follower,contact
     from t_project
     limit #{from},#{to}
   </select>
   <select id="selectProjects" resultType="zc.commons.pojo.TProject">
     select tp.id, tp.name,tp.remark, tp.money, tp.day, tp.status, tp.deploydate,
-           tp.supportmoney, tp.supporter,tp.completion, tp.memberid, tp.createdate, tp.follower
+           tp.supportmoney, tp.supporter,tp.completion, tp.memberid, tp.createdate, tp.follower,tp.contact
     from t_project tp join t_project_type tpt on tp.id = tpt.projectid join  t_type  tt on tpt.typeid = tt.id
     <where>
       <if test="type != 'all'">
@@ -96,7 +148,7 @@
         and tp.status=#{status}
       </if>
       <if test="queryContent != null and queryContent!= ''">
-        and tp.name like concat('%',#{queryContent},'%')
+        and tp.name like contact('%',#{queryContent},'%')
       </if>
     </where>
     <choose>
@@ -126,7 +178,7 @@
         and tp.status=#{status}
       </if>
       <if test="queryContent != null and queryContent!= ''">
-        and tp.name like concat('%',#{queryContent},'%')
+        and tp.name like contact('%',#{queryContent},'%')
       </if>
     </where>
     <choose>
@@ -140,5 +192,80 @@
         order by tp.supporter desc
       </when>
     </choose>
+  </select>
+  <select id="selectIndexProjects" resultType="zc.commons.pojo.TProject">
+    select id, name, remark, money, day, status, deploydate, supportmoney, supporter,
+    completion, memberid, createdate, follower,contact
+    from t_project
+    where id in (select projectid from t_project_type
+                 where typeid in (select id from t_type where name=#{type})
+                 )
+    limit 0,4
+  </select>
+  <insert id="insertByTempProject" useGeneratedKeys="true" keyProperty="id">
+    insert into t_project(name ,remark,money,day,createdate,memberid,contact)
+    values(#{name},#{remark},#{money},#{day},#{createdate},#{memberid},#{contact})
+  </insert>
+  <insert id="insertPicPathByTempProject" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_project_pic(projectid ,headpicpath,detailpicpath)
+    values(#{projectid},#{project.headpicpath},#{project.detailpicpath})
+  </insert>
+  <insert id="insertPayInfoByTempProject" useGeneratedKeys="true" keyProperty="id">
+    insert into t_project_pay_info(projectid ,appid,appprivatekey,alipaypublickey)
+    values(#{projectid},#{project.appid},#{project.appprivatekey},#{project.alipaypublickey})
+  </insert>
+  <insert id="insertTypeByTempProject" useGeneratedKeys="true" keyProperty="id">
+        insert into t_project_type(projectid ,typeid)
+        values(#{projectid},#{typeid})
+  </insert>
+  <select id="selectFollowProjectByMemberId" resultMap="MyFollowMap">
+    select *
+    from  t_project
+    where id in (select projectid from t_member_project_follow where memberid = #{memberid})
+    limit #{start},#{size}
+  </select>
+  <select id="selectFollowCountByMemberId" resultType="int">
+    select count(id)
+    from  t_project
+    where id in (select projectid from t_member_project_follow where memberid = #{memberid})
+  </select>
+  <select id="selectInitiateProjectByMemberId" resultMap="MyInitiateMap">
+    select *
+    from  t_project
+    where memberid = #{memberid}
+    <if test="status != 'all'">
+      and  status = #{status}
+    </if>
+    limit #{start},#{size}
+  </select>
+  <select id="selectInitiateProjectCountByMemberId" resultType="int">
+    select count(id)
+    from  t_project
+    where memberid = #{memberid}
+    <if test="status != 'all'">
+      and  status = #{status}
+    </if>
+  </select>
+  <insert id="insertFollow" useGeneratedKeys="true" keyProperty="id">
+      insert into t_member_project_follow(projectid,memberid) values (#{projectid},#{memberid})
+  </insert>
+  <delete id="deleteFollow" >
+     delete from  t_member_project_follow where projectid=#{projectid} and memberid=#{memberid}
+  </delete>
+  <select id="selectToMyProject" resultMap="MyProjectMap">
+    select tp.id, tp.name,tp.remark, tp.money, tp.day, tp.status, tp.deploydate,
+           tp.supportmoney, tp.supporter,tp.completion, tp.memberid as initiator_id, tp.createdate,
+           tp.follower,tp.contact,tm.realname as initiator_name,tm.description as initiator_desc
+    from t_project tp join t_member tm on tp.memberid=tm.id
+    where tp.id =#{projectid}
+  </select>
+  <select id="selectFormFollow" resultType="zc.commons.pojo.TMemberProjectFollow">
+      select * from t_member_project_follow where memberid=#{memberid} and projectid=#{projectid}
+  </select>
+  <select id="selectReturnByProjectid" resultType="zc.commons.pojo.TReturn">
+    select * from t_return where projectid=#{rojectid}
+  </select>
+  <select id="selectPayInfo" resultType="zc.commons.bean.ProjectPayInfo">
+    select * from t_project_pay_info where projectid=#{projectid}
   </select>
 </mapper>

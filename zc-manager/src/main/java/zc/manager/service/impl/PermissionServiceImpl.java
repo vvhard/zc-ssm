@@ -25,7 +25,12 @@ public class PermissionServiceImpl implements PermissionService {
         }
         return null;
     }
-
+    @Override
+    public List<TPermission> getPermissons(TUser user) {
+        List<TPermission> permissions ;
+        permissions = permissionMapper.selectByUser(user.getLoginacct());
+        return permissions;
+    }
     @Override
     public List<TPermission> getAllPermission() {
         return permissionMapper.selectAll();

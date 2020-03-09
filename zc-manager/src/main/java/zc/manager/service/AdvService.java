@@ -11,4 +11,12 @@ public interface AdvService {
     int queryUserNums(Map<String, Object> map);
 
     TAdvertisement getDetailById(int id);
+
+    void addAdv(TAdvertisement advertisement);
+
+    int deleteAdvById(int id);
+
+    int changAdvStatus(int id, String status);
+
+    List<TAdvertisement> getShowAdv();
 }

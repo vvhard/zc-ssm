@@ -1,5 +1,9 @@
 package zc.commons.pojo;
 
+import zc.commons.util.DateUtil;
+
+import java.util.Date;
+
 public class TProject {
     private Integer id;
 
@@ -27,7 +31,11 @@ public class TProject {
 
     private Integer follower;
 
-    public TProject(Integer id, String name, String remark, Long money, Integer day, String status, String deploydate, Long supportmoney, Integer supporter, Integer completion, Integer memberid, String createdate, Integer follower) {
+    private String concat;
+
+    public TProject(Integer id, String name, String remark, Long money, Integer day, String status,
+                    String deploydate, Long supportmoney, Integer supporter, Integer completion,
+                    Integer memberid, String createdate, Integer follower,String concat) {
         this.id = id;
         this.name = name;
         this.remark = remark;
@@ -41,7 +49,9 @@ public class TProject {
         this.memberid = memberid;
         this.createdate = createdate;
         this.follower = follower;
+        this.concat = concat;
     }
+
 
     public TProject() {
         super();
@@ -151,6 +161,14 @@ public class TProject {
         this.follower = follower;
     }
 
+    public String getConcat() {
+        return concat;
+    }
+
+    public void setConcat(String concat) {
+        this.concat = concat;
+    }
+
     @Override
     public String toString() {
         return "TProject{" +
@@ -167,6 +185,7 @@ public class TProject {
                 ", memberid=" + memberid +
                 ", createdate='" + createdate + '\'' +
                 ", follower=" + follower +
+                ", concat='" + concat + '\'' +
                 '}';
     }
 }

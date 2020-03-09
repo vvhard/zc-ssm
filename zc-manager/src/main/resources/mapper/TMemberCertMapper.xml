@@ -6,7 +6,7 @@
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="memberid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="certid" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="iconpath" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="path" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -15,24 +15,24 @@
   </delete>
   <insert id="insert" parameterType="zc.commons.pojo.TMemberCert">
     insert into t_member_cert (id, memberid, certid, 
-      iconpath)
+      path)
     values (#{id,jdbcType=INTEGER}, #{memberid,jdbcType=INTEGER}, #{certid,jdbcType=INTEGER}, 
-      #{iconpath,jdbcType=VARCHAR})
+      #{path,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TMemberCert">
     update t_member_cert
     set memberid = #{memberid,jdbcType=INTEGER},
       certid = #{certid,jdbcType=INTEGER},
-      iconpath = #{iconpath,jdbcType=VARCHAR}
+      path = #{iconpath,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, memberid, certid, iconpath
+    select id, memberid, certid, path
     from t_member_cert
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, memberid, certid, iconpath
+    select id, memberid, certid, path
     from t_member_cert
   </select>
 </mapper>

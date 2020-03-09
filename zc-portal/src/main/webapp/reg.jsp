@@ -78,11 +78,9 @@
         var userpswd = $("#userpswd").val()
         var email = $("#email").val()
         if(isNullStr(loginacct) || isNullStr(userpswd)){
-            alert("空")
             return ;
         }
         if(notEmail(email)){
-            alert(email)
             return ;
         }
         // 先用jq做简单校验，后续优化再进行详细校验
@@ -106,7 +104,7 @@
         })
     });
    function isNullStr(str){
-       if(str == null || str.trim() == ""){
+       if(str == null || str.replace(/(^s*)|(s*$)/g, "").length == 0 ){
            return true;
        }
        return false;

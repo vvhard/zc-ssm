@@ -61,7 +61,7 @@
   <select id="selectRolePermissions" resultType="zc.commons.pojo.TPermission">
     select p.*
     from t_permission p join t_role_permission rp on  p.id=rp.permissionid
-    where rp.id=#{roleid}
+    where rp.roleid=#{roleid}
   </select>
 
 </mapper>

@@ -5,6 +5,8 @@
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="memberid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tel" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
@@ -12,25 +14,27 @@
     delete from t_member_address
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="zc.commons.pojo.TMemberAddress">
-    insert into t_member_address (id, memberid, address
+  <insert id="insert" parameterType="zc.commons.pojo.TMemberAddress" useGeneratedKeys="true" keyProperty="id">
+    insert into t_member_address (memberid, name,tel,address
       )
-    values (#{id,jdbcType=INTEGER}, #{memberid,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}
+    values (#{memberid,jdbcType=INTEGER}, #{name},#{tel},#{address,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TMemberAddress">
     update t_member_address
     set memberid = #{memberid,jdbcType=INTEGER},
+      name=#{name},
+      tel=#{tel},
       address = #{address,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, memberid, address
+    select id, memberid, name,tel,address
     from t_member_address
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, memberid, address
+    select id, memberid, name,tel,address
     from t_member_address
   </select>
 </mapper>

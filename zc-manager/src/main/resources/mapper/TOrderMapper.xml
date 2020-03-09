@@ -9,30 +9,69 @@
       <arg column="returnid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="ordernum" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="createdate" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="price" javaType="java.lang.Double" jdbcType="DOUBLE" />
       <arg column="money" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="rtncount" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="status" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="receiptname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tel" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="invoice" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="invoictitle" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+  <resultMap id="MySupportMap" type="zc.commons.bean.MySupport">
+    <id property="project_id" column="id"></id>
+    <result property="project_name" column="name"></result>
+    <result property="completion" column="completion"></result>
+    <result property="day" column="day"></result>
+    <result property="deploydate" column="deploydate"></result>
+    <result property="support_time" column="createdate"></result>
+    <result property="order_num" column="ordernum"></result>
+    <result property="support_money" column="money"></result>
+    <result property="return_count" column="count"></result>
+    <result property="order_status" column="status"></result>
+  </resultMap>
+  <resultMap id="MyOrderMap" type="zc.commons.bean.MyOrder">
+      <id property="id" column="id" />
+      <result property="member_id" column="memberid"  />
+      <result property="project_id" column="projectid" />
+      <result property="return_id" column="returnid"  />
+      <result property="order_num" column="ordernum"  />
+      <result property="create_date" column="createdate" />
+      <result property="price" column="price" />
+      <result property="money" column="money"/>
+      <result property="count" column="count"  />
+      <result property="remark" column="remark"  />
+      <result property="status" column="status"  />
+      <result property="receipt_name" column="receiptname" />
+      <result property="tel" column="tel"/>
+      <result property="address" column="address" />
+      <result property="invoice" column="invoice" />
+      <result property="invoic_title" column="invoictitle" />
+      <result property="content" column="content"  />
+      <result property="rtncount" column="rtncount" />
+      <result property="freight" column="freight"/>
+      <result property="project_name" column="project_name" />
+      <result property="realname" column="realname" />
+  </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="zc.commons.pojo.TOrder">
+  <insert id="insert" parameterType="zc.commons.pojo.TOrder" useGeneratedKeys="true" keyProperty="id">
     insert into t_order (id, memberid, projectid, 
-      returnid, ordernum, createdate, 
-      money, rtncount, status, 
+      returnid, ordernum, createdate, price,
+      money, count, status, receiptname,tel,
       address, invoice, invoictitle, 
       remark)
     values (#{id,jdbcType=INTEGER}, #{memberid,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, 
-      #{returnid,jdbcType=INTEGER}, #{ordernum,jdbcType=VARCHAR}, #{createdate,jdbcType=CHAR}, 
-      #{money,jdbcType=INTEGER}, #{rtncount,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, 
-      #{address,jdbcType=VARCHAR}, #{invoice,jdbcType=CHAR}, #{invoictitle,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR})
+      #{returnid,jdbcType=INTEGER}, #{ordernum,jdbcType=VARCHAR}, #{createdate,jdbcType=CHAR},
+      #{price},#{money,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{status,jdbcType=CHAR},
+      #{receiptname},#{tel},#{address,jdbcType=VARCHAR}, #{invoice,jdbcType=CHAR},
+      #{invoictitle,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TOrder">
     update t_order
@@ -41,9 +80,12 @@
       returnid = #{returnid,jdbcType=INTEGER},
       ordernum = #{ordernum,jdbcType=VARCHAR},
       createdate = #{createdate,jdbcType=CHAR},
+      price = #{price},
       money = #{money,jdbcType=INTEGER},
-      rtncount = #{rtncount,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER},
       status = #{status,jdbcType=CHAR},
+      receiptname = #{receiptname},
+      tel = #{tel},
       address = #{address,jdbcType=VARCHAR},
       invoice = #{invoice,jdbcType=CHAR},
       invoictitle = #{invoictitle,jdbcType=VARCHAR},
@@ -51,14 +93,45 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, memberid, projectid, returnid, ordernum, createdate, money, rtncount, 
-    status, address, invoice, invoictitle, remark
+    select id, memberid, projectid, returnid, ordernum, createdate,  price,
+      money, count,receiptname,tel, address,status, invoice, invoictitle, remark
     from t_order
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, memberid, projectid, returnid, ordernum, createdate, money, rtncount, 
-    status, address, invoice, invoictitle, remark
+    select id, memberid, projectid, returnid, ordernum, createdate,price,
+      money, count,receiptname,tel, address,status, invoice, invoictitle, remark
     from t_order
   </select>
+  <select id="selectByMap" resultMap="MySupportMap">
+    select tp.id,tp.name,tp.completion,tp.day,tp.deploydate,o.ordernum,
+            o.createdate,o.money,o.count,o.status
+    from t_order o join t_project tp on o.projectid=tp.id
+    where o.memberid = #{memberid}
+    <if test="status != 'all'">
+      and o.status=#{status}
+    </if>
+    limit #{start},#{size}
+  </select>
+  <select id="selectCountByMap" resultType="int">
+    select count(tp.id)
+    from t_order o join t_project tp on o.projectid=tp.id
+    where o.memberid = #{memberid}
+    <if test="status != 'all'">
+      and o.status=#{status}
+    </if>
+  </select>
+  <select id="selectByOrderNum" resultMap="MyOrderMap">
+    select o.id,o.memberid,o.projectid,o.returnid,o.ordernum,o.createdate,o.price,o.money,
+			o.count,o.remark,o.status,o.receiptname,o.tel,o.address,o.invoice,invoictitle,
+			tr.content,tr.count as rtncount,tr.freight,tp.name,tm.realname
+    from (((t_order o join t_project tp on o.projectid = tp.id)
+                                  join t_member tm on tm.id=tp.memberid)
+                                  join t_return tr on tr.id = o.returnid)
+    where o.ordernum=#{ordernum}
+  </select>
+  <delete id="deleteByOrderNum" >
+    delete from t_order
+    where ordernum=#{ordernum}
+  </delete>
 </mapper>

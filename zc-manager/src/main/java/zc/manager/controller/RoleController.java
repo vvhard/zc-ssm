@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import zc.commons.pojo.TPermission;
 import zc.commons.pojo.TRole;
+import zc.commons.pojo.TRolePermission;
 import zc.manager.AjaxResult;
 import zc.manager.Page;
 import zc.manager.service.PermissionService;
@@ -104,17 +105,28 @@ public class RoleController {
     }
     @ResponseBody
     @RequestMapping("/doAssign")
-    public Object doAssign(int roleid,int[] unassignroleids) {
-        AjaxResult result  = new AjaxResult();
+    public zc.commons.bean.AjaxResult<Object> doAssign(int roleid, int[] permissionids) {
+        Map<String,Object> ext = new HashMap<>();
+        try {
+            // 先删除已经拥有的权限，重新分配
+            roleServiceImpl.removeRoleAllPermission(roleid);
+        } catch (Exception e) {
+            ext.put("exception", e.toString());
+            return zc.commons.bean.AjaxResult.fail("分配失败",null,ext);
+        }
+        try {
+            for(int permissionid:permissionids) {
+                TRolePermission rp = new TRolePermission();
+                rp.setRoleid(roleid);
+                rp.setPermissionid(permissionid);
+                roleServiceImpl.assignPermission2Role(rp);
+            }
+            return zc.commons.bean.AjaxResult.success("分配成功",null,null);
+        } catch (Exception e) {
+            ext.put("exception", e.toString());
+            return zc.commons.bean.AjaxResult.fail("分配失败",null,ext);
+        }
 
-        return result;
-    }
-    @ResponseBody
-    @RequestMapping("/unAssign")
-    public Object unAssign(int roleid,int[] assignroleids) {
-        AjaxResult result  = new AjaxResult();
-
-        return result;
     }
     @ResponseBody
     @RequestMapping("/loadAssignData")
@@ -144,7 +156,7 @@ public class RoleController {
 
     @ResponseBody
     @RequestMapping("/update")
-    public Object uppdate(Integer roleid,String name,String description) {
+    public Object update(Integer roleid,String name,String description) {
         AjaxResult result = new AjaxResult();
         try {
             roleServiceImpl.updateRoleById(roleid,name,description);

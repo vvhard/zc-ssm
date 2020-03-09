@@ -22,36 +22,6 @@
 			border-top: 1px solid #ddd;
 			text-align: center;
 		}
-		#topcontrol {
-			color: #fff;
-			z-index: 99;
-			width: 30px;
-			height: 30px;
-			font-size: 20px;
-			background: #222;
-			position: relative;
-			right: 14px !important;
-			bottom: 11px !important;
-			border-radius: 3px !important;
-		}
-
-		#topcontrol:after {
-			/*top: -2px;*/
-			left: 8.5px;
-			content: "\f106";
-			position: absolute;
-			text-align: center;
-			font-family: FontAwesome;
-		}
-
-		#topcontrol:hover {
-			color: #fff;
-			background: #18ba9b;
-			-webkit-transition: all 0.3s ease-in-out;
-			-moz-transition: all 0.3s ease-in-out;
-			-o-transition: all 0.3s ease-in-out;
-			transition: all 0.3s ease-in-out;
-		}
 		/* 侧栏导航 */
 		.sideBox{padding:10px;height:220px;background:#fff;margin-bottom:10px;overflow:hidden;}
 		.sideBox .hd{height:30px; line-height:30px; background:#f60; padding:0 10px;text-align:center;overflow:hidden;}
@@ -145,11 +115,28 @@
 		// genDivContent("c2_div","test");
 		// genDivContent("c3_div","test");
 		// genDivContent("oc_div","test");
+		<%--$.ajax({--%>
+			<%--type:"GET",--%>
+			<%--url:"${ctx}/advInfo",--%>
+			<%--data:{},--%>
+			<%--success:function(result){--%>
+				<%--if(result.code == 1){--%>
+					<%--var advs = result.content;--%>
+					<%--var a = '';--%>
+					<%--$.each(advs,function(index,adv){--%>
+						<%--a+='<div class="item" onclick="" style="cursor:pointer;">'--%>
+							<%--+'	<img src="'+adv.iconpath+'" alt="Third slide"/>'--%>
+							<%--+'</div>'--%>
+					<%--})--%>
+					<%--$("#advDiv").prepend(a);--%>
+				<%--}else{--%>
+
+				<%--}--%>
+			<%--}--%>
+		<%--})--%>
 	});
 	$(".thumbnail img").css("cursor", "pointer");
-	// $(".thumbnail img").click(function(id){
-	// });
-	function  genRecDivContent() {
+	function genRecDivContent() {
 		$.ajax({
 			type:"GET",
 			url:"${ctx}/rec",
@@ -232,7 +219,7 @@
 		}); // ajax
 	}
 	function details(id){
-		window.location.href ="${ctx}/project/detail?id=" + id ;
+		window.location.href ="${ctx}/project/toDetail?id=" +id ;
 	}
 	function moreProject(div_id){
 		var type = $("#" + div_id).text() // 获取分类

@@ -55,4 +55,10 @@
     freight, invoice, rtndate
     from t_return
   </select>
+  <insert id="insertByTempProject" keyProperty="id" useGeneratedKeys="true">
+    insert into
+      t_return (projectid, type, supportmoney, content, count, signalpurchase, purchase, freight, invoice, rtndate)
+    values (#{projectid}, #{rtn.type}, #{rtn.supportmoney}, #{rtn.content}, #{rtn.count},
+            #{rtn.signalpurchase}, #{rtn.purchase}, #{rtn.freight}, #{rtn.invoice}, #{rtn.rtndate})
+  </insert>
 </mapper>

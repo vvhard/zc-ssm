@@ -108,6 +108,12 @@
                 }
             }
         });
+        // 列表展开
+        $("a[href='${ctx}/permission/index']").css("color", "red");
+        //加上tree close样式
+        $("a[href='${ctx}/permission/index']").parents(".list-group-item")
+            .removeClass("tree-closed");
+        $("a[href='${ctx}/permission/index']").parent().parent("ul").show(100);
         initPermissionTree();
     });
 

@@ -56,4 +56,7 @@
     order by id desc
     limit #{start},#{size}
   </select>
+  <select id="selectIdByName" resultType="int">
+    select id from t_type where name=#{type}
+  </select>
 </mapper>

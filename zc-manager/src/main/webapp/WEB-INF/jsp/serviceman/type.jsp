@@ -88,6 +88,12 @@
                 }
             }
         });
+        // 列表展开
+        $("a[href='${ctx}/serviceman/type/index']").css("color", "red");
+        //加上tree close样式
+        $("a[href='${ctx}/serviceman/type/index']").parents(".list-group-item")
+            .removeClass("tree-closed");
+        $("a[href='${ctx}/serviceman/type/index']").parent().parent("ul").show(100);
     });
     function modify(acctTypeId){
         var c = acctTypeId;

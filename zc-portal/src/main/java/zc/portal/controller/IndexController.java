@@ -1,15 +1,15 @@
 package zc.portal.controller;
 
 import com.alibaba.fastjson.JSON;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import zc.commons.bean.AjaxResult;
+import zc.commons.pojo.TAdvertisement;
 import zc.commons.pojo.TProject;
-import zc.portal.util.Configuration;
+import zc.commons.util.Configuration;
 import zc.portal.util.Constant;
-import zc.portal.util.HttpClientUtil;
+import zc.commons.util.HttpClientUtil;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -71,41 +71,34 @@ public class IndexController {
     @RequestMapping("/category")
     @ResponseBody
     public  Object getCategory1(String type){
-        AjaxResult<List<TProject>> result;
         Map<String,Object> ext = new HashMap<>();
         try {
-            // TODO 先默认请求这个，后续改回这个
-//            String project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/category/" + type);
-            String project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/category");
+            String project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/category/" + type);
             // 转换成JSON对象
-            result = JSON.toJavaObject(JSON.parseObject(project), AjaxResult.class);
-            if(result.getCode() == 0){
-                result.setMsg("加载失败");
-            }else{
-                result.setMsg("加载成功");
-            }
+            return JSON.toJavaObject(JSON.parseObject(project), AjaxResult.class);
+
         } catch (Exception e) {
             ext.put("err", "跨域请求失败");
             ext.put("exception", e.toString());
-            result = AjaxResult.fail("加载失败",null,ext);
+            return AjaxResult.fail("加载失败",null,ext);
         }
-        return result;
     }
-//    @RequestMapping("/loadData")
-//    @ResponseBody
-//    public  AjaxResult<String> loadData(String[] types){
-//        AjaxResult<String> result;
-//        // 加载推荐项目
-//        String rec_project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/recommand");
-//        // 先写死
-//        // 加载分类1
-//        String c1_project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/category/");
-//        // 加载分类2
-//        String c2_project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/category2");
-//        // 加载分类3
-//        String c3_project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/category3");
-//        // 加载其他分类
-//        String oth_project = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/category_oth");
-//        return result;
-//    }
+
+    @RequestMapping("/advInfo")
+    @ResponseBody
+    public  AjaxResult<List<TAdvertisement>> getCategory(){
+        Map<String,Object> ext = new HashMap<>();
+        try {
+            String adv = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/advInfo");
+            // 转换成JSON对象
+            return JSON.toJavaObject(JSON.parseObject(adv), AjaxResult.class);
+
+        } catch (Exception e) {
+            ext.put("err", "跨域请求失败");
+            ext.put("exception", e.toString());
+            return AjaxResult.fail("加载失败",null,ext);
+        }
+
+    }
+
 }

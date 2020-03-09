@@ -22,4 +22,6 @@ public interface PermissionService {
 
     int updatePermission(Integer id, String name, String url, String icon);
 
+    List<TPermission> getPermissons(TUser user);
+
 }

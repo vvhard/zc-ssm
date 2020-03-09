@@ -16,7 +16,7 @@
                             <a rel="nofollow" onclick="start()"><i class="glyphicon glyphicon-edit"></i> 发起众筹</a>
                         </li>
                         <li>
-                            <a rel="nofollow" href="${ctx}/member/personal_center"><i class="glyphicon glyphicon-user"></i> 我的众筹</a>
+                            <a rel="nofollow" href="${ctx}/member/personal_center?id=${portal_login_user.id}"><i class="glyphicon glyphicon-user"></i> 我的众筹</a>
                         </li>
                     </ul>
                 </div>

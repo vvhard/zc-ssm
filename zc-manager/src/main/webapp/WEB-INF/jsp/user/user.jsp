@@ -113,6 +113,12 @@
                 }
             }
         });
+        // 列表展开
+        $("a[href='${ctx}/user/index']").css("color", "red");
+        //加上tree close样式
+        $("a[href='${ctx}/user/index']").parents(".list-group-item")
+            .removeClass("tree-closed");
+        $("a[href='${ctx}/user/index']").parent().parent("ul").show(100);
         asyncRequesyData(1); // 页面初始化请求第一页
     });// init
     // user.jsp 用到的js
@@ -442,6 +448,7 @@
             +'<label for="exampleInputPassword1">登陆账号</label>'
             +'<input type="text" class="form-control" readonly id="loginacct" name="loginacct" value="' +acct + '">'
             +'<i style="color:red;" class="errorinfo"></i>'
+            +'</div>'
             +'<div class="form-group">'
             +'<label for="exampleInputPassword1">用户名称</label>'
             +'<input type="text" class="form-control" id="username" name="username" value="' +username + '">'

@@ -5,6 +5,9 @@ public class TProjectTemp {
 
     private Integer memberid;
 
+    // 新加的membername，数据库没有此字段
+    private String membername;
+
     private String name;
 
     private String type;
@@ -25,19 +28,36 @@ public class TProjectTemp {
 
     private String contact;
 
-    public TProjectTemp(Integer id, Integer memberid, String name, String type, String remark, Long money, Integer day, String status, String createdate, String headpicpath, String detailpicpath, String contact) {
-        this.id = id;
-        this.memberid = memberid;
-        this.name = name;
-        this.type = type;
-        this.remark = remark;
-        this.money = money;
-        this.day = day;
-        this.status = status;
-        this.createdate = createdate;
-        this.headpicpath = headpicpath;
-        this.detailpicpath = detailpicpath;
-        this.contact = contact;
+    private String appid;
+
+    private String alipaypublickey;
+
+    private String appprivatekey;
+
+    private String feedback;
+
+    public String getAppid() {
+        return appid;
+    }
+
+    public void setAppid(String appid) {
+        this.appid = appid;
+    }
+
+    public String getAlipaypublickey() {
+        return alipaypublickey;
+    }
+
+    public void setAlipaypublickey(String alipaypublickey) {
+        this.alipaypublickey = alipaypublickey;
+    }
+
+    public String getAppprivatekey() {
+        return appprivatekey;
+    }
+
+    public void setAppprivatekey(String appprivatekey) {
+        this.appprivatekey = appprivatekey;
     }
 
     public TProjectTemp() {
@@ -138,5 +158,40 @@ public class TProjectTemp {
 
     public void setContact(String contact) {
         this.contact = contact == null ? null : contact.trim();
+    }
+
+    public String getMembername() {
+        return membername;
+    }
+
+    public void setMebername(String membername) {
+        this.membername = membername;
+    }
+
+    public void setMembername(String membername) {
+        this.membername = membername;
+    }
+
+    @Override
+    public String toString() {
+        return "TProjectTemp{" +
+                "id=" + id +
+                ", memberid=" + memberid +
+                ", membername='" + membername + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", remark='" + remark + '\'' +
+                ", money=" + money +
+                ", day=" + day +
+                ", status='" + status + '\'' +
+                ", createdate='" + createdate + '\'' +
+                ", headpicpath='" + headpicpath + '\'' +
+                ", detailpicpath='" + detailpicpath + '\'' +
+                ", contact='" + contact + '\'' +
+                ", appid='" + appid + '\'' +
+                ", alipaypublickey='" + alipaypublickey + '\'' +
+                ", appprivatekey='" + appprivatekey + '\'' +
+                ", feedback='" + feedback + '\'' +
+                '}';
     }
 }

@@ -143,30 +143,25 @@
                                 <div class="col-md-12 column">
                                     <blockquote style="border-left: 5px solid #f60;color:#f60;padding: 0 0 0 20px;">
                                         <b>
-                                            确认信息（请填写易付宝企业账号用于收款及身份核实）
+                                            确认信息（请填写支付沙箱支付所需的信息）
                                         </b>
                                     </blockquote>
                                 </div>
                                 <div class="col-md-12 column">
-
-
                                     <div class="row clearfix">
                                         <div class="col-md-6 column">
-                                            <form role="form">
+                                            <form role="form" action="${ctx}/crow/start_step4" method="post">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">易付宝企业账号：</label><input type="email" class="form-control" id="exampleInputEmail1" />
+                                                    <input value="${projectTempId}" type="hidden" name="project_temp_id">
+                                                    <label >支付宝沙箱APPID：</label><input type="email" class="form-control" id="app_id" />
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="exampleInputPassword1">法人身份证号：</label><input type="password" class="form-control" id="exampleInputPassword1" />
+                                                    <label >生成的应用私钥：</label><input type="password" class="form-control" id="app_private_key" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label >支付宝公钥：</label><input type="password" class="form-control" id="alipay_public_key" />
                                                 </div>
                                             </form>
-                                        </div>
-                                        <div class="col-md-6 column">
-                                            <div class="panel panel-default">
-                                                <div class="panel-body" style="padding:40px;">
-                                                    <i class="glyphicon glyphicon-user"></i> 易购账户名：1880XXXXXXX<br><br><span style="margin-left:60px;">您正在使用该账号发起众筹项目</span>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -194,7 +189,13 @@
         $(this).tab('show')
     })
     function submit(){
-        window.location.href = "${ctx}/crow/start_step4?projectTempId=" + ${projectTempId};
+        var appid = $("#app_id").val().trim();
+        var privatekey = $("#app_private_key").val().trim();
+        var publickey = $("#alipay_public_key").val().trim();
+        if((appid == null || appid =='') || (privatekey == null || publickey == '')||(publickey == null || publickey == '')){
+            return;
+        }
+       $("form[role='form']").submit();
     }
 </script>
 </body>

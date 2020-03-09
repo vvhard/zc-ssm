@@ -9,7 +9,7 @@
             </li>
             <c:forEach items="${user_menus}" var="permission">
                 <li class="list-group-item tree-closed">
-                    <span><i class="${permission.icon} "></i>${permission.name}<span class="badge" style="float: right">3</span></span>
+                    <span><i class="${permission.icon} "></i>${permission.name}</span>
                     <ul style="margin-top: 10px; display: none;">
                         <c:forEach items="${permission.childs }" var="child">
                             <li style="height: 30px;"><a href="${ctx }${child.url }">

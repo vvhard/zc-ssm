@@ -13,13 +13,24 @@ public class TAdvertisement {
 
     private Integer userid;
 
-    public TAdvertisement(Integer id, String name, String iconpath, String status, String url, Integer userid) {
+    private String description;
+
+    public TAdvertisement(Integer id, String name, String iconpath, String status, String url, Integer userid, String description) {
         this.id = id;
         this.name = name;
         this.iconpath = iconpath;
         this.status = status;
         this.url = url;
         this.userid = userid;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public TAdvertisement() {

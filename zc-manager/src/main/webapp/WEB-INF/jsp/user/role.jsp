@@ -117,6 +117,12 @@
                 }
             }
         });
+        // 列表展开
+        $("a[href='${ctx}/role/index']").css("color", "red");
+        //加上tree close样式
+        $("a[href='${ctx}/role/index']").parents(".list-group-item")
+            .removeClass("tree-closed");
+        $("a[href='${ctx}/role/index']").parent().parent("ul").show(100);
         asyncRequesyData(1); // 页面初始化请求第一页
     });// init
     // user.jsp 用到的js
@@ -356,14 +362,13 @@
     }
     function assignModal(roleid){
         // '<button class="btn btn-success" style="margin-left: 20px;margin-top: 10px;"  onclick="doAssign()">分配许可</button>'
-
         var assign =
              '<div class="panel-body">'
             +'      <ul id="permissionTree" class="ztree"></ul>'
             +'</div>';
         $(".modal-title").empty().text("权限分配");
         $(".modal-body").empty().html(assign);
-        var footer = '<button type="button" id="insertBtn" class="btn btn-success">'
+        var footer = '<button type="button" id="insertBtn" class="btn btn-success" onclick="doAssign('+roleid+')">'
             +'<i class="glyphicon glyphicon-plus"></i> 完成'
             +'</button>'
             +'<button type="reset" class="btn btn-danger">'
@@ -372,8 +377,6 @@
             +'</button>';
         $(".modal-footer").empty().html(footer);
         initPermissionTree(roleid);
-
-
     }
     //保存ztree对象的
     var ztreeObject;
@@ -449,7 +452,7 @@
         })
     }
     // 分配
-    function doAssign() {
+    function doAssign(roleid) {
         var treeObj = $.fn.zTree.getZTreeObj("permissionTree");
         var nodes = treeObj.getCheckedNodes(true);
         if (nodes.length == 0) {
@@ -460,7 +463,7 @@
             }, function() {
             });
         } else {
-            var d = "roleid=${param.id}";
+            var d = "roleid="+roleid;
             $.each(nodes, function(i, node) {
                 d += "&permissionids=" + node.id;
             });
@@ -469,11 +472,14 @@
                 url : "${ctx}/role/doAssign",
                 data : d,
                 success : function(result) {
-                    if (result.success) {
+                    if (result.code ==1) {
                         layer.msg("分配成功", {
                             time : 1000,
                             icon : 6
-                        }, function() {});
+                        }, function() {
+                            asyncRequesyData(1);
+                            $("#my_modal").modal("hide");
+                        });
                     } else {
                         layer.msg("分配失败", {
                             time : 1000,
@@ -509,12 +515,6 @@
             +'</i> 重置'
             + '</button>';
         $(".modal-footer").empty().html(footer);
-    }
-    function  assign() {
-        // 获取被选中的角色
-    }
-    function unAssign(){
-
     }
 </script>
 </body>

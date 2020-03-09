@@ -15,25 +15,13 @@
       <arg column="cardnum" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="accttype" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="feedback" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_member
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <!--注册时，只有这几个字段信息，其他字段可在个人中心修改信息时，通过更新记录进行设置-->
-  <insert id="insert" parameterType="zc.commons.pojo.TMember" useGeneratedKeys="true" keyProperty="id">
-    insert into t_member
-        (loginacct, userpswd,username, email,authstatus,usertype)
-    values (
-      #{loginacct,jdbcType=VARCHAR},
-      #{userpswd,jdbcType=VARCHAR},
-      #{username,jdbcType=VARCHAR},
-      #{email,jdbcType=VARCHAR},
-      #{authstatus,jdbcType=CHAR},
-      #{usertype,jdbcType=CHAR}
-      )
-  </insert>
   <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TMember">
     update t_member
     set loginacct = #{loginacct,jdbcType=VARCHAR},
@@ -48,24 +36,6 @@
       accttype = #{accttype,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByLoginacct" parameterType="zc.commons.pojo.TMember">
-    update t_member
-    set
-      tel = #{tel,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      authstatus = #{authstatus,jdbcType=CHAR},
-      realname = #{realname,jdbcType=VARCHAR},
-      cardnum = #{cardnum,jdbcType=VARCHAR},
-      accttype = #{accttype,jdbcType=VARCHAR}
-    where loginacct = #{loginacct,jdbcType=VARCHAR},
-  </update>
-  <insert id="" parameterType="list" useGeneratedKeys="true" keyProperty="id">
-    insert into t_member_cert(memberid,certid,iconpath)
-    values
-    <foreach separator="," collection="list" item="tmc">
-      (#{tmc.memberid},#{tmc.certid},#{tmc.iconpath})
-    </foreach>
-  </insert>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, loginacct, userpswd, username, tel, email, authstatus, usertype, realname, 
     cardnum, accttype
@@ -74,9 +44,23 @@
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, loginacct, userpswd, username, tel, email, authstatus, usertype, realname, 
-    cardnum, accttype
+    cardnum, accttype,feedback
     from t_member
   </select>
+
+  <!--注册时，只有这几个字段信息，其他字段可在个人中心修改信息时，通过更新记录进行设置-->
+  <insert id="insert" parameterType="zc.commons.pojo.TMember" useGeneratedKeys="true" keyProperty="id">
+    insert into t_member
+        (loginacct, userpswd,username, email,authstatus,usertype)
+    values (
+      #{loginacct,jdbcType=VARCHAR},
+      #{userpswd,jdbcType=VARCHAR},
+      #{username,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR},
+      #{authstatus,jdbcType=CHAR},
+      #{usertype,jdbcType=CHAR}
+      )
+  </insert>
   <select id="selectByLoginacct" resultType="zc.commons.pojo.TMember">
     select * from t_member
     where loginacct=#{loginacct} and userpswd=#{userpswd}
@@ -89,5 +73,64 @@
       select authstatus
       from t_member
       where loginacct=#{loginacct}
+  </select>
+  <update id="updateAuthInfoByLoginacct">
+    update t_member
+    set
+      tel = #{tel,jdbcType=VARCHAR},
+      authstatus = 'CHECKING',
+      realname = #{realname,jdbcType=VARCHAR},
+      cardnum = #{cardnum,jdbcType=VARCHAR},
+      accttype = #{accttype,jdbcType=VARCHAR}
+    where loginacct = #{loginacct}
+  </update>
+  <update id="updateByLoginacct">
+    update t_member
+    set
+      username = #{username},
+      tel = #{tel},
+      email = #{email},
+      description = #{description}
+    where loginacct = #{loginacct}
+  </update>
+  <update id="updatePassword">
+    update t_member
+    set
+      userpswd = #{newPassword},
+    where loginacct = #{loginacct} and userpswd=#{oldPassword}
+  </update>
+  <insert id="insert2MemberCertByMemberId" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+      insert into t_member_cert(memberid,certid,path)
+      values
+      <foreach separator="," collection="list" item="tmc">
+        (#{tmc.memberid},#{tmc.certid},#{tmc.path})
+      </foreach>
+</insert>
+  <select id="selectInChecking" resultType="zc.commons.pojo.TMember">
+     select * from t_member
+     where authstatus='CHECKING'
+     limit #{start},#{size}
+  </select>
+  <select id="selectInCheckingCount" resultType="int">
+     select count(id) from t_member
+     where authstatus='CHECKING'
+  </select>
+  <select id="selectCertByMemberId" resultType="zc.commons.pojo.TMemberCert">
+      select * from t_member_cert
+      where memberid=#{memberid}
+  </select>
+  <select id="selectCertNameByMemberId" resultType="String">
+      select name from t_cert
+      where id in(select certid from t_member_cert where memberid=#{memberid})
+  </select>
+  <update id="updateAuthStatus" >
+      update t_member set authstatus=#{status},feedback=#{feedback}
+      where id=#{id}
+  </update>
+  <select id="selectById" resultType="zc.commons.pojo.TMember">
+    select * from t_member where id = #{id}
+  </select>
+  <select id="selectAddress" resultType="zc.commons.pojo.TMemberAddress">
+    select * from t_member_address where memberid = #{memberid}
   </select>
 </mapper>

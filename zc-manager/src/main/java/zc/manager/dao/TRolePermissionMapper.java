@@ -15,4 +15,6 @@ public interface TRolePermissionMapper {
     List<TRolePermission> selectAll();
 
     int updateByPrimaryKey(TRolePermission record);
+
+    void deleteByRoleId(int roleid);
 }

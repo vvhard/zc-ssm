@@ -13,11 +13,17 @@ public class TOrder {
 
     private String createdate;
 
+    private double price;
+
     private Integer money;
 
-    private Integer rtncount;
+    private Integer count;
 
     private String status;
+
+    private String receiptname;
+
+    private String tel;
 
     private String address;
 
@@ -27,16 +33,22 @@ public class TOrder {
 
     private String remark;
 
-    public TOrder(Integer id, Integer memberid, Integer projectid, Integer returnid, String ordernum, String createdate, Integer money, Integer rtncount, String status, String address, String invoice, String invoictitle, String remark) {
+    public TOrder(Integer id, Integer memberid, Integer projectid, Integer returnid, String ordernum,
+                  String createdate, double price, Integer money, Integer count, String status,
+                  String receiptname, String tel, String address, String invoice, String invoictitle,
+                  String remark) {
         this.id = id;
         this.memberid = memberid;
         this.projectid = projectid;
         this.returnid = returnid;
         this.ordernum = ordernum;
         this.createdate = createdate;
+        this.price = price;
         this.money = money;
-        this.rtncount = rtncount;
+        this.count = count;
         this.status = status;
+        this.receiptname = receiptname;
+        this.tel = tel;
         this.address = address;
         this.invoice = invoice;
         this.invoictitle = invoictitle;
@@ -103,12 +115,28 @@ public class TOrder {
         this.money = money;
     }
 
-    public Integer getRtncount() {
-        return rtncount;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setRtncount(Integer rtncount) {
-        this.rtncount = rtncount;
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public String getReceiptname() {
+        return receiptname;
+    }
+
+    public void setReceiptname(String receiptname) {
+        this.receiptname = receiptname;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     public String getStatus() {
@@ -149,5 +177,13 @@ public class TOrder {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

@@ -12,10 +12,10 @@
     delete from t_role_permission
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="zc.commons.pojo.TRolePermission">
-    insert into t_role_permission (id, roleid, permissionid
+  <insert id="insert" parameterType="zc.commons.pojo.TRolePermission" useGeneratedKeys="true" keyProperty="id">
+    insert into t_role_permission (roleid, permissionid
       )
-    values (#{id,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{permissionid,jdbcType=INTEGER}
+    values ( #{roleid,jdbcType=INTEGER}, #{permissionid,jdbcType=INTEGER}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="zc.commons.pojo.TRolePermission">
@@ -33,4 +33,8 @@
     select id, roleid, permissionid
     from t_role_permission
   </select>
+  <delete id="deleteByRoleId">
+        delete from t_role_permission
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </delete>
 </mapper>
