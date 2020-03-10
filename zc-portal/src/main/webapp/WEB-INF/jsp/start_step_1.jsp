@@ -219,10 +219,10 @@
                                             <label class="col-sm-2 control-label">项目头图</label>
                                             <div class="col-sm-10">
                                                 <div style="float: left">
-                                                    <input type="file"name="hfile" id="hfile"onchange="readAsDataURL()">
+                                                    <input type="file"name="hfile" id="hfile"onchange="readAsDataURL('hfile')">
                                                 </div>
-                                                <div class="pic" style="float: left">
-                                                    <img id="img1" src=""/>
+                                                <div class="pic" id="hfileImg"  style="float: left">
+                                                    <img  src=""/>
                                                 </div>
                                             </div>
                                         </div>
@@ -233,10 +233,10 @@
                                             <label class="col-sm-2 control-label">项目详情</label>
                                             <div class="col-sm-10">
                                                 <div style="float: left">
-                                                    <input type="file" name="dfile" id="dfile"onchange="readAsDataURL()">
+                                                    <input type="file" name="dfile" id="dfile"onchange="readAsDataURL('dfile')">
                                                 </div>
-                                                <div class="pic" style="float: left">
-                                                    <img id="img2" src=""/>
+                                                <div class="pic" id="dfileImg"  style="float: left">
+                                                    <img src=""/>
                                                 </div>
                                             </div>
                                         </div>
@@ -293,6 +293,20 @@
             }
         });
     });
+    function readAsDataURL(id) {
+        if(typeof FileReader=='undifined')			//判断浏览器是否支持filereader
+        {
+            alert("否支持filereader")
+            return false;
+        }
+        var file=document.getElementById(id).files[0];
+        var reader=new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload=function(e)
+        {
+            $("#" + id +"Img").html('<img src="'+this.result+'"/>')
+        }
+    }
 </script>
 </body>
 </html>

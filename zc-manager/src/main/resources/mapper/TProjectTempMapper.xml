@@ -73,7 +73,7 @@
   <update id="insertPayInfo">
     update t_project_temp
     set appid=#{app_id},appprivatekey=#{app_private_key},alipaypublickey=#{alipay_public_key}
-    where id = #{project_temp_id,jdbcType=INTEGER}
+    where id = #{project_temp_id}
   </update>
   <select id="selectByMap" resultType="zc.commons.pojo.TProjectTemp">
     select tpt.id, tpt.memberid,tm.realname as membername,tpt.name, tpt.type, tpt.remark, tpt.money, tpt.day,
@@ -90,6 +90,9 @@
   <update id="updateStatus">
     update t_project_temp
     set status=#{status}
+    <if test="feedback != null">
+      ,feedback=#{feedback}
+    </if>
     where id = #{project_temp_id}
   </update>
 </mapper>

@@ -207,8 +207,10 @@
     limit 0,4
   </select>
   <insert id="insertByTempProject" useGeneratedKeys="true" keyProperty="id">
-    insert into t_project(name ,remark,money,day,createdate,memberid,contact)
-    values(#{name},#{remark},#{money},#{day},#{createdate},#{memberid},#{contact})
+    insert into t_project(name ,remark,money,day,createdate,memberid,contact,
+    status, deploydate,supportmoney, supporter, completion,  follower)
+    values(#{name},#{remark},#{money},#{day},#{createdate},#{memberid},#{contact},
+    #{status},#{deploydate},#{supportmoney},#{supporter},#{completion},#{follower})
   </insert>
   <insert id="insertPicPathByTempProject" useGeneratedKeys="true" keyProperty="id" >
     insert into t_project_pic(projectid ,headpicpath,detailpicpath)
@@ -275,7 +277,15 @@
   </select>
   <update id="updateFollowCount">
     update t_project
-    set follower= #{follower} + (select c from (select follower as c from t_project where id=#{peojectid}) as temp)
-    where  id=#{peojectid}
+    set follower= #{follower} + (select c from (select follower as c from t_project where id=#{projectid}) as temp)
+    where  id=#{projectid}
+  </update>
+  <update id="updateProjectAfterSupport">
+    update t_project
+    set
+    supporter = 1+(select c from (select supporter as c from t_project where id=#{projectid}) as temp),
+    supportmoney = #{money}+ (select c from (select supportmoney as c from t_project where id=#{projectid}) as temp1),
+    completion = ((#{money}+(select c from (select supportmoney as c from t_project where id=#{projectid}) as temp2))/money)*100
+    where  id=#{projectid};
   </update>
 </mapper>

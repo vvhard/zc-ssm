@@ -141,4 +141,9 @@ public class MemberServiceImpl implements MemberService {
     public boolean updatePassword(String loginacct, String oldPassword, String newPassword) {
         return (memeberMapper.updatePassword(loginacct,oldPassword,newPassword) > 0);
     }
+
+    @Override
+    public void delteAddress(int addressid) {
+        memberAddressMapper.deleteByPrimaryKey(addressid);
+    }
 }

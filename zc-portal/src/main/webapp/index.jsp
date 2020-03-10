@@ -90,20 +90,7 @@
 	<%@include file="/WEB-INF/commons/other_project.jsp"%>
 </div><!-- /.container -->
 <!-- FOOTER -->
-<div class="container"  >
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<div id="footer">
-				<div class="footerNav">
-					<a rel="nofollow" href="http://www.atguigu.com">关于我们</a> | <a rel="nofollow" href="http://www.atguigu.com">服务条款</a> | <a rel="nofollow" href="http://www.atguigu.com">免责声明</a> | <a rel="nofollow" href="http://www.atguigu.com">网站地图</a> | <a rel="nofollow" href="http://www.atguigu.com">联系我们</a>
-				</div>
-				<div class="copyRight">
-					Copyright ?2017-2017atguigu.com 版权所有
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+<%@include file="./WEB-INF/commons/footer.jsp"%>
 <script src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="${ctx}/static/script/docs.min.js"></script>
 <script src="${ctx}/static/script/back-to-top.js"></script>
@@ -115,25 +102,6 @@
 		// genDivContent("c2_div","test");
 		// genDivContent("c3_div","test");
 		// genDivContent("oc_div","test");
-		<%--$.ajax({--%>
-			<%--type:"GET",--%>
-			<%--url:"${ctx}/advInfo",--%>
-			<%--data:{},--%>
-			<%--success:function(result){--%>
-				<%--if(result.code == 1){--%>
-					<%--var advs = result.content;--%>
-					<%--var a = '';--%>
-					<%--$.each(advs,function(index,adv){--%>
-						<%--a+='<div class="item" onclick="" style="cursor:pointer;">'--%>
-							<%--+'	<img src="'+adv.iconpath+'" alt="Third slide"/>'--%>
-							<%--+'</div>'--%>
-					<%--})--%>
-					<%--$("#advDiv").prepend(a);--%>
-				<%--}else{--%>
-
-				<%--}--%>
-			<%--}--%>
-		<%--})--%>
 	});
 	$(".thumbnail img").css("cursor", "pointer");
 	function genRecDivContent() {

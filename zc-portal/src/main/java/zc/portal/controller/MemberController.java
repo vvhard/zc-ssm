@@ -316,6 +316,64 @@ public class MemberController {
             return AjaxResult.fail("请求失败，请稍后重试",null,ext);
         }
     }
+    @RequestMapping("/address")
+    @ResponseBody
+    public AjaxResult<List<TMemberAddress>> updateInfo(String memberid){
+        Map<String,Object> ext = new HashMap<>();
+        try{
+            String json = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/member/"+ memberid +"/address" );
+            return JSON.toJavaObject(JSON.parseObject(json), AjaxResult.class);
+        }catch (Exception e){
+            ext.put("err", "请求失败");
+            ext.put("exception",e.toString());
+            return AjaxResult.fail("请求失败，请稍后重试",null,ext);
+        }
+    }
+    @RequestMapping("/address/add")
+    @ResponseBody
+    public AjaxResult<TMemberAddress> addAddress(String name,String tel,String address,HttpSession session){
+        Map<String,Object> ext = new HashMap<>();
+        Map<String,Object> params = new HashMap<>();
+        TMember member = (TMember) session.getAttribute(Constant.PORTAL_LOGIN_USER);
+        if(member == null){
+            return AjaxResult.fail("用户未登录", null, null);
+        }else {
+            try {
+                params.put("name", name);
+                params.put("tel", tel);
+                params.put("address", address);
+                String json = HttpClientUtil.httpPostRequest(
+                        Configuration.remoteAddress + "/member/"+member.getId()+"/address/add" , params);
+                return JSON.toJavaObject(JSON.parseObject(json), AjaxResult.class);
+            } catch (Exception e) {
+                ext.put("err", "请求失败");
+                ext.put("exception", e.toString());
+                return AjaxResult.fail("请求失败，请稍后重试", null, ext);
+            }
+        }
+    }
+    @RequestMapping("/address/delete")
+    @ResponseBody
+    public AjaxResult<Object> deleteAddress(String addressid,HttpSession session){
+        Map<String,Object> ext = new HashMap<>();
+        TMember member = (TMember) session.getAttribute(Constant.PORTAL_LOGIN_USER);
+        if(member == null){
+            return AjaxResult.fail("用户未登录", null, null);
+        }else {
+            try {
+                String json = HttpClientUtil.httpPostRequest(
+                        Configuration.remoteAddress + "/member/address/delete/" + addressid);
+                return JSON.toJavaObject(JSON.parseObject(json), AjaxResult.class);
+            } catch (Exception e) {
+                ext.put("err", "请求失败");
+                ext.put("exception", e.toString());
+                return AjaxResult.fail("请求失败，请稍后重试", null, ext);
+            }
+        }
+    }
+
+
+
 
 
 }

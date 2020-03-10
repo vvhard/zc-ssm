@@ -165,7 +165,7 @@
                         </div>
                     </div>
                     <div class="panel-footer" style="text-align:center;">
-                        <button type="button" class="btn  btn-warning btn-lg" onclick="window.location.href='${ctx}/member/personal_center'">我的众筹</button>
+                        <button type="button" class="btn  btn-warning btn-lg" onclick="window.location.href='${ctx}/member/personal_center?id=${portal_login_user.id}'">我的众筹</button>
                     </div>
                 </div>
             </div>

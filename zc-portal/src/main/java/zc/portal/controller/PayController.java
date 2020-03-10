@@ -56,9 +56,9 @@ public class PayController {
         params.put("name", name);
         params.put("tel",tel);
         params.put("address", address);
-        params.put("memberid", member.getId());
         try {
-            String json = HttpClientUtil.httpPostRequest(Configuration.remoteAddress + "/pay/addr",params);
+            String json = HttpClientUtil.httpPostRequest(
+                    Configuration.remoteAddress + "/member/"+member.getId()+"/address/add",params);
             return JSON.toJavaObject(JSON.parseObject(json), AjaxResult.class);
         } catch (UnsupportedEncodingException e) {
             ext.put("err", "跨域请求错误/JSON解析错误");

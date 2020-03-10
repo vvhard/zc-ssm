@@ -20,4 +20,6 @@ public interface ProjectTempService {
     int queryProjectCount();
 
     void checking(int project_temp_id);
+
+    void checkFail(int projectid, String feedback);
 }

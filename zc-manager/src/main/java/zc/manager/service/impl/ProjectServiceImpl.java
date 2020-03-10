@@ -8,6 +8,7 @@ import zc.commons.bean.MyInitiate;
 import zc.commons.bean.MyProject;
 import zc.commons.bean.ProjectPayInfo;
 import zc.commons.pojo.*;
+import zc.commons.util.DateUtil;
 import zc.manager.dao.*;
 import zc.manager.service.ProjectService;
 
@@ -134,7 +135,14 @@ public class ProjectServiceImpl implements ProjectService {
         project.setDay(projectTemp.getDay());
         project.setMoney(projectTemp.getMoney());
         project.setCreatedate(projectTemp.getCreatedate());
-        project.setConcat(projectTemp.getContact());
+        project.setContact(projectTemp.getContact());
+        // 默认字段
+        project.setSupporter(0);
+        project.setSupportmoney((long)0);
+        project.setCompletion(0);
+        project.setDeploydate(DateUtil.currentDate());
+        project.setFollower(0);
+        project.setStatus("I");
         projectMapper.insertByTempProject(project); // 设置项目基本信息
         int projectid = project.getId();
         projectMapper.insertPicPathByTempProject(projectid,projectTemp); // 设置项目图片

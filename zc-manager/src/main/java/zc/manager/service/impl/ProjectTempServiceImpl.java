@@ -17,6 +17,7 @@ public class ProjectTempServiceImpl implements ProjectTempService {
     @Override
     public void addPayInfo(int project_temp_id, String app_id, String app_private_key, String alipay_public_key) {
         projectTempMapper.insertPayInfo(project_temp_id,app_id,app_private_key,alipay_public_key);
+        projectTempMapper.updateStatus(project_temp_id,"CHECKING",null);
     }
 
     /**
@@ -42,6 +43,11 @@ public class ProjectTempServiceImpl implements ProjectTempService {
 
     @Override
     public void checking(int project_temp_id) {
-        projectTempMapper.updateStatus(project_temp_id,"CHECKING");
+        projectTempMapper.updateStatus(project_temp_id,"CHECKING",null);
+    }
+
+    @Override
+    public void checkFail(int projectid, String feedback) {
+        projectTempMapper.updateStatus(projectid,"CHECKING",feedback);
     }
 }

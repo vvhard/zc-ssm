@@ -114,6 +114,7 @@
                         <li role="presentation" class="active"><a href="#support" onclick="mySupport(1,'all')">我支持的</a></li>
                         <li role="presentation"><a href="#attension"onclick="myFollow(1)">我关注的</a></li>
                         <li role="presentation"><a href="#add"onclick="myInitiate(1,'all')">我发起的</a></li>
+                        <li role="presentation"><a href="#addr"onclick="myAddress()">我的地址</a></li>
                         <li class=" pull-right">
                             <button type="button" class="btn btn-warning" onclick="start()">发起众筹</button>
                         </li>
@@ -224,6 +225,55 @@
                                 </div>
                             </div>
                         </div>
+                        <!--我的地址-->
+                        <div role="tabpanel" class="tab-pane fade  " id="addr" aria-labelledby="addr-tab">
+                            <div class="container-fluid">
+                                <div class="row clearfix">
+                                    <div class="col-md-12 column" id="myAddress">
+                                    </div >
+
+                                    <div class="col-md-12 column" style="padding:0 30px;" >
+                                        <div style="margin-top: 15px;">
+                                            <button type="button" class="btn btn-primary" onclick="addAddress()">
+                                                <b style="font-size: 15px">新地址</b>
+                                            </button>
+                                        </div>
+                                        <div class="newAddress panel panel-default" style="display:none;border-style: dashed;background-color:#eceeef;margin-top: 15px">
+                                            <div class="panel-body">
+                                                <div type="button" class="close" style="float: right" onclick="closeDiv()">&times;</div>
+                                                <div class="col-md-12 column" >
+                                                    <form class="form-horizontal" id ="addrForm">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">收货人（*）</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" class="form-control"name="name" style="width:200px;" placeholder="姓名" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">手机（*）</label>
+                                                            <div class="col-sm-10">
+                                                                <input class="form-control" name="tel"type="text" style="width:200px;" placeholder="请填写11位手机号码"></input>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">地址（*）</label>
+                                                            <div class="col-sm-10">
+                                                                <input class="form-control" type="text" name="address"style="width:400px;" placeholder="请填写收货地址"></input>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-sm-10">
+                                                                <button type="button" class="btn btn-primary" onclick="addAddr()">确认配送信息</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -278,7 +328,6 @@
            }
         }); // ajax
         mySupport(1,'all');
-        myFollow(1);
     })
     /*选择项目状态时的点击事件处理*/
     $("div[id='s_status'] a").click(function(){
@@ -596,9 +645,9 @@
                     body+='<div style=" border:1px solid #ddd">'
                         +'      <div style="margin-top:10px;margin-left: 10px;">'
                         +'          <label>订单编号：</label>' + order.order_num
-                        +'          <label style="margin-left: 50px">创建时间：</label>' + order.create_date
+                        +'          <label style="margin-left: 30px">创建时间：</label>' + order.create_date
                         +'          <label style="margin-left: 50px">订单状态：</label>' + (order.status =='N'?'未完成':'已完成')
-                        +'          <label style="margin-left: 50px">是否开具发票:</label>' + (order.invoice == 'N'?'是':'否')
+                        +'          <label style="margin-left: 30px">是否开具发票:</label>' + (order.invoice == 'N'?'是':'否')
                         +'      </div>'
                         +'      <div style="margin-top:20px;margin-left: 10px;margin-right: 10px">'
                         +'          <table class="table table-bordered" style="text-align:center;">'
@@ -760,6 +809,94 @@
             +'</div>'
         $(".modal-body").empty().html(body);
     }
+    function myAddress(){
+        $("#myAddress").empty();
+        $.ajax({
+            type:"GET",
+            url:"${ctx}/member/address",
+            data:{
+                "memberid":${portal_login_user.id}
+            },
+            success:function(result){
+                var address = result.content;
+                var body = ''; // 地址
+                $.each(address,function(index,addr){
+                    body+= '<div class="col-sm-4 col-sm-offset-2"  style="float: left;height:100px;width:300px;background-color:#eceeef;'
+                        +'                  margin-left: 20px;margin-top: 10px" >'
+                        +' <div type="button" class="close" style="float: right" onclick="delAddress('+addr.id +')">&times;</div>'
+                        +'<div style="margin-top: 10px">'
+                        +'    <label style="margin-left: 5px;margin-top: 5px">姓名:'
+                        +'           <b style="font-size: 14px">'+addr.name+'</b>'
+                        +'    </label><br>'
+                        +'    <label style="margin-left: 5px;margin-top: 5px">电话:'
+                        +'           <b style="font-size: 14px">'+addr.tel + '</b>'
+                        +'    </label><br>'
+                        +'    <label style="margin-left: 5px;margin-top: 5px">地址:'
+                        +'           <b style="font-size: 14px">'+ addr.address +'</b>'
+                        +'    </label>'
+                        +'</div>'
+                        +'</div>';
+                });
+                $("#myAddress").html(body);
+                $(".newAddress").hide();
+            }
+        });
+    }
+    function addAddress(){
+        $(".newAddress").show();
+    }
+    function addAddr(){
+        $.ajax({
+            type:"POST",
+            url:"${ctx}/member/address/add",
+            data:$("#addrForm").serialize(),
+            success:function(result){
+                if(result.code == 1){
+                    layer.msg("添加成功",{icon:6,time:1500},function(){
+                        myAddress();
+                        $(".newAddress").hide();
+                    })
+                }else{
+                    layer.msg("添加失败，请重试",{icon:5,time:1500,shift:6},function(){
+
+                    })
+                }
+            }
+        });
+    }
+    function delAddress(id){
+        layer.confirm("是否删除该地址信息?", {
+            icon : 3,
+            title : '提示'
+        }, function(cindex) {
+            // 删除信息
+            $.ajax({
+                type : "POST",
+                url : "${ctx}/member/address/delete",
+                data : {
+                    "addressid": id
+                },
+                success : function(result) {
+                    if (result.code == 1) {
+                        layer.msg("删除成功",{time:2000,icon:6},function(){
+                            myAddress();
+                        });
+                    } else {
+                        layer.msg("删除失败", {
+                            time : 2000,
+                            icon : 5,
+                            shift : 6
+                        }, function() {});
+                    }
+                } // success
+            }); // ajax
+        }, function(cindex) {
+            layer.close(cindex);
+        }); // layer回调
+    }
+    function closeDiv(){
+        $(".newAddress").hide();
+    }
     function update(){
         var username=$("#un").val()
         var email =$("#email").val()
@@ -830,7 +967,6 @@
             } //success
         });// ajax
     }
-
     function reset(){
         // 不要用$("#addForm").reset();
         if(document.getElementById("addForm") != null){

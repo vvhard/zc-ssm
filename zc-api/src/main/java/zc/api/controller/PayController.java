@@ -52,24 +52,6 @@ public class PayController {
             return AjaxResult.fail("获取数据失败", null, ext);
         }
     }
-    @PostMapping("/addr")
-    public AjaxResult<TMemberAddress> addAddress(int memberid,String name,String tel,String address){
-
-        TMemberAddress memberAddress = new TMemberAddress();
-        memberAddress.setAddress(address);
-        memberAddress.setMemberid(memberid);
-        memberAddress.setName(name);
-        memberAddress.setTel(tel);
-        try {
-            memberService.addAddress(memberAddress);
-            return AjaxResult.success("添加成功",memberAddress , null);
-        } catch (Exception e) {
-            Map<String,Object> ext = new HashMap<>();
-            ext.put("err", "数据访问出错");
-            ext.put("exception", e.toString());
-            return AjaxResult.fail("添加失败", null, ext);
-        }
-    }
     @PostMapping("/submit")
     public AjaxResult<TOrder> pay(int projectid,int returnid,int price,int count,int totalmoney,
                                   int memberid,int addressid,String remark){

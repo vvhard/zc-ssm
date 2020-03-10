@@ -1,15 +1,15 @@
 package zc.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import zc.commons.bean.AjaxResult;
 import zc.commons.pojo.TMember;
+import zc.commons.pojo.TMemberAddress;
 import zc.commons.util.MD5Util;
 import zc.manager.service.MemberService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -56,4 +56,50 @@ public class MemberController {
             return AjaxResult.fail("修改失败", null,null);
         }
     }
+
+
+    @GetMapping("/{memberid}/address")
+    public AjaxResult<List<TMemberAddress>> getAddress(@PathVariable("memberid") int memberid){
+        Map<String,Object> ext = new HashMap<>();
+        try {
+            List<TMemberAddress> returns = memberService.getAddress(memberid);
+            return AjaxResult.success("查询成功", returns, null);
+        } catch (Exception e) {
+            ext.put("err", "数据库错误");
+            ext.put("exception", e.toString());
+            return AjaxResult.fail("数据库访问错误", null, ext);
+        }
+    }
+
+    @PostMapping("/{memberid}/address/add")
+    public AjaxResult<TMemberAddress> getAddress(@PathVariable("memberid") int memberid,String name,
+                                                 String tel,String address){
+        Map<String,Object> ext = new HashMap<>();
+        try {
+            TMemberAddress memberAddress = new TMemberAddress();
+            memberAddress.setAddress(address);
+            memberAddress.setMemberid(memberid);
+            memberAddress.setName(name);
+            memberAddress.setTel(tel);
+            memberService.addAddress(memberAddress);
+            return AjaxResult.success("添加成功", memberAddress, null);
+        } catch (Exception e) {
+            ext.put("err", "数据库错误");
+            ext.put("exception", e.toString());
+            return AjaxResult.fail("数据库访问错误", null, ext);
+        }
+    }
+    @PostMapping("/address/delete/{addressid}")
+    public AjaxResult<Object> deleteAddress(@PathVariable("addressid") int addressid){
+        Map<String,Object> ext = new HashMap<>();
+        try {
+            memberService.delteAddress(addressid);
+            return AjaxResult.success("查询成功", null, null);
+        } catch (Exception e) {
+            ext.put("err", "数据库错误");
+            ext.put("exception", e.toString());
+            return AjaxResult.fail("数据库访问错误", null, ext);
+        }
+    }
+
 }

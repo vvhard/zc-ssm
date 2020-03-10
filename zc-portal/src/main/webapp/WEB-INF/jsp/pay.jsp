@@ -267,25 +267,6 @@
 <script src="${ctx}/static/script/back-to-top.js"></script>
 <script src="${ctx}/static/layer/layer.js"></script>
 <script>
-    $('#myTab a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-    })
-    function change(btn){
-        // slice(1) ;// 截取数字，第二个开始到最后
-        var money = parseInt($(btn).val()) * parseInt($("#price").text().slice(1));
-        var freight =  $("#freight").text().slice(1);
-        var totalmoney = money + parseInt(freight);
-        $("#money").empty().text("￥" + money)
-        $("#totalmoney").empty().text("￥" + totalmoney)
-    }
-    function radioClick(radio){
-        if ( $(radio).val() == 'new' ) {
-            $(".newAddress").show();
-        } else {
-            $(".newAddress").hide();
-        }
-    };
     $(function(){
         $.ajax({
             type:"GET",
@@ -331,10 +312,29 @@
             }
         });
     })
+    $('#myTab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+    function change(btn){
+        // slice(1) ;// 截取数字，第二个开始到最后
+        var money = parseInt($(btn).val()) * parseInt($("#price").text().slice(1));
+        var freight =  $("#freight").text().slice(1);
+        var totalmoney = money + parseInt(freight);
+        $("#money").empty().text("￥" + money)
+        $("#totalmoney").empty().text("￥" + totalmoney)
+    }
+    function radioClick(radio){
+        if ( $(radio).val() == 'new' ) {
+            $(".newAddress").show();
+        } else {
+            $(".newAddress").hide();
+        }
+    };
     function addAddr(){
         $.ajax({
            type:"POST",
-           url:"${ctx}/pay/addAddr",
+           url:"${ctx}/member/address/add",
            data:$("#addrForm").serialize(),
             success:function(result){
                 if(result.code == 1){

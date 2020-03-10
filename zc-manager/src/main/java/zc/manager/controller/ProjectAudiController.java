@@ -72,7 +72,8 @@ public class ProjectAudiController {
         try {
             // 插入到正式项目表,并设置还分类表，回报表,并删除原来的临时记录
             projectService.addProjectByTempProject(projectTempId);
-//            //
+            //TODO 发邮件通知用户
+//
 //            returnService.addRetunForProject(projectid);
             // 设置项目分类表，并删除原来的临时记录
             result = zc.commons.bean.AjaxResult.success("审核完成",null, null);
@@ -88,7 +89,8 @@ public class ProjectAudiController {
     public zc.commons.bean.AjaxResult<Object> authFail(int projectid,String feedback ){
         Map<String,Object> ext = new HashMap<>();
         try {
-
+            projectTempService.checkFail(projectid,feedback);
+            //TODO 发邮件通知用户
             return zc.commons.bean.AjaxResult.success("查询成功",null, ext);
         } catch (Exception e) {
             ext.put("err", "数据错误");

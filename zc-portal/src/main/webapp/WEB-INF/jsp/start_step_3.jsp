@@ -153,13 +153,13 @@
                                             <form role="form" action="${ctx}/crow/start_step4" method="post">
                                                 <div class="form-group">
                                                     <input value="${projectTempId}" type="hidden" name="project_temp_id">
-                                                    <label >支付宝沙箱APPID：</label><input type="email" class="form-control" id="app_id" />
+                                                    <label >支付宝沙箱APPID：</label><input type="text" class="form-control" id="app_id" name="app_id"/>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label >生成的应用私钥：</label><input type="password" class="form-control" id="app_private_key" />
+                                                    <label >生成的应用私钥：</label><input type="text" class="form-control"name="app_private_key" id="app_private_key" />
                                                 </div>
                                                 <div class="form-group">
-                                                    <label >支付宝公钥：</label><input type="password" class="form-control" id="alipay_public_key" />
+                                                    <label >支付宝公钥：</label><input type="text" class="form-control" id="alipay_public_key" name="alipay_public_key"/>
                                                 </div>
                                             </form>
                                         </div>

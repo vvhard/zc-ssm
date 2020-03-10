@@ -28,5 +28,6 @@ public interface TProjectTempMapper {
 
     int selectProjectCount();
 
-    void updateStatus(@Param("project_temp_id") int project_temp_id,@Param("status") String status);
+    void updateStatus(@Param("project_temp_id") int project_temp_id,@Param("status") String status,
+                      @Param("feedback") String feedback);
 }

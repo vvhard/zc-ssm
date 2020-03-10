@@ -245,7 +245,7 @@
                         var project = projects[index];
                         h +='<div class="col-md-3">'
                             +'  <div class="thumbnail">'
-                            +'      <img alt="300x200" onclick="details('+ project.id+')"'
+                            +'      <img style="height: 155px" alt="300x200" onclick="details('+ project.id+')"'
                             +'           src="'+project.headpicpath+'"/>'
                             +'      <div class="caption">'
                             +'          <h3 class="break">'

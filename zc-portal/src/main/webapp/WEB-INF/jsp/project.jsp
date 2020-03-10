@@ -177,7 +177,7 @@
                             +'     <div class="progress" style="height:10px; margin-bottom: 5px;">'
                             +'        <div class="progress-bar progress-bar-success" role="progressbar" '
                             +'              aria-valuenow="'+project.completion+'" aria-valuemin="0" aria-valuemax="100"'
-                            +'              style="width: 60%;">'
+                            +'              style="width: '+project.completion+'%;">'
                             +'        </div>'
                             +'     </div>'
                             +'     <p>剩余'+project.remaining_day+'天</p>'

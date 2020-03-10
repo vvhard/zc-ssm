@@ -71,18 +71,24 @@ public class CrowController {
     @RequestMapping("/start_step4")
     public String step3(int project_temp_id,String app_id,String app_private_key,String alipay_public_key,
                         HttpSession session){
+        System.out.println("portal/start_step4:" + project_temp_id + ":" + app_id + ":" + app_private_key+ ":" + alipay_public_key);
         session.setAttribute(Constant.PROJECTTEMPID,project_temp_id);
         Map<String,Object> params = new HashMap<>();
         params.put("project_temp_id", project_temp_id);
         params.put("app_id", app_id);
         params.put("app_private_key", app_private_key);
         params.put("alipay_public_key", alipay_public_key);
+        AjaxResult<TProjectTemp> result ;
         try {
             String json = HttpClientUtil.httpPostRequest(Configuration.remoteAddress + "/crow/pay_info",params);
+            result = JSON.toJavaObject(JSON.parseObject(json), AjaxResult.class);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            result = AjaxResult.fail("fail",null,null);
         }
-        return "start_step_4";
+        if(result.getCode() == 1)
+            return "start_step_4";
+        else
+            return  "start_step_3";
     }
     @RequestMapping("/start_step3")
     public String step4(int projectTempId,HttpSession session){

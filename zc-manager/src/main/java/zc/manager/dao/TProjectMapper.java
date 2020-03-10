@@ -71,5 +71,5 @@ public interface TProjectMapper {
 
     void updateFollowCount(@Param("projectid") int projectid, @Param("follower") int follower);
 
-    void updateProjectAfterSupport(@Param("projectid")Integer projectid, @Param("projectid")double money);
+    void updateProjectAfterSupport(@Param("projectid")Integer projectid, @Param("money")double money);
 }

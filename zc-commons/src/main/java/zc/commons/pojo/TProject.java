@@ -31,7 +31,7 @@ public class TProject {
 
     private Integer follower;
 
-    private String concat;
+    private String contact;
 
     private String headpicpath;
 
@@ -39,7 +39,7 @@ public class TProject {
 
     public TProject(Integer id, String name, String remark, Long money, Integer day, String status,
                     String deploydate, Long supportmoney, Integer supporter, Integer completion,
-                    Integer memberid, String createdate, Integer follower,String concat,String headpicpath,
+                    Integer memberid, String createdate, Integer follower,String contact,String headpicpath,
                     String detailpicpath) {
         this.id = id;
         this.name = name;
@@ -54,7 +54,7 @@ public class TProject {
         this.memberid = memberid;
         this.createdate = createdate;
         this.follower = follower;
-        this.concat = concat;
+        this.contact = contact;
         this.headpicpath = headpicpath;
         this.detailpicpath = detailpicpath;
     }
@@ -168,14 +168,6 @@ public class TProject {
         this.follower = follower;
     }
 
-    public String getConcat() {
-        return concat;
-    }
-
-    public void setConcat(String concat) {
-        this.concat = concat;
-    }
-
     public String getHeadpicpath() {
         return headpicpath;
     }
@@ -190,6 +182,14 @@ public class TProject {
 
     public void setDetailpicpath(String detailpicpath) {
         this.detailpicpath = detailpicpath;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     @Override
@@ -208,7 +208,7 @@ public class TProject {
                 ", memberid=" + memberid +
                 ", createdate='" + createdate + '\'' +
                 ", follower=" + follower +
-                ", concat='" + concat + '\'' +
+                ", contact='" + contact + '\'' +
                 ", headpicpath='" + headpicpath + '\'' +
                 ", detailpicpath='" + detailpicpath + '\'' +
                 '}';

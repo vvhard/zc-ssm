@@ -59,4 +59,6 @@ public interface MemberService {
     TMemberAddress getAddressByAddressId(int addressid);
 
     boolean updatePassword(String loginacct, String oldPassword, String newPassword);
+
+    void delteAddress(int addressid);
 }

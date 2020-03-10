@@ -119,8 +119,7 @@
 <script src="${ctx}/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="${ctx}/static/script/docs.min.js"></script>
 <script>
-    function readAsDataURL(id)
-    {
+    function readAsDataURL(id) {
         if(typeof FileReader=='undifined')			//判断浏览器是否支持filereader
         {
             alert("否支持filereader")

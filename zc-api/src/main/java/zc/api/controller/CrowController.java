@@ -71,14 +71,14 @@ public class CrowController {
         }
         return result;
     }
-    @PostMapping(value = "/crow/pay_info")
+    @PostMapping(value = "/pay_info")
     public AjaxResult<TProjectTemp> payInfo(int project_temp_id,String app_id,String app_private_key,String alipay_public_key){
         AjaxResult<TProjectTemp> result;
         Map<String,Object> ext = new HashMap<>();
         try {
+            System.out.println("api-row/pay_info:" + project_temp_id + ":" + app_id + ":" + app_private_key+ ":" + alipay_public_key);
             projectTempService.addPayInfo(project_temp_id,app_id,app_private_key,alipay_public_key);
             // 设置待审核状态CHECKING
-            projectTempService.checking(project_temp_id);
             result = AjaxResult.success("添加成功",null,null);
         } catch (Exception e) {
             ext.put("err", "数据库错误");
