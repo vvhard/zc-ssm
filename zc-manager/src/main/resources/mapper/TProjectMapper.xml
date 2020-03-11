@@ -134,14 +134,14 @@
   </select>
   <select id="selectRange" resultType="zc.commons.pojo.TProject">
     select tp.id, name, remark, money, day, status, deploydate, supportmoney, supporter,
-            completion, memberid, createdate, follower,contact,headpicpath,detailpicpath
+           completion, memberid, createdate, follower,contact,headpicpath,detailpicpath
     from t_project tp join t_project_pic tpp on tp.id=tpp.projectid
     limit #{from},#{to}
   </select>
   <select id="selectProjects" resultType="zc.commons.pojo.TProject">
     select tp.id, tp.name,tp.remark, tp.money, tp.day, tp.status, tp.deploydate,
-           tp.supportmoney, tp.supporter,tp.completion, tp.memberid, tp.createdate, tp.follower,tp.contact,tpp.headpicpath,
-           tpp.detailpicpath
+           tp.supportmoney, tp.supporter,tp.completion, tp.memberid, tp.createdate,
+           tp.follower,tp.contact,tpp.headpicpath,tpp.detailpicpath
     from t_project tp join t_project_type tpt on tp.id = tpt.projectid
         join  t_type  tt on tpt.typeid = tt.id  join t_project_pic tpp on tp.id=tpp.projectid
     <where>
@@ -152,7 +152,7 @@
         and tp.status=#{status}
       </if>
       <if test="queryContent != null and queryContent!= ''">
-        and tp.name like contact('%',#{queryContent},'%')
+        and tp.name like concat('%',#{queryContent},'%')
       </if>
     </where>
     <choose>
@@ -182,7 +182,7 @@
         and tp.status=#{status}
       </if>
       <if test="queryContent != null and queryContent!= ''">
-        and tp.name like contact('%',#{queryContent},'%')
+        and tp.name like concat('%',#{queryContent},'%')
       </if>
     </where>
     <choose>

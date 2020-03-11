@@ -18,7 +18,6 @@ public class RegController {
     // TODO 将注册功能完善，做到邮件发送验证码，验证邮箱可用
     @RequestMapping("/reg")
     public AjaxResult<TMember> index(String loginacct, String userpswd, String email){
-        System.out.println("portal:reg");
         AjaxResult<TMember> result ;
         Map<String,Object> params = new HashMap<>();
         params.put("loginacct", loginacct);

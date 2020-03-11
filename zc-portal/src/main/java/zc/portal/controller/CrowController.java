@@ -31,6 +31,7 @@ public class CrowController {
         TMember member = (TMember) session.getAttribute(Constant.PORTAL_LOGIN_USER);
         try {
             if(member == null){
+                // 拦截器，也做了登录检查
                 result = AjaxResult.fail("请先进行登录再发起众筹",null,null);
             }else{
                 String json = HttpClientUtil.httpGetRequest(Configuration.remoteAddress + "/crow/member/" + member.getLoginacct());
