@@ -24,7 +24,6 @@
                 </property>
             </bean>
         </mvc:message-converters>
-
     </mvc:annotation-driven>
     <mvc:default-servlet-handler></mvc:default-servlet-handler>
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

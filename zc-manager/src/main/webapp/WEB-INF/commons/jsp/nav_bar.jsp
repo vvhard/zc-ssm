@@ -25,9 +25,7 @@
                     </button>
                 </li>
             </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="查询">
-            </form>
+
         </div>
     </div>
 </nav>

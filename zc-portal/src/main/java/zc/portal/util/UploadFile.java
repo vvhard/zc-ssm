@@ -25,7 +25,7 @@ public class UploadFile {
         WebResource resource = client.resource(webPath + filename);
         try {
             resource.put(file.getBytes());
-            result = AjaxResult.success("上传成功",  (webPath+"/" + filename), null);
+            result = AjaxResult.success("上传成功",  (webPath + filename), null);
         } catch (IOException e) {
             Map<String,Object> ext = new HashMap<>();
             ext.put("exception", e.toString());

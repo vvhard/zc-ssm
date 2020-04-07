@@ -316,7 +316,7 @@
                    var member = result.content;
                    if(member.authstatus =="Y"){
                        h+= '<span class="label label-success" style="cursor:pointer;" onclick="auth(\'Y\')">'+member.accttype+'</span>';
-                   }else if(authstatus == 'N'){
+                   }else if(member.authstatus == 'N'){
                        h += '<span class="label label-danger" style="cursor:pointer;" onclick="auth(\'N\')">未实名认证</span>'
                    }else {
                        h+= '<span class="label label-warning" style="cursor:pointer;" onclick="auth(\'CHECKING\')">实名信息待审核</span>'

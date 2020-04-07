@@ -68,7 +68,7 @@
                             <label for="realname">电话号码</label>
                             <input type="text" class="form-control" name="tel" id="tel" placeholder="请输入电话号码">
                         </div>
-                        <div class="form-group" style="float: left">
+                        <div class="form-group" style="float: left;display: none">
                             <label >验证码</label>
                             <input type="text" class="form-control" style="width: 150px;"
                                    name="validateCode" id="validateCode" placeholder="请输入你邮箱中接收到的验证码">

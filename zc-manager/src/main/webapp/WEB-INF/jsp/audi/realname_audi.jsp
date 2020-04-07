@@ -220,7 +220,7 @@
                         body+='<div style="float:left;margin-left: 10px">'
                             +'      <label>'+ cn[i] +'</label>'
                             +'     <div class="pic">'
-                            +'         <img src="http://localhost:8082/zc_api/upload/auth/'+tmc[i].path+'">'
+                            +'         <img src="'+tmc[i].path+'">'
                             +'     </div>'
                             +'</div>' ;
                     }

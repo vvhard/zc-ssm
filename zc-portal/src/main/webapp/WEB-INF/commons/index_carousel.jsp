@@ -39,7 +39,6 @@
                                 +'	<img src="'+adv.iconpath+'" alt="Third slide"/>'
                                 +'</div>'
                         }
-
                     })
                     $("#advDiv").prepend(a);
                 }else{

@@ -45,7 +45,6 @@ public class CrowController {
         try {
             projectTempService.insert(projectTemp); // 插入成功后返回id
             // 创建任务
-//            taskService.createTask(projectTemp.getId());
             ext.put("projectTempId", projectTemp.getId());
             result = AjaxResult.success("数据提交成功，请进行下一步",projectTemp,ext);
         }catch (Exception e){
@@ -76,7 +75,6 @@ public class CrowController {
         AjaxResult<TProjectTemp> result;
         Map<String,Object> ext = new HashMap<>();
         try {
-            System.out.println("api-row/pay_info:" + project_temp_id + ":" + app_id + ":" + app_private_key+ ":" + alipay_public_key);
             projectTempService.addPayInfo(project_temp_id,app_id,app_private_key,alipay_public_key);
             // 设置待审核状态CHECKING
             result = AjaxResult.success("添加成功",null,null);
